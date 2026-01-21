@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+extract.py
+bananax.md
+new_templates.txt
+extract_dna_batch_*.md
+.env
+*.pyc
+__pycache__/

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GFIMS Design Universe | 차세대 디자인 DNA 라이브러리</title>
+    <meta name="description" content="전 세계의 시각적 유산에서 추출한 디자인 DNA와 에이전틱 프롬프트 빌더.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="logo">GFIMS <span>Universe</span></div>
+            <div class="nav-links">
+                <a href="#" class="active">DNA Library</a>
+                <a href="#dna-mixer">DNA Hybridizer</a>
+                <a href="#about">About GFIMS v3.5</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <div class="badge">AGENTIC DESIGN SYSTEM v3.5</div>
+            <h1>Design DNA Universe</h1>
+            <p class="subtitle">Extracting visual genes from global masterpieces to build the future of agentic creativity. Explore, Mix, and Generate.</p>
+        </header>
+
+        <section class="controls">
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="dna-search" placeholder="Search by vibe, color, or category (e.g., 'Cyberpunk', 'Gold', 'Minimal')...">
+            </div>
+            <div class="filter-chips">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="tech">Tech & Future</button>
+                <button class="chip" data-filter="art">Art History</button>
+                <button class="chip" data-filter="nature">Natural Phenomena</button>
+                <button class="chip" data-filter="brand">Brand Ethos</button>
+            </div>
+        </section>
+
+        <section class="dna-stats">
+            <div class="stat-item">
+                <span class="stat-value" id="template-count">0</span>
+                <span class="stat-label">MASTER DNA TEMPLATES</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">100%</span>
+                <span class="stat-label">AGENTIC OPTIMIZED</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">MECE</span>
+                <span class="stat-label">DESIGN STRUCTURE</span>
+            </div>
+        </section>
+
+        <section id="dna-grid" class="dna-grid">
+            <!-- DNA Cards will be injected here -->
+            <div class="loader">Scanning Global Design Repository...</div>
+        </section>
+
+        <section id="dna-mixer" class="dna-mixer-section">
+            <div class="section-title">
+                <h2>DNA Hybridizer</h2>
+                <p>Combine the visual genes of two distinct styles to create a new hybrid aesthetic.</p>
+            </div>
+            <div class="mixer-interface">
+                <div class="mixer-slot" id="slot-a">
+                    <div class="slot-label">Style A (Base)</div>
+                    <div class="slot-select" id="select-a">Select DNA</div>
+                </div>
+                <div class="mixer-plus">+</div>
+                <div class="mixer-slot" id="slot-b">
+                    <div class="slot-label">Style B (Modifier)</div>
+                    <div class="slot-select" id="select-b">Select DNA</div>
+                </div>
+                <div class="mixer-arrow"><i data-lucide="arrow-right"></i></div>
+                <div class="mixer-result">
+                    <button id="mix-dna-btn" class="btn btn-primary btn-lg">GENERATE HYBRID DNA</button>
+                </div>
+            </div>
+            <div id="hybrid-output" class="hybrid-output"></div>
+        </section>
+    </main>
+
+    <div id="dna-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">GFIMS v3.5</div>
+            <p>© 2026 GFIMS Design Universe. Built for the era of Agentic Coding.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+:root {
+    --bg-color: #050505;
+    --card-bg: rgba(26, 26, 26, 0.6);
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-glow: #00ffff;
+    --accent-purple: #6c5ce7;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Glassmorphism Background */
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(108, 92, 231, 0.05) 0%, transparent 50%);
+}
+
+/* Navigation */
+.glass-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.logo span {
+    color: var(--accent-glow);
+    font-weight: 400;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--accent-glow);
+}
+
+/* Header Badge */
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid var(--accent-glow);
+    color: var(--accent-glow);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    margin-bottom: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
+}
+
+/* Controls & Search */
+.controls {
+    margin-bottom: 4rem;
+}
+
+.search-box {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.search-box i {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--accent-glow);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-chips {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 0.6rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.chip.active, .chip:hover {
+    background: var(--accent-glow);
+    color: black;
+    border-color: var(--accent-glow);
+}
+
+/* Stats */
+.dna-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 3rem 0;
+    margin-bottom: 4rem;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.2em;
+    font-weight: 800;
+}
+
+/* DNA Mixer Section */
+.dna-mixer-section {
+    margin-top: 8rem;
+    padding: 6rem 0;
+    border-top: 1px solid var(--glass-border);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.mixer-interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 3rem;
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    gap: 2rem;
+}
+
+.mixer-slot {
+    flex: 1;
+    text-align: center;
+}
+
+.slot-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.slot-select {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px dashed var(--glass-border);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    position: relative;
+}
+
+.slot-select:hover {
+    border-color: var(--accent-glow);
+    background: rgba(0, 255, 255, 0.02);
+}
+
+.mixer-plus, .mixer-arrow {
+    font-size: 2rem;
+    color: var(--text-secondary);
+}
+
+.options-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background: #1a1a1a;
+    border: 1px solid var(--accent-glow);
+    border-radius: 12px;
+    z-index: 10;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+.option {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.option:hover {
+    background: var(--accent-glow);
+    color: black;
+}
+
+/* Modal Details */
+.modal-header h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: var(--accent-glow);
+}
+
+.dna-id {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.dna-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+}
+
+.dna-section h4 {
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.1em;
+}
+
+.full-width { grid-column: span 2; }
+
+.prompt-box {
+    background: #000;
+    padding: 1.5rem;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.prompt-box code {
+    color: var(--accent-glow);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+}
+
+.copy-btn-inner {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-glow);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.md-preview {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.5rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #ccc;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: inherit;
+}
+
+/* Hybrid Output */
+.hybrid-output {
+    display: none;
+    margin-top: 3rem;
+}
+
+.hybrid-output.visible {
+    display: block;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hybrid-card {
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%);
+    border: 1px solid var(--accent-glow);
+    padding: 3rem;
+    border-radius: 32px;
+    text-align: center;
+}
+
+.hybrid-badge {
+    color: var(--accent-glow);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer */
+footer {
+    padding: 4rem 2rem;
+    margin-top: 8rem;
+    border-top: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.footer-content p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    .container { padding: 1rem; }
+}

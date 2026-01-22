@@ -453,6 +453,57 @@ body {
     font-weight: 800;
     color: var(--accent-glow);
 }
+/* Real-time Render Overlay */
+.render-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.15;
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.dna-card:hover .render-overlay {
+    opacity: 0.3;
+}
+
+.modal-left .render-overlay {
+    z-index: 1;
+    opacity: 0.4;
+}
+
+/* Hybrid Glitch Effect */
+.hybrid-glitch {
+    position: relative;
+    overflow: hidden;
+}
+
+.hybrid-glitch::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 255, 0.05) 3px,
+        transparent 3px
+    );
+    animation: static-move 2s steps(10) infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes static-move {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10%); }
+}
 
 /* Modal Close Button */
 .close-modal {

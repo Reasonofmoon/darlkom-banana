@@ -58,6 +58,7 @@ function renderGrid(data) {
         const accents = palette.accents || [];
         
         card.innerHTML = `
+            <div class="render-overlay" id="render-${dna.id}"></div>
             <div class="tag">#${dna.id.toString().padStart(3, '0')} DNA</div>
             <h3>${dna.ko_title || dna.title}</h3>
             <p class="tone">${dna.tone ? dna.tone : 'Premium design aesthetic'}</p>
@@ -70,6 +71,10 @@ function renderGrid(data) {
             </div>
         `;
         grid.appendChild(card);
+        
+        // Apply Real-time Rendering to Overlay
+        const overlay = document.getElementById(`render-${dna.id}`);
+        RenderEngine.render(overlay, dna);
     });
 }
 
@@ -83,7 +88,8 @@ function openDnaPortal(id) {
     
     modalBody.innerHTML = `
         <div class="modal-left">
-            <div class="visual-preview" style="background-image: url('${imgUrl}')">
+            <div class="visual-preview" id="modal-render-area" style="background-image: url('${imgUrl}')">
+                <div class="render-overlay" id="modal-pattern-overlay"></div>
                 <div class="visual-overlay">
                     <h2>${dna.ko_title || dna.title}</h2>
                     <p>${dna.tone}</p>
@@ -143,6 +149,11 @@ function openDnaPortal(id) {
         </div>
     `;
     modal.style.display = 'flex';
+
+    // Apply Real-time Rendering to Modal
+    const modalOverlay = document.getElementById('modal-pattern-overlay');
+    RenderEngine.render(modalOverlay, dna);
+    modalOverlay.style.opacity = "0.4"; // Blend with sample image
 }
 
 function renderMetric(label, score) {

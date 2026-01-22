@@ -293,4 +293,5 @@ function copyPrompt(text) {
     });
 }
 
-loadData();
+// Final check: All initialization happens in init() via DOMContentLoaded
+// window.loadData = loadData; // Optional: expose if needed for debug

@@ -4,9 +4,12 @@ let filteredData = [];
 // Image Mapping
 const sampleImages = {
     16: 'art_deco_gold_dna_sample_1769039206808.png',
+    17: 'art_deco_neon_dna_sample_1769039711703.png',
     26: 'neon_noir_dna_sample_1769039191428.png',
     15: 'ukiyo_e_modern_dna_sample_1769039223658.png',
-    75: 'neon_noir_dna_sample_1769039191428.png' // Supporting both original and new IDs if overlap
+    19: 'ukiyo_e_tattoo_dna_sample_1769039695373.png',
+    8: 'minimal_white_dna_sample_1769039665828.png',
+    30: 'bauhaus_geometric_dna_sample_1769039679414.png'
 };
 
 // Initialize Lucide icons

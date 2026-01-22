@@ -12,17 +12,67 @@ const sampleImages = {
     30: 'bauhaus_geometric_dna_sample_1769039679414.png'
 };
 
-// Initialize Lucide icons
-lucide.createIcons();
+// Elements (Declared globally but initialized in DOMContentLoaded)
+let grid, searchInput, templateCount, filterChips, modal, modalBody, closeModal;
 
-// Elements
-const grid = document.getElementById('dna-grid');
-const searchInput = document.getElementById('dna-search');
-const templateCount = document.getElementById('template-count');
-const filterChips = document.querySelectorAll('.chip');
-const modal = document.getElementById('dna-modal');
-const modalBody = document.getElementById('modal-body');
-const closeModal = document.querySelector('.close-modal');
+function init() {
+    grid = document.getElementById('dna-grid');
+    searchInput = document.getElementById('dna-search');
+    templateCount = document.getElementById('template-count');
+    filterChips = document.querySelectorAll('.chip');
+    modal = document.getElementById('dna-modal');
+    modalBody = document.getElementById('modal-body');
+    closeModal = document.querySelector('.close-modal');
+
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // Attach Search listener
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            filteredData = dnaData.filter(dna => 
+                dna.title.toLowerCase().includes(term) || 
+                (dna.ko_title && dna.ko_title.toLowerCase().includes(term)) ||
+                dna.tone.toLowerCase().includes(term)
+            );
+            renderGrid(filteredData);
+        });
+    }
+
+    // Attach Filter listener
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            filterChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const filter = chip.dataset.filter;
+            
+            if (filter === 'all') {
+                filteredData = [...dnaData];
+            } else {
+                filteredData = dnaData.filter(dna => {
+                    const text = (dna.title + dna.tone).toLowerCase();
+                    if (filter === 'tech') return text.includes('future') || text.includes('neon') || text.includes('cyber');
+                    if (filter === 'art') return text.includes('art') || text.includes('ukiyo') || text.includes('bauhaus');
+                    if (filter === 'nature') return text.includes('nature') || text.includes('marble') || text.includes('watercolor');
+                    if (filter === 'brand') return text.includes('brand') || text.includes('ethos') || text.includes('design');
+                    return true;
+                });
+            }
+            renderGrid(filteredData);
+        });
+    });
+
+    // Modal close shortcuts
+    if (closeModal) closeModal.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+
+    loadData();
+}
+
+document.addEventListener('DOMContentLoaded', init);
 
 // Load Data
 async function loadData() {
@@ -35,12 +85,12 @@ async function loadData() {
             .map(title => dnaData.find(d => d.title === title));
             
         filteredData = [...dnaData];
-        templateCount.innerText = dnaData.length;
+        if (templateCount) templateCount.innerText = dnaData.length;
         renderGrid(filteredData);
         populateMixerOptions();
     } catch (error) {
         console.error("Error loading DNA templates:", error);
-        grid.innerHTML = `<div class="error">DNA 저장소를 불러올 수 없습니다.</div>`;
+        if (grid) grid.innerHTML = `<div class="error">DNA 저장소를 불러올 수 없습니다.</div>`;
     }
 }
 
@@ -170,47 +220,19 @@ function renderMetric(label, score) {
     `;
 }
 
-// Search & Filter
-searchInput.addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase();
-    filteredData = dnaData.filter(dna => 
-        dna.title.toLowerCase().includes(term) || 
-        (dna.ko_title && dna.ko_title.toLowerCase().includes(term)) ||
-        dna.tone.toLowerCase().includes(term)
-    );
-    renderGrid(filteredData);
-});
-
-filterChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-        filterChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const filter = chip.dataset.filter;
-        
-        if (filter === 'all') {
-            filteredData = [...dnaData];
-        } else {
-            // Simplified category mapping based on title/tone
-            filteredData = dnaData.filter(dna => {
-                const text = (dna.title + dna.tone).toLowerCase();
-                if (filter === 'tech') return text.includes('future') || text.includes('neon') || text.includes('cyber');
-                if (filter === 'art') return text.includes('art') || text.includes('ukiyo') || text.includes('bauhaus');
-                if (filter === 'nature') return text.includes('nature') || text.includes('marble') || text.includes('watercolor');
-                return true;
-            });
-        }
-        renderGrid(filteredData);
-    });
-});
-
 // Mixer Implementation
-const selectA = document.getElementById('select-a');
-const selectB = document.getElementById('select-b');
-const mixBtn = document.getElementById('mix-dna-btn');
-const hybridOutput = document.getElementById('hybrid-output');
+let selectA, selectB, mixBtn, hybridOutput;
 
 function populateMixerOptions() {
+    selectA = document.getElementById('select-a');
+    selectB = document.getElementById('select-b');
+    mixBtn = document.getElementById('mix-dna-btn');
+    hybridOutput = document.getElementById('hybrid-output');
+
+    if (!selectA || !selectB) return;
+
     [selectA, selectB].forEach(select => {
+        select.innerHTML = '<option value="">Select DNA</option>'; // Reset
         dnaData.forEach(dna => {
             const opt = document.createElement('option');
             opt.value = dna.id;
@@ -218,9 +240,14 @@ function populateMixerOptions() {
             select.appendChild(opt);
         });
     });
+
+    if (mixBtn && !mixBtn.dataset.listener) {
+        mixBtn.addEventListener('click', handleMix);
+        mixBtn.dataset.listener = 'true';
+    }
 }
 
-mixBtn.addEventListener('click', () => {
+function handleMix() {
     const idA = selectA.value;
     const idB = selectB.value;
     
@@ -246,15 +273,14 @@ mixBtn.addEventListener('click', () => {
     hybridOutput.style.display = 'block';
     
     const target = document.getElementById('hybrid-render-target');
-    RenderEngine.renderHybrid(target, dnaA, dnaB);
+    if (typeof RenderEngine !== 'undefined') {
+        RenderEngine.renderHybrid(target, dnaA, dnaB);
+    }
     
-    // Scroll to result
     hybridOutput.scrollIntoView({ behavior: 'smooth' });
-});
+}
 
-// Modal close shortcuts
-closeModal.onclick = () => modal.style.display = 'none';
-window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+// Modal close shortcuts handled in init()
 
 // Exposure for global calls
 window.openDnaPortal = openDnaPortal;

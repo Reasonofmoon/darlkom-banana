@@ -170,7 +170,7 @@ function renderMetric(label, score) {
     `;
 }
 
-// Search & Filter (Same as before but with ko_title support)
+// Search & Filter
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
     filteredData = dnaData.filter(dna => 
@@ -181,9 +181,84 @@ searchInput.addEventListener('input', (e) => {
     renderGrid(filteredData);
 });
 
+filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const filter = chip.dataset.filter;
+        
+        if (filter === 'all') {
+            filteredData = [...dnaData];
+        } else {
+            // Simplified category mapping based on title/tone
+            filteredData = dnaData.filter(dna => {
+                const text = (dna.title + dna.tone).toLowerCase();
+                if (filter === 'tech') return text.includes('future') || text.includes('neon') || text.includes('cyber');
+                if (filter === 'art') return text.includes('art') || text.includes('ukiyo') || text.includes('bauhaus');
+                if (filter === 'nature') return text.includes('nature') || text.includes('marble') || text.includes('watercolor');
+                return true;
+            });
+        }
+        renderGrid(filteredData);
+    });
+});
+
+// Mixer Implementation
+const selectA = document.getElementById('select-a');
+const selectB = document.getElementById('select-b');
+const mixBtn = document.getElementById('mix-dna-btn');
+const hybridOutput = document.getElementById('hybrid-output');
+
+function populateMixerOptions() {
+    [selectA, selectB].forEach(select => {
+        dnaData.forEach(dna => {
+            const opt = document.createElement('option');
+            opt.value = dna.id;
+            opt.innerText = dna.ko_title || dna.title;
+            select.appendChild(opt);
+        });
+    });
+}
+
+mixBtn.addEventListener('click', () => {
+    const idA = selectA.value;
+    const idB = selectB.value;
+    
+    if (!idA || !idB) return alert("두 가지 DNA를 선택해주세요.");
+    
+    const dnaA = dnaData.find(d => d.id == idA);
+    const dnaB = dnaData.find(d => d.id == idB);
+    
+    hybridOutput.innerHTML = `
+        <div class="hybrid-card" id="hybrid-render-target">
+            <div class="hybrid-badge">NEW HYBRID DNA SYNTHESIZED</div>
+            <h2>${dnaA.title.split('/')[0]} x ${dnaB.title.split('/')[0]}</h2>
+            <div class="analysis-grid" style="margin: 2rem 0;">
+                <p>Base DNA: ${dnaA.ko_title || dnaA.title}</p>
+                <p>Modifier DNA: ${dnaB.ko_title || dnaB.title}</p>
+            </div>
+            <div class="prompt-box-elaborate">
+                <code>${dnaA.prompt} ${dnaB.prompt}</code>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 2rem;" onclick="copyPrompt('${dnaA.prompt} ${dnaB.prompt}')">COPY HYBRID PROMPT</button>
+        </div>
+    `;
+    hybridOutput.style.display = 'block';
+    
+    const target = document.getElementById('hybrid-render-target');
+    RenderEngine.renderHybrid(target, dnaA, dnaB);
+    
+    // Scroll to result
+    hybridOutput.scrollIntoView({ behavior: 'smooth' });
+});
+
 // Modal close shortcuts
 closeModal.onclick = () => modal.style.display = 'none';
 window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+
+// Exposure for global calls
+window.openDnaPortal = openDnaPortal;
+window.copyPrompt = copyPrompt;
 
 function copyPrompt(text) {
     if (!text) return alert("프롬프트가 없습니다.");
@@ -191,8 +266,5 @@ function copyPrompt(text) {
         alert("DNA 프롬프트가 복사되었습니다.");
     });
 }
-
-// Populate Mixer (Legacy fallback)
-function populateMixerOptions() {}
 
 loadData();

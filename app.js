@@ -1,5 +1,6 @@
 let dnaData = [];
 let filteredData = [];
+console.log("GFIMS App v3.5.2 Loaded"); // Force Update Check
 
 // Image Mapping
 const sampleImages = {
@@ -96,6 +97,10 @@ async function loadData() {
 
 // Render Cards
 function renderGrid(data) {
+    if (!grid) {
+        console.warn("Grid element not initialized yet.");
+        return;
+    }
     grid.innerHTML = '';
     data.forEach(dna => {
         const card = document.createElement('div');

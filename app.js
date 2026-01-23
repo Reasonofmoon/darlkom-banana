@@ -109,11 +109,13 @@ function renderGrid(data) {
         
         const palette = dna.palette || {};
         const bg = palette.background || '#1a1a1a';
-        const text = palette.text || '#ffffff';
         const accents = palette.accents || [];
         
+        // Changed: render-overlay is now a container for the canvas
         card.innerHTML = `
-            <div class="render-overlay" id="render-${dna.id}"></div>
+            <div class="render-overlay" id="render-container-${dna.id}">
+                <canvas id="canvas-${dna.id}" class="canvas-full"></canvas>
+            </div>
             <div class="tag">#${dna.id.toString().padStart(3, '0')} DNA</div>
             <h3>${dna.ko_title || dna.title}</h3>
             <p class="tone">${dna.tone ? dna.tone : 'Premium design aesthetic'}</p>
@@ -127,9 +129,12 @@ function renderGrid(data) {
         `;
         grid.appendChild(card);
         
-        // Apply Real-time Rendering to Overlay
-        const overlay = document.getElementById(`render-${dna.id}`);
-        RenderEngine.render(overlay, dna);
+        // Apply Canvas Rendering
+        const canvas = document.getElementById(`canvas-${dna.id}`);
+        // Small delay to ensure layout is computed (optional but safer)
+        requestAnimationFrame(() => {
+            RenderEngine.renderCanvas(canvas, dna);
+        });
     });
 }
 
@@ -143,9 +148,10 @@ function openDnaPortal(id) {
     
     modalBody.innerHTML = `
         <div class="modal-left">
-            <div class="visual-preview" id="modal-render-area" style="background-image: url('${imgUrl}')">
-                <div class="render-overlay" id="modal-pattern-overlay"></div>
-                <div class="visual-overlay">
+            <div class="visual-preview" id="modal-render-area">
+                <!-- Replaced background image div with Canvas -->
+                <canvas id="modal-canvas" class="canvas-full" style="z-index: 1;"></canvas>
+                <div class="visual-overlay" style="z-index: 2; pointer-events: none;">
                     <h2>${dna.ko_title || dna.title}</h2>
                     <p>${dna.tone}</p>
                 </div>
@@ -205,10 +211,11 @@ function openDnaPortal(id) {
     `;
     modal.style.display = 'flex';
 
-    // Apply Real-time Rendering to Modal
-    const modalOverlay = document.getElementById('modal-pattern-overlay');
-    RenderEngine.render(modalOverlay, dna);
-    modalOverlay.style.opacity = "0.4"; // Blend with sample image
+    // Apply Real-time Rendering to Modal Canvas
+    const modalCanvas = document.getElementById('modal-canvas');
+    requestAnimationFrame(() => {
+        RenderEngine.renderCanvas(modalCanvas, dna);
+    });
 }
 
 function renderMetric(label, score) {
@@ -263,23 +270,31 @@ function handleMix() {
     
     hybridOutput.innerHTML = `
         <div class="hybrid-card" id="hybrid-render-target">
-            <div class="hybrid-badge">NEW HYBRID DNA SYNTHESIZED</div>
-            <h2>${dnaA.title.split('/')[0]} x ${dnaB.title.split('/')[0]}</h2>
-            <div class="analysis-grid" style="margin: 2rem 0;">
-                <p>Base DNA: ${dnaA.ko_title || dnaA.title}</p>
-                <p>Modifier DNA: ${dnaB.ko_title || dnaB.title}</p>
+             <!-- Hybrid Canvas -->
+            <canvas id="hybrid-canvas" class="canvas-full hybrid-canvas"></canvas>
+            
+            <div class="hybrid-content">
+                <div class="hybrid-badge">NEW HYBRID DNA SYNTHESIZED</div>
+                <h2>${dnaA.title.split('/')[0]} x ${dnaB.title.split('/')[0]}</h2>
+                <div class="analysis-grid" style="margin: 2rem 0;">
+                    <p>Base DNA: ${dnaA.ko_title || dnaA.title}</p>
+                    <p>Modifier DNA: ${dnaB.ko_title || dnaB.title}</p>
+                </div>
+                <div class="prompt-box-elaborate">
+                    <code>${dnaA.prompt} ${dnaB.prompt}</code>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 2rem;" onclick="copyPrompt('${dnaA.prompt} ${dnaA.prompt === dnaB.prompt ? '' : ' ' + dnaB.prompt}')">COPY HYBRID PROMPT</button>
             </div>
-            <div class="prompt-box-elaborate">
-                <code>${dnaA.prompt} ${dnaB.prompt}</code>
-            </div>
-            <button class="btn btn-primary" style="margin-top: 2rem;" onclick="copyPrompt('${dnaA.prompt} ${dnaB.prompt}')">COPY HYBRID PROMPT</button>
         </div>
     `;
     hybridOutput.style.display = 'block';
     
-    const target = document.getElementById('hybrid-render-target');
+    // Render Hybrid Canvas
+    const hybridCanvas = document.getElementById('hybrid-canvas');
     if (typeof RenderEngine !== 'undefined') {
-        RenderEngine.renderHybrid(target, dnaA, dnaB);
+        requestAnimationFrame(() => {
+            RenderEngine.renderHybridCanvas(hybridCanvas, dnaA, dnaB);
+        });
     }
     
     hybridOutput.scrollIntoView({ behavior: 'smooth' });

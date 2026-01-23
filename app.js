@@ -36,7 +36,7 @@ function init() {
             const term = e.target.value.toLowerCase();
             filteredData = dnaData.filter(dna => 
                 dna.title.toLowerCase().includes(term) || 
-                (dna.ko_title && dna.ko_title.toLowerCase().includes(term)) ||
+                (dna.display_title && dna.display_title.toLowerCase().includes(term)) ||
                 dna.tone.toLowerCase().includes(term)
             );
             renderGrid(filteredData);
@@ -91,7 +91,7 @@ async function loadData() {
         populateMixerOptions();
     } catch (error) {
         console.error("Error loading DNA templates:", error);
-        if (grid) grid.innerHTML = `<div class="error">DNA 저장소를 불러올 수 없습니다.</div>`;
+        if (grid) grid.innerHTML = `<div class="error">Cannot load DNA repository.</div>`;
     }
 }
 
@@ -117,14 +117,14 @@ function renderGrid(data) {
                 <canvas id="canvas-${dna.id}" class="canvas-full"></canvas>
             </div>
             <div class="tag">#${dna.id.toString().padStart(3, '0')} DNA</div>
-            <h3>${dna.ko_title || dna.title}</h3>
+            <h3>${dna.display_title || dna.title}</h3>
             <p class="tone">${dna.tone ? dna.tone : 'Premium design aesthetic'}</p>
             <div class="palette-preview">
                 <div class="color-dot" style="background: ${bg}" title="Background"></div>
                 ${accents.map(c => `<div class="color-dot" style="background: ${c}" title="Accent"></div>`).join('')}
             </div>
             <div class="actions">
-                <button class="btn btn-secondary" onclick="openDnaPortal(${dna.id})">분석하기</button>
+                <button class="btn btn-secondary" onclick="openDnaPortal(${dna.id})">Analyze</button>
             </div>
         `;
         grid.appendChild(card);
@@ -152,7 +152,7 @@ function openDnaPortal(id) {
                 <!-- Replaced background image div with Canvas -->
                 <canvas id="modal-canvas" class="canvas-full" style="z-index: 1;"></canvas>
                 <div class="visual-overlay" style="z-index: 2; pointer-events: none;">
-                    <h2>${dna.ko_title || dna.title}</h2>
+                    <h2>${dna.display_title || dna.title}</h2>
                     <p>${dna.tone}</p>
                 </div>
             </div>
@@ -188,11 +188,11 @@ function openDnaPortal(id) {
             </div>
 
             <div class="analysis-grid">
-                ${renderMetric('가독성 / 가시성', dna.metrics.readability)}
-                ${renderMetric('계층 구조', dna.metrics.hierarchy)}
-                ${renderMetric('일관성', dna.metrics.consistency)}
-                ${renderMetric('분위기 표현력', dna.metrics.atmosphere)}
-                ${renderMetric('테마 적합성', dna.metrics.suitability)}
+                ${renderMetric('Readability', dna.metrics.readability)}
+                ${renderMetric('Hierarchy', dna.metrics.hierarchy)}
+                ${renderMetric('Consistency', dna.metrics.consistency)}
+                ${renderMetric('Atmosphere', dna.metrics.atmosphere)}
+                ${renderMetric('Suitability', dna.metrics.suitability)}
             </div>
 
             <div class="prompt-header">
@@ -205,7 +205,9 @@ function openDnaPortal(id) {
 
             <div class="dna-section" style="margin-top: 3rem;">
                 <h4>STRUCTURAL DNA DATA</h4>
-                <pre class="md-preview">${dna.full_report}</pre>
+                <div class="report-grid">
+                    ${renderStructure(dna.structured_report)}
+                </div>
             </div>
         </div>
     `;
@@ -248,7 +250,7 @@ function populateMixerOptions() {
         dnaData.forEach(dna => {
             const opt = document.createElement('option');
             opt.value = dna.id;
-            opt.innerText = dna.ko_title || dna.title;
+            opt.innerText = dna.display_title || dna.title;
             select.appendChild(opt);
         });
     });
@@ -263,7 +265,7 @@ function handleMix() {
     const idA = selectA.value;
     const idB = selectB.value;
     
-    if (!idA || !idB) return alert("두 가지 DNA를 선택해주세요.");
+    if (!idA || !idB) return alert("Please select two DNAs.");
     
     const dnaA = dnaData.find(d => d.id == idA);
     const dnaB = dnaData.find(d => d.id == idB);
@@ -277,8 +279,8 @@ function handleMix() {
                 <div class="hybrid-badge">NEW HYBRID DNA SYNTHESIZED</div>
                 <h2>${dnaA.title.split('/')[0]} x ${dnaB.title.split('/')[0]}</h2>
                 <div class="analysis-grid" style="margin: 2rem 0;">
-                    <p>Base DNA: ${dnaA.ko_title || dnaA.title}</p>
-                    <p>Modifier DNA: ${dnaB.ko_title || dnaB.title}</p>
+                    <p>Base DNA: ${dnaA.display_title || dnaA.title}</p>
+                    <p>Modifier DNA: ${dnaB.display_title || dnaB.title}</p>
                 </div>
                 <div class="prompt-box-elaborate">
                     <code>${dnaA.prompt} ${dnaB.prompt}</code>
@@ -307,10 +309,65 @@ window.openDnaPortal = openDnaPortal;
 window.copyPrompt = copyPrompt;
 
 function copyPrompt(text) {
-    if (!text) return alert("프롬프트가 없습니다.");
+    if (!text) return alert("No prompt available.");
     navigator.clipboard.writeText(text).then(() => {
-        alert("DNA 프롬프트가 복사되었습니다.");
+        alert("DNA Prompt copied to clipboard.");
     });
+}
+
+// Helper to render structured boxes
+function renderStructure(struct) {
+    if (!struct) return '<p>No structured data available.</p>';
+    
+    // We expect struct to have sections based on our python parser
+    // Flatten the sections for display
+    let html = '';
+    
+    // Tone
+    if (struct.Tone) {
+        html += createBox('Tone & Vibe', struct.Tone);
+    }
+    
+    // Visual Identity
+    if (struct["Visual Identity"]) {
+         const vi = struct["Visual Identity"];
+         let content = ``;
+         for (const [key, val] of Object.entries(vi)) {
+             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
+         }
+         html += createBox('Visual Identity', content, true);
+    }
+    
+    // Typography
+    if (struct["Typography"]) {
+         const typo = struct["Typography"];
+         let content = ``;
+         for (const [key, val] of Object.entries(typo)) {
+             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
+         }
+         html += createBox('Typography', content, true);
+    }
+    
+    // Image Style
+    if (struct["Image Style"]) {
+         const img = struct["Image Style"];
+         let content = ``;
+         for (const [key, val] of Object.entries(img)) {
+             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
+         }
+         html += createBox('Image Style', content, true);
+    }
+    
+    return html;
+}
+
+function createBox(title, content, isHtml = false) {
+    return `
+        <div class="report-box">
+            <h5>${title}</h5>
+            ${isHtml ? content : `<p>${content}</p>`}
+        </div>
+    `;
 }
 
 // Final check: All initialization happens in init() via DOMContentLoaded

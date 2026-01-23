@@ -48,15 +48,15 @@ const RenderEngine = {
         ctx.fillRect(0, 0, width, height);
 
         // Determine Style Mode
-        if (fullReport.includes('Grid') || fullReport.includes('グリッド') || fullReport.includes('Blueprint')) {
+        if (fullReport.includes('Grid') || fullReport.includes('Blueprint')) {
             this.drawGrid(ctx, width, height, accent, 40);
-        } else if (fullReport.includes('Neon') || fullReport.includes('ネオン')) {
+        } else if (fullReport.includes('Neon') || fullReport.includes('Cyber') || fullReport.includes('Night')) {
             this.drawNeon(ctx, width, height, accent, secondary);
         } else if (fullReport.includes('Noise') || fullReport.includes('Grain') || fullReport.includes('Lofi')) {
             this.drawNoise(ctx, width, height, bg);
-        } else if (fullReport.includes('Dot') || fullReport.includes('ドット')) {
+        } else if (fullReport.includes('Dot') || fullReport.includes('Pop') || fullReport.includes('Memphis')) {
             this.drawDots(ctx, width, height, accent, 20);
-        } else if (fullReport.includes('Marble') || fullReport.includes('Ink')) {
+        } else if (fullReport.includes('Marble') || fullReport.includes('Ink') || fullReport.includes('Watercolor')) {
             this.drawMarble(ctx, width, height, accent);
         } else {
              // Default / Abstract

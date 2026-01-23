@@ -666,3 +666,58 @@ footer {
     h1 { font-size: 2.5rem; }
     .container { padding: 1rem; }
 }
+
+/* Report Grid Layout */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.report-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.report-box:hover {
+    border-color: var(--accent-glow);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.report-box h5 {
+    color: var(--accent-glow);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 0.5rem;
+}
+
+.report-box p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.kv-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.8rem;
+}
+
+.kv-row .k {
+    font-weight: 700;
+    color: white;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+.kv-row .v {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}

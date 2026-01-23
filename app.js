@@ -24,6 +24,21 @@ function init() {
     modal = document.getElementById('dna-modal');
     modalBody = document.getElementById('modal-body');
     closeModal = document.querySelector('.close-modal');
+    
+    // Theme Toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', () => {
+        const body = document.body;
+        const current = body.getAttribute('data-theme');
+        if (current === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.innerHTML = '<i data-lucide="sun"></i>';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.innerHTML = '<i data-lucide="moon"></i>';
+        }
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
 
     // Initialize Lucide icons
     if (typeof lucide !== 'undefined') {

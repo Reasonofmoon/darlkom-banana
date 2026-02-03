@@ -7,3 +7,5 @@ extract_dna_batch_*.md
 .env
 *.pyc
 __pycache__/
+templates.backup.json
+output/

@@ -1,219 +1,250 @@
+// Darlkom v2.0 Render Engine (Hybrid: Canvas 2D + p5.js)
+
 const RenderEngine = {
+    // Current p5 instance
+    currentP5: null,
+
     /**
-     * Initializes the rendering context for a canvas element.
-     * @param {HTMLCanvasElement} canvas 
-     * @returns {CanvasRenderingContext2D}
+     * Renders a lightweight thumbnail using native Canvas 2D (Performance optimized)
      */
-    init(canvas) {
-        if (!canvas) return null;
-        // Handle High DPI displays
-        const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
+    renderThumbnail: (containerId, dna) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
         
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        // Remove existing canvas
+        container.innerHTML = '';
         
+        const canvas = document.createElement('canvas');
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
         const ctx = canvas.getContext('2d');
-        ctx.scale(dpr, dpr);
-        return ctx;
-    },
-
-    /**
-     * Helper to parse color strings
-     */
-    parseColor(color) {
-        // Basic hex/name pass-through, could be enhanced
-        if (!color) return '#333';
-        return color.split(' ')[0]; // Handle "Color (Name)" format
-    },
-
-    /**
-     * Main render function
-     * @param {HTMLCanvasElement} canvas - Target canvas
-     * @param {Object} dna - DNA Data Object
-     */
-    renderCanvas(canvas, dna) {
-        const ctx = this.init(canvas);
-        if (!ctx) return;
-
-        const { width, height } = canvas.getBoundingClientRect();
-        const palette = dna.palette || {};
-        const bg = this.parseColor(palette.background) || '#111';
-        const accent = this.parseColor(palette.accents?.[0]) || '#0ff';
-        const secondary = this.parseColor(palette.accents?.[1]) || '#ff0';
-        const fullReport = dna.full_report || '';
-
-        // Clear and Set Background
+        container.appendChild(canvas);
+        
+        const d = dna.design_dna;
+        const w = canvas.width;
+        const h = canvas.height;
+        
+        // --- 1. Background (Palette) ---
+        const bg = d.color_palette?.primary || '#111';
         ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, width, height);
-
-        // Determine Style Mode
-        if (fullReport.includes('Grid') || fullReport.includes('Blueprint')) {
-            this.drawGrid(ctx, width, height, accent, 40);
-        } else if (fullReport.includes('Neon') || fullReport.includes('Cyber') || fullReport.includes('Night')) {
-            this.drawNeon(ctx, width, height, accent, secondary);
-        } else if (fullReport.includes('Noise') || fullReport.includes('Grain') || fullReport.includes('Lofi')) {
-            this.drawNoise(ctx, width, height, bg);
-        } else if (fullReport.includes('Dot') || fullReport.includes('Pop') || fullReport.includes('Memphis')) {
-            this.drawDots(ctx, width, height, accent, 20);
-        } else if (fullReport.includes('Marble') || fullReport.includes('Ink') || fullReport.includes('Watercolor')) {
-            this.drawMarble(ctx, width, height, accent);
+        ctx.fillRect(0, 0, w, h);
+        
+        // --- 2. Form (Structure) ---
+        const layout = d.layout_rules?.composition || 'grid';
+        const accent = d.color_palette?.accent || '#f00';
+        const secondary = d.color_palette?.secondary || '#fff';
+        
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1;
+        
+        if (layout.includes('grid')) {
+            // Grid Lines
+            ctx.beginPath();
+            for(let i=0; i<w; i+=20) { ctx.moveTo(i,0); ctx.lineTo(i,h); }
+            for(let i=0; i<h; i+=20) { ctx.moveTo(0,i); ctx.lineTo(w,i); }
+            ctx.globalAlpha = 0.2;
+            ctx.stroke();
+        } else if (layout.includes('central')) {
+            // Circle
+            ctx.beginPath();
+            ctx.arc(w/2, h/2, w/4, 0, Math.PI*2);
+            ctx.fillStyle = secondary;
+            ctx.globalAlpha = 0.1;
+            ctx.fill();
+            ctx.globalAlpha = 1.0;
+            ctx.stroke();
         } else {
-             // Default / Abstract
-            this.drawAbstract(ctx, width, height, accent, secondary);
+            // Freeform / Organic
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            ctx.bezierCurveTo(w/3, h/2, w*2/3, h, w, 0);
+            ctx.stroke();
         }
+        
+        // --- 3. Text Placeholder ---
+        ctx.font = '10px sans-serif';
+        ctx.fillStyle = secondary;
+        ctx.globalAlpha = 0.8;
+        ctx.fillText(dna.style_name.substring(0, 10), 10, h-10);
     },
 
     /**
-     * Hybrid Render Function
+     * Renders the High-Fidelity Hybrid using p5.js in 4K resolution
      */
-    renderHybridCanvas(canvas, dnaA, dnaB) {
-        const ctx = this.init(canvas);
-        if (!ctx) return;
+    renderHybrid: (containerId, dnaA, dnaB, dnaC) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
         
-        const { width, height } = canvas.getBoundingClientRect();
-
-        // Mix Colors
-        const bgA = this.parseColor(dnaA.palette?.background) || '#000';
-        const accentB = this.parseColor(dnaB.palette?.accents?.[0]) || '#fff';
-
-        // 1. Draw Base (A) Background
-        ctx.fillStyle = bgA;
-        ctx.fillRect(0, 0, width, height);
-
-        // 2. Draw A's Structure (Low Opacity)
-        ctx.globalAlpha = 0.3;
-        this.renderPattern(ctx, dnaA, width, height);
-        
-        // 3. Draw B's Structure (High Opacity, Blend Mode)
-        ctx.globalAlpha = 0.7;
-        ctx.globalCompositeOperation = 'screen'; // Additive blending for neon/tech feel
-        this.renderPattern(ctx, dnaB, width, height, accentB);
-        
-        // Reset
-        ctx.globalAlpha = 1.0;
-        ctx.globalCompositeOperation = 'source-over';
-        
-        // 4. Glitch/Overlay Effect
-        this.drawScanlines(ctx, width, height);
-    },
-    
-    // --- Specific Pattern Drawers ---
-    
-    renderPattern(ctx, dna, width, height, overrideColor = null) {
-        const fullReport = dna.full_report || '';
-        const palette = dna.palette || {};
-        const accent = overrideColor || this.parseColor(palette.accents?.[0]) || '#0ff';
-        
-        if (fullReport.includes('Grid') || fullReport.includes('Blueprint')) {
-            this.drawGrid(ctx, width, height, accent, 30);
-        } else if (fullReport.includes('Neon')) {
-             this.drawNeon(ctx, width, height, accent, accent);
-        } else if (fullReport.includes('Dot')) {
-            this.drawDots(ctx, width, height, accent, 15);
-        } else {
-            this.drawAbstract(ctx, width, height, accent, accent);
+        // Cleanup old p5 instance
+        if (RenderEngine.currentP5) {
+            RenderEngine.currentP5.remove();
         }
-    },
 
-    drawGrid(ctx, w, h, color, step) {
-        ctx.beginPath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 0.5;
-        // Vertical
-        for (let x = 0; x <= w; x += step) {
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, h);
-        }
-        // Horizontal
-        for (let y = 0; y <= h; y += step) {
-            ctx.moveTo(0, y);
-            ctx.lineTo(w, y);
-        }
-        ctx.stroke();
-    },
-
-    drawDots(ctx, w, h, color, step) {
-        ctx.fillStyle = color;
-        for (let x = 0; x <= w; x += step) {
-            for (let y = 0; y <= h; y += step) {
-                ctx.beginPath();
-                ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-    },
-
-    drawNeon(ctx, w, h, c1, c2) {
-        // Random neon lines/shapes
-        const count = 5;
-        ctx.shadowBlur = 15;
-        ctx.lineWidth = 2;
-        
-        for(let i=0; i<count; i++) {
-            ctx.strokeStyle = i % 2 === 0 ? c1 : c2;
-            ctx.shadowColor = ctx.strokeStyle;
+        const sketch = (p) => {
+            // --- DNA Extraction ---
+            // A: Structure (Layout, Shapes)
+            // B: Palette (Colors)
+            // C: Material (Texture, Grain, Line Feel)
             
-            ctx.beginPath();
-            ctx.moveTo(Math.random() * w, Math.random() * h);
-            ctx.bezierCurveTo(
-                Math.random() * w, Math.random() * h,
-                Math.random() * w, Math.random() * h,
-                Math.random() * w, Math.random() * h
-            );
-            ctx.stroke();
-        }
-        ctx.shadowBlur = 0;
-    },
-    
-    drawNoise(ctx, w, h, bg) {
-        // Simple noise imitation
-        const iData = ctx.getImageData(0, 0, w, h);
-        const buffer = iData.data;
-        for (let i = 0; i < buffer.length; i += 4) {
-            const noise = (Math.random() - 0.5) * 30;
-            buffer[i] = Math.min(255, Math.max(0, buffer[i] + noise));
-            buffer[i+1] = Math.min(255, Math.max(0, buffer[i+1] + noise));
-            buffer[i+2] = Math.min(255, Math.max(0, buffer[i+2] + noise));
-        }
-        ctx.putImageData(iData, 0, 0);
-    },
+            // Fallbacks
+            const struct = dnaA?.design_dna?.layout_rules || { composition: 'central' };
+            const shape = dnaA?.design_dna?.line_shape || { line_style: 'geometric' };
+            
+            const palette = dnaB?.design_dna?.color_palette || { primary:'#111', secondary:'#fff', accent:'#f00' };
+            
+            const material = dnaC?.design_dna?.materiality || { texture: [] };
+            const emotion = dnaC?.design_dna?.emotional_profile || {};
 
-    drawMarble(ctx, w, h, accent) {
-        // Fluid lines
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = accent;
-        ctx.globalAlpha = 0.5;
-        
-        for(let i=0; i<8; i++) {
-            ctx.beginPath();
-            let y = Math.random() * h;
-            ctx.moveTo(0, y);
-            for(let x=0; x<=w; x+=20) {
-                 ctx.lineTo(x, y + Math.sin(x * 0.01 + i) * 50);
+            p.setup = () => {
+                // Responsive Size
+                const w = container.clientWidth;
+                const h = container.clientHeight; // Aspect ratio check?
+                p.createCanvas(w, h);
+                p.pixelDensity(2); // High res
+                p.noLoop();
+                
+                // Defaults
+                p.background(palette.primary);
+            };
+
+            p.draw = () => {
+                const w = p.width;
+                const h = p.height;
+                
+                // Color Setup
+                const cPrim = p.color(palette.primary);
+                const cSec = p.color(palette.secondary);
+                const cAcc = p.color(palette.accent);
+                
+                // --- LAYER 1: FORM (From A) ---
+                p.strokeWeight(1);
+                
+                // Stroke Style (From C - Material influence on Line)
+                if (shape.line_style === 'hand-drawn' || emotion.mood?.includes('personal')) {
+                     // Hand drawn feel simulation could go here
+                }
+
+                if (struct.composition.includes('grid')) {
+                    drawBauhausGrid(p, w, h, cSec, cAcc);
+                } else if (struct.composition.includes('flow') || struct.composition.includes('organic')) {
+                    drawOrganicFlow(p, w, h, cSec, cAcc);
+                } else if (struct.composition.includes('central')) {
+                     drawCentralGlow(p, w, h, cSec, cAcc);
+                } else {
+                    // Default fallback
+                     drawAbstractShapes(p, w, h, cSec, cAcc);
+                }
+                
+                // --- LAYER 2: TEXTURE (From C) ---
+                if (material.texture.some(t => t.includes('grain') || t.includes('paper'))) {
+                    applyGrain(p, 0.15);
+                }
+                if (material.texture.some(t => t.includes('glitch') || t.includes('digital'))) {
+                    applyScanlines(p);
+                }
+            };
+            
+            // --- Helper Functions (Generative Patterns) ---
+            
+            function drawBauhausGrid(p, w, h, cSec, cAcc) {
+                const cols = 12;
+                const rows = 8;
+                const cellW = w / cols;
+                const cellH = h / rows;
+                
+                p.stroke(cSec);
+                p.noFill();
+                
+                for(let x=0; x<cols; x++) {
+                    for(let y=0; y<rows; y++) {
+                        // Random Bauhaus Shapes
+                        const r = p.random();
+                        p.push();
+                        p.translate(x*cellW, y*cellH);
+                        if (r > 0.8) {
+                             p.fill(cAcc);
+                             p.rect(0,0, cellW, cellH);
+                        } else if (r > 0.6) {
+                             p.line(0,0, cellW, cellH);
+                        } else if (r > 0.5) {
+                             p.ellipse(cellW/2, cellH/2, cellW * 0.8);
+                        }
+                        p.pop();
+                    }
+                }
             }
-            ctx.stroke();
-        }
-        ctx.globalAlpha = 1.0;
-    },
+            
+            function drawOrganicFlow(p, w, h, cSec, cAcc) {
+                p.noFill();
+                p.stroke(cSec);
+                p.strokeWeight(2);
+                
+                for(let i=0; i<5; i++) {
+                    p.beginShape();
+                    for(let x=0; x<=w; x+=20) {
+                        const n = p.noise(x * 0.005, i * 0.1);
+                        const y = p.map(n, 0, 1, h*0.2, h*0.8);
+                        p.vertex(x, y);
+                    }
+                    p.endShape();
+                }
+                
+                // Accent blobs
+                p.noStroke();
+                p.fill(cAcc);
+                p.globalAlpha = 0.2;
+                p.ellipse(w*0.8, h*0.2, 200);
+                p.globalAlpha = 1.0;
+            }
+            
+            function drawCentralGlow(p, w, h, cSec, cAcc) {
+                 // Cyberpunk/Central style
+                 p.stroke(cAcc);
+                 p.noFill();
+                 p.translate(w/2, h/2);
+                 for(let i=0; i<10; i++) {
+                     p.rotate(p.PI / 5);
+                     p.rectMode(p.CENTER);
+                     p.rect(0, 0, w*0.4, h*0.4);
+                 }
+            }
+            
+            function drawAbstractShapes(p, w, h, cSec, cAcc) {
+                p.background(cSec); // Invert?
+            }
 
-    drawAbstract(ctx, w, h, c1, c2) {
-        ctx.fillStyle = c1;
-        ctx.globalAlpha = 0.1;
-        ctx.beginPath();
-        ctx.arc(w/2, h/2, w/3, 0, Math.PI*2);
-        ctx.fill();
-        ctx.globalAlpha = 1.0;
-        
-        ctx.strokeStyle = c2;
-        ctx.lineWidth = 2;
-        ctx.strokeRect(w*0.1, h*0.1, w*0.8, h*0.8);
+            function applyGrain(p, opacity) {
+                p.loadPixels();
+                const d = p.pixelDensity();
+                const total = 4 * (p.width * d) * (p.height * d);
+                for (let i = 0; i < total; i += 4) {
+                    const grain = p.random(-20, 20);
+                    p.pixels[i] = p.pixels[i] + grain;
+                    p.pixels[i+1] = p.pixels[i+1] + grain;
+                    p.pixels[i+2] = p.pixels[i+2] + grain;
+                }
+                p.updatePixels();
+            }
+            
+            function applyScanlines(p) {
+                p.fill(0, 50);
+                p.noStroke();
+                for(let y=0; y<p.height; y+=4) {
+                    p.rect(0, y, p.width, 1);
+                }
+            }
+        };
+
+        RenderEngine.currentP5 = new p5(sketch, containerId);
     },
     
-    drawScanlines(ctx, w, h) {
-        ctx.fillStyle = 'rgba(0,0,0,0.5)';
-        for(let y=0; y<h; y+=4) {
-            ctx.fillRect(0, y, w, 1);
-        }
+    download: () => {
+         if (RenderEngine.currentP5) {
+             RenderEngine.currentP5.save('darlkom_v2_design.png');
+         } else {
+             alert("No design generated yet.");
+         }
     }
 };
+
+window.RenderEngine = RenderEngine;

@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "title": "Minimal / Tech / Blue",
+      "role_bucket": "Structure",
+      "slide_intent": ["Clarity", "Trust"],
+      "image_prompt_one_line": "presentation slide background, tech minimal style, blue gradient, suitable for structure slide, 8k",
+      "palette": { "background": "#f0f8ff", "accents": ["#007bff"] }
+    },
+    {
+      "id": 2,
+      "title": "Creative / Doodle / Paper",
+      "role_bucket": "Opening",
+      "slide_intent": ["Impact", "Fun"],
+      "image_prompt_one_line": "presentation slide background, doodle style on paper texture, creative, 8k",
+      "palette": { "background": "#fff", "accents": ["#000"] }
+    },
+    {
+      "id": 3,
+      "title": "Corporate / Clean / Grey",
+      "role_bucket": "Data",
+      "slide_intent": ["Focus", "Neutral"],
+      "image_prompt_one_line": "presentation slide background, clean corporate style, grey minimalist, 8k",
+      "palette": { "background": "#eee", "accents": ["#333"] }
+    }
+]

@@ -1,0 +1,69 @@
+/* Basic Style System for Students */
+:root {
+    --card-bg: #222;
+    --accent: #FFD700;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.visual {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    padding: 1rem;
+}
+
+.visual h3 {
+    background: rgba(255,255,255,0.8);
+    padding: 0.5rem;
+}
+
+.meta {
+    padding: 1rem;
+}
+
+.role {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.intent {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 0.5rem;
+}
+
+.actions {
+    padding: 1rem;
+    border-top: 1px solid #333;
+}
+
+button {
+    width: 100%;
+    padding: 0.5rem;
+    background: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent);
+    color: black;
+}

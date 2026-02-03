@@ -3,116 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFIMS Design Universe | Next-Gen Design DNA Library</title>
-    <meta name="description" content="Design DNA and Agentic Prompt Builder extracted from global visual heritage.">
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
+    <title>Darlkom v2.0 | Design DNA Workstation</title>
+    <meta name="description" content="Professional Slide DNA Architect & Workstation">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
-</head>
-<body>
-    <div class="bg-glow"></div>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
-    <nav class="glass-nav">
-        <div class="nav-content">
-            <div class="logo">GFIMS <span>UNIVERSE</span></div>
-            <div class="theme-toggle" id="theme-toggle" title="Toggle Dark/Light Mode">
-                <i data-lucide="sun"></i>
-            </div>
-            <div class="nav-links">
-                <a href="#" class="active">DNA Library</a>
-                <a href="#dna-mixer">DNA Hybridizer</a>
-                <a href="#about">About GFIMS v3.5</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- p5.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-zinc">
 
-    <main class="container">
-        <header>
-            <div class="badge">AGENTIC DESIGN SYSTEM v3.5</div>
-            <h1>Design DNA Universe</h1>
-            <p class="subtitle">Extracting visual genes from global masterpieces to build the future of agentic creativity. Explore, Mix, and Generate.</p>
-        </header>
+    <div class="app-container">
+        <!-- 1. Left Sidebar: Library & Navigation -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i data-lucide="dna"></i></div>
+                <span class="logo-text">DARLKOM <span class="version">v2.0</span></span>
+            </div>
+            
+            <div class="nav-group">
+                <div class="nav-label">LIBRARY</div>
+                <div class="nav-item active" data-view="grid"><i data-lucide="grid-3x3"></i> All Styles</div>
+                <div class="nav-item" data-view="favorites"><i data-lucide="star"></i> Favorites</div>
+                <div class="nav-item" data-view="recent"><i data-lucide="clock"></i> Recent</div>
+            </div>
 
-        <section class="controls">
-            <div class="search-box">
-                <i data-lucide="search"></i>
-                <input type="text" id="dna-search" placeholder="Search by vibe, color, or category (e.g., 'Cyberpunk', 'Gold', 'Minimal')...">
+            <div class="nav-group">
+                <div class="nav-label">FILTERS</div>
+                <div class="filter-item active" data-filter="all"><i data-lucide="layers"></i> All</div>
+                <div class="filter-item" data-filter="opening"><i data-lucide="zap"></i> Opening</div>
+                <div class="filter-item" data-filter="structure"><i data-lucide="layout"></i> Structure</div>
+                <div class="filter-item" data-filter="high impact"><i data-lucide="monitor-play"></i> High Impact</div>
             </div>
-            <div class="filter-chips">
-                <button class="chip active" data-filter="all">All</button>
-                <button class="chip" data-filter="tech">Tech & Future</button>
-                <button class="chip" data-filter="art">Art History</button>
-                <button class="chip" data-filter="nature">Natural Phenomena</button>
-                <button class="chip" data-filter="brand">Brand Ethos</button>
+            
+            <div class="bottom-actions">
+                <div class="nav-item"><i data-lucide="settings"></i> Settings</div>
             </div>
-        </section>
+        </aside>
 
-        <section class="dna-stats">
-            <div class="stat-item">
-                <span class="stat-value" id="template-count">0</span>
-                <span class="stat-label">MASTER DNA TEMPLATES</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">100%</span>
-                <span class="stat-label">AGENTIC OPTIMIZED</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value">MECE</span>
-                <span class="stat-label">DESIGN STRUCTURE</span>
-            </div>
-        </section>
-
-        <section id="dna-grid" class="dna-grid">
-            <!-- DNA Cards will be injected here -->
-            <div class="loader">Scanning Global Design Repository...</div>
-        </section>
-
-        <section id="dna-mixer" class="dna-mixer-section">
-            <div class="section-title">
-                <h2>DNA Hybridizer</h2>
-                <p>Combine the visual genes of two distinct styles to create a new hybrid aesthetic.</p>
-            </div>
-            <div class="mixer-interface">
-                <div class="mixer-slot" id="slot-a">
-                    <div class="slot-label">Style A (Base)</div>
-                    <select class="slot-select" id="select-a">
-                        <option value="">Select DNA</option>
-                    </select>
+        <!-- 2. Center Main: Canvas & Mixer -->
+        <main class="app-main">
+            <!-- Toolbar -->
+            <header class="main-toolbar">
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="global-search" placeholder="Search DNA (e.g. 'neon', 'minimal')...">
                 </div>
-                <div class="mixer-plus">+</div>
-                <div class="mixer-slot" id="slot-b">
-                    <div class="slot-label">Style B (Modifier)</div>
-                    <select class="slot-select" id="select-b">
-                        <option value="">Select DNA</option>
-                    </select>
+                <div class="view-toggles">
+                    <button class="icon-btn active" title="Grid View"><i data-lucide="grid"></i></button>
+                    <button class="icon-btn" title="List View"><i data-lucide="list"></i></button>
                 </div>
-                <div class="mixer-arrow"><i data-lucide="arrow-right"></i></div>
-                <div class="mixer-result">
-                    <button id="mix-dna-btn" class="btn btn-primary btn-lg">GENERATE HYBRID DNA</button>
+            </header>
+
+            <!-- Content Area -->
+            <div id="content-area" class="content-area">
+                
+                <!-- 3-Way Mixer Panel (Top) -->
+                <section class="mixer-panel">
+                    <div class="panel-header">
+                        <h3><i data-lucide="flask-conical"></i> DNA HYBRIDIZER</h3>
+                        <div class="mixer-controls">
+                            <button id="btn-mix" class="btn-primary"><i data-lucide="wand-2"></i> SYNTHESIZE</button>
+                            <button id="btn-export" class="btn-secondary"><i data-lucide="download"></i> EXPORT PNG</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mixer-slots">
+                        <!-- Slot A: Structure -->
+                        <div class="slot" data-slot="A">
+                            <div class="slot-header"><i data-lucide="layout-template"></i> STRUCTURE</div>
+                            <div class="slot-dropzone" id="slot-a-zone">Drag DNA Here</div>
+                            <div class="slot-value" id="slot-a-value">Bauhaus Grid</div> <!-- Default/Placeholder -->
+                        </div>
+                        
+                        <div class="mixer-operator">+</div>
+                        
+                        <!-- Slot B: Palette -->
+                        <div class="slot" data-slot="B">
+                            <div class="slot-header"><i data-lucide="palette"></i> PALETTE</div>
+                            <div class="slot-dropzone" id="slot-b-zone">Drag DNA Here</div>
+                            <div class="slot-value" id="slot-b-value">Cyberpunk Neon</div>
+                        </div>
+
+                        <div class="mixer-operator">+</div>
+
+                        <!-- Slot C: Material -->
+                        <div class="slot" data-slot="C">
+                            <div class="slot-header"><i data-lucide="component"></i> MATERIAL</div>
+                            <div class="slot-dropzone" id="slot-c-zone">Drag DNA Here</div>
+                            <div class="slot-value" id="slot-c-value">Paper Texture</div>
+                        </div>
+                    </div>
+                    
+                    <!-- P5 Canvas Container -->
+                    <div id="p5-canvas-container" class="preview-stage">
+                        <!-- p5.js canvas will be injected here -->
+                    </div>
+                </section>
+
+                <!-- DNA Library Grid (Bottom) -->
+                <section class="library-browser">
+                    <div class="section-title">REPOSITORY</div>
+                    <div id="dna-grid" class="dna-grid-pro">
+                        <!-- Items injected via JS -->
+                    </div>
+                </section>
+                
+            </div>
+            
+            <!-- Timeline (Bottom Fixed) -->
+            <div class="app-timeline">
+                <div class="timeline-track" id="deck-timeline">
+                    <div class="timeline-placeholder">Drag DNA here to build Deck Sequence...</div>
                 </div>
             </div>
-            <div id="hybrid-output" class="hybrid-output"></div>
-        </section>
-    </main>
+        </main>
 
-    <div id="dna-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="modal-body"></div>
-        </div>
+        <!-- 3. Right Inspector: Properties -->
+        <aside class="app-inspector" id="inspector-panel">
+            <div class="inspector-header">
+                <h3>INSPECTOR</h3>
+                <span class="badge-outline">READ ONLY</span>
+            </div>
+            
+            <div id="inspector-content" class="inspector-content">
+                <div class="empty-state">Select a DNA to inspect</div>
+            </div>
+        </aside>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">GFIMS v3.5</div>
-            <p>© 2026 GFIMS Design Universe. Built for the era of Agentic Coding.</p>
-        </div>
-    </footer>
-
+    <!-- Scripts -->
     <script src="RenderEngine.js"></script>
     <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

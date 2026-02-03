@@ -1,389 +1,245 @@
-let dnaData = [];
-let filteredData = [];
-console.log("GFIMS App v3.5.2 Loaded"); // Force Update Check
+// Darlkom v2.0 Controller
+console.log("Darlkom v2.0 Workstation Initializing...");
 
-// Image Mapping
-const sampleImages = {
-    16: 'art_deco_gold_dna_sample_1769039206808.png',
-    17: 'art_deco_neon_dna_sample_1769039711703.png',
-    26: 'neon_noir_dna_sample_1769039191428.png',
-    15: 'ukiyo_e_modern_dna_sample_1769039223658.png',
-    19: 'ukiyo_e_tattoo_dna_sample_1769039695373.png',
-    8: 'minimal_white_dna_sample_1769039665828.png',
-    30: 'bauhaus_geometric_dna_sample_1769039679414.png'
+// State
+const state = {
+    library: [],
+    filter: 'all',
+    view: 'grid',
+    selection: null, // Currently selected DNA ID
+    mixer: {
+        A: null, // Structure
+        B: null, // Palette/Vibe
+        C: null  // Material
+    }
 };
 
-// Elements (Declared globally but initialized in DOMContentLoaded)
-let grid, searchInput, templateCount, filterChips, modal, modalBody, closeModal;
+// DOM Elements
+const els = {
+    grid: document.getElementById('dna-grid'),
+    inspector: document.getElementById('inspector-content'),
+    inspectorPanel: document.getElementById('inspector-panel'),
+    slots: {
+        A: document.querySelector('.slot[data-slot="A"]'),
+        B: document.querySelector('.slot[data-slot="B"]'),
+        C: document.querySelector('.slot[data-slot="C"]')
+    },
+    slotValues: {
+        A: document.getElementById('slot-a-value'),
+        B: document.getElementById('slot-b-value'),
+        C: document.getElementById('slot-c-value')
+    },
+    mixBtn: document.getElementById('btn-mix'),
+    exportBtn: document.getElementById('btn-export'),
+    filters: document.querySelectorAll('.filter-item'),
+    search: document.getElementById('global-search')
+};
 
-function init() {
-    grid = document.getElementById('dna-grid');
-    searchInput = document.getElementById('dna-search');
-    templateCount = document.getElementById('template-count');
-    filterChips = document.querySelectorAll('.chip');
-    modal = document.getElementById('dna-modal');
-    modalBody = document.getElementById('modal-body');
-    closeModal = document.querySelector('.close-modal');
+
+// --- Initialization ---
+async function init() {
+    await loadLibrary();
+    setupEventListeners();
     
-    // Theme Toggle
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', () => {
-        const body = document.body;
-        const current = body.getAttribute('data-theme');
-        if (current === 'light') {
-            body.setAttribute('data-theme', 'dark');
-            themeBtn.innerHTML = '<i data-lucide="sun"></i>';
-        } else {
-            body.setAttribute('data-theme', 'light');
-            themeBtn.innerHTML = '<i data-lucide="moon"></i>';
-        }
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-    });
-
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+    // Auto-select first item if available
+    if (state.library.length > 0) {
+        selectDNA(state.library[0].module_id);
     }
-
-    // Attach Search listener
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            filteredData = dnaData.filter(dna => 
-                dna.title.toLowerCase().includes(term) || 
-                (dna.display_title && dna.display_title.toLowerCase().includes(term)) ||
-                dna.tone.toLowerCase().includes(term)
-            );
-            renderGrid(filteredData);
-        });
-    }
-
-    // Attach Filter listener
-    filterChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            filterChips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            const filter = chip.dataset.filter;
-            
-            if (filter === 'all') {
-                filteredData = [...dnaData];
-            } else {
-                filteredData = dnaData.filter(dna => {
-                    const text = (dna.title + dna.tone).toLowerCase();
-                    if (filter === 'tech') return text.includes('future') || text.includes('neon') || text.includes('cyber');
-                    if (filter === 'art') return text.includes('art') || text.includes('ukiyo') || text.includes('bauhaus');
-                    if (filter === 'nature') return text.includes('nature') || text.includes('marble') || text.includes('watercolor');
-                    if (filter === 'brand') return text.includes('brand') || text.includes('ethos') || text.includes('design');
-                    return true;
-                });
-            }
-            renderGrid(filteredData);
-        });
-    });
-
-    // Modal close shortcuts
-    if (closeModal) closeModal.onclick = () => modal.style.display = 'none';
-    window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
-
-    loadData();
 }
 
-document.addEventListener('DOMContentLoaded', init);
-
-// Load Data
-async function loadData() {
+async function loadLibrary() {
     try {
-        const response = await fetch('templates.json');
-        dnaData = await response.json();
-        
-        // Remove duplicates and normalize
-        dnaData = Array.from(new Set(dnaData.map(d => d.title)))
-            .map(title => dnaData.find(d => d.title === title));
-            
-        filteredData = [...dnaData];
-        if (templateCount) templateCount.innerText = dnaData.length;
-        renderGrid(filteredData);
-        populateMixerOptions();
-    } catch (error) {
-        console.error("Error loading DNA templates:", error);
-        if (grid) grid.innerHTML = `<div class="error">Cannot load DNA repository.</div>`;
+        const res = await fetch('templates.json');
+        const data = await res.json();
+        // Support both v2 and legacy schemas if needed, but prefer v2
+        state.library = data.styles_v2 || data.styles_001_100 || [];
+        renderLibrary();
+    } catch (e) {
+        console.error("Failed to load library:", e);
+        els.grid.innerHTML = `<div class="error">Failed to load DNA Module Database. Check console.</div>`;
     }
 }
 
-// Render Cards
-function renderGrid(data) {
-    if (!grid) {
-        console.warn("Grid element not initialized yet.");
-        return;
-    }
-    grid.innerHTML = '';
-    data.forEach(dna => {
-        const card = document.createElement('div');
-        card.className = 'dna-card';
-        card.dataset.id = dna.id;
+// --- Rendering ---
+function renderLibrary() {
+    els.grid.innerHTML = '';
+    
+    const term = els.search.value.toLowerCase();
+    
+    const filtered = state.library.filter(dna => {
+        // Filter Logic
+        if (state.filter !== 'all') {
+            const role = (dna.role_bucket || '').toLowerCase();
+            if (!role.includes(state.filter)) return false;
+        }
+        // Search Logic
+        if (term) {
+            const haystack = JSON.stringify(dna).toLowerCase();
+            if (!haystack.includes(term)) return false;
+        }
+        return true;
+    });
+
+    filtered.forEach(dna => {
+        const item = document.createElement('div');
+        item.className = `dna-item ${state.selection === dna.module_id ? 'selected' : ''}`;
+        item.onclick = () => selectDNA(dna.module_id);
         
-        const palette = dna.palette || {};
-        const bg = palette.background || '#1a1a1a';
-        const accents = palette.accents || [];
+        // Thumbnail Logic (p5 instance later?)
+        // For now, simple ID-based placeholder or p5 rendering
+        const thumbID = `thumb-${dna.module_id}`;
         
-        // Changed: render-overlay is now a container for the canvas
-        card.innerHTML = `
-            <div class="render-overlay" id="render-container-${dna.id}">
-                <canvas id="canvas-${dna.id}" class="canvas-full"></canvas>
-            </div>
-            <div class="tag">#${dna.id.toString().padStart(3, '0')} DNA</div>
-            <h3>${dna.display_title || dna.title}</h3>
-            <p class="tone">${dna.tone ? dna.tone : 'Premium design aesthetic'}</p>
-            <div class="palette-preview">
-                <div class="color-dot" style="background: ${bg}" title="Background"></div>
-                ${accents.map(c => `<div class="color-dot" style="background: ${c}" title="Accent"></div>`).join('')}
-            </div>
-            <div class="actions">
-                <button class="btn btn-secondary" onclick="openDnaPortal(${dna.id})">Analyze</button>
+        item.innerHTML = `
+            <div class="dna-thumb" id="${thumbID}"></div>
+            <div class="dna-info">
+                <div class="dna-title">${dna.style_name}</div>
+                <div class="dna-role">${dna.role_bucket}</div>
             </div>
         `;
-        grid.appendChild(card);
         
-        // Apply Canvas Rendering
-        const canvas = document.getElementById(`canvas-${dna.id}`);
-        // Small delay to ensure layout is computed (optional but safer)
+        els.grid.appendChild(item);
+
+        // Async render thumbnail
         requestAnimationFrame(() => {
-            RenderEngine.renderCanvas(canvas, dna);
+            if (window.RenderEngine) {
+                window.RenderEngine.renderThumbnail(thumbID, dna);
+            }
         });
     });
 }
 
-// Modal Implementation (Split View)
-function openDnaPortal(id) {
-    const dna = dnaData.find(d => d.id === id);
+function selectDNA(id) {
+    state.selection = id;
+    
+    // Update Grid Selection UI
+    document.querySelectorAll('.dna-item').forEach(el => el.classList.remove('selected'));
+    // Re-render whole grid is inefficient, just update class finding by title/id logic?
+    // For prototype, simple re-render is fine or query selector
+    renderLibrary(); // Re-render to update selection class (naive)
+
+    // Update Inspector
+    const dna = state.library.find(d => d.module_id === id);
+    renderInspector(dna);
+}
+
+
+function renderInspector(dna) {
     if (!dna) return;
     
-    const imgUrl = sampleImages[dna.id] || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-    const totalScore = Object.values(dna.metrics).reduce((a, b) => a + b, 0);
+    const d = dna.design_dna;
     
-    modalBody.innerHTML = `
-        <div class="modal-left">
-            <div class="visual-preview" id="modal-render-area">
-                <!-- Replaced background image div with Canvas -->
-                <canvas id="modal-canvas" class="canvas-full" style="z-index: 1;"></canvas>
-                <div class="visual-overlay" style="z-index: 2; pointer-events: none;">
-                    <h2>${dna.display_title || dna.title}</h2>
-                    <p>${dna.tone}</p>
-                </div>
+    let colorHtml = '';
+    if (d.color_palette) {
+        const { primary, secondary, accent } = d.color_palette;
+        colorHtml = `
+            <div class="color-swatch-row">
+                <div class="swatch" style="background:${primary}" title="Primary: ${primary}"></div>
+                <div class="swatch" style="background:${secondary}" title="Secondary: ${secondary}"></div>
+                <div class="swatch" style="background:${accent}" title="Accent: ${accent}"></div>
             </div>
-            <div class="dna-map-container">
-                <svg class="dna-helix-svg" viewBox="0 0 800 300">
-                    <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#6c5ce7;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Visual DNA Helix Path -->
-                    <path class="helix-strand" d="M0,150 Q200,50 400,150 T800,150" fill="none" stroke="url(#grad1)" stroke-width="4" opacity="0.3">
-                        <animate attributeName="d" dur="5s" repeatCount="indefinite" values="M0,150 Q200,50 400,150 T800,150;M0,150 Q200,250 400,150 T800,150;M0,150 Q200,50 400,150 T800,150" />
-                    </path>
-                    <path class="helix-strand" d="M0,150 Q200,250 400,150 T800,150" fill="none" stroke="#fff" stroke-width="2" opacity="0.2">
-                        <animate attributeName="d" dur="5s" repeatCount="indefinite" values="M0,150 Q200,250 400,150 T800,150;M0,150 Q200,50 400,150 T800,150;M0,150 Q200,250 400,150 T800,150" />
-                    </path>
-                    <!-- Gene Nodes -->
-                    ${Object.entries(dna.metrics).map(([key, val], i) => `
-                        <circle cx="${150 + i * 120}" cy="${150 + Math.sin(i) * 50}" r="8" fill="#00ffff" opacity="${val / 10}">
-                            <animate attributeName="r" values="6;10;6" dur="3s" repeatCount="indefinite" begin="${i * 0.5}s" />
-                        </circle>
-                        <text x="${150 + i * 120}" y="${180 + Math.sin(i) * 50}" text-anchor="middle" fill="#aaa" font-size="10" font-weight="bold">${key.toUpperCase()}: ${val}</text>
-                    `).join('')}
-                </svg>
-            </div>
-        </div>
-        <div class="modal-right">
-            <div class="total-score-box">
-                <div class="total-score-value">${totalScore}<span>/50</span></div>
-                <div class="stat-label">TOTAL DESIGN SYNERGY</div>
-            </div>
-
-            <div class="analysis-grid">
-                ${renderMetric('Readability', dna.metrics.readability)}
-                ${renderMetric('Hierarchy', dna.metrics.hierarchy)}
-                ${renderMetric('Consistency', dna.metrics.consistency)}
-                ${renderMetric('Atmosphere', dna.metrics.atmosphere)}
-                ${renderMetric('Suitability', dna.metrics.suitability)}
-            </div>
-
-            <div class="prompt-header">
-                <h4>ELABORATED DNA PROMPT</h4>
-                <button class="btn btn-primary" onclick="copyPrompt('${dna.prompt.replace(/'/g, "\\'")}')">COPY DNA</button>
-            </div>
-            <div class="prompt-box-elaborate">
-                <code>${dna.prompt || 'No elaborate prompt available for this legacy DNA.'}</code>
-            </div>
-
-            <div class="dna-section" style="margin-top: 3rem;">
-                <h4>STRUCTURAL DNA DATA</h4>
-                <div class="report-grid">
-                    ${renderStructure(dna.structured_report)}
-                </div>
-            </div>
-        </div>
-    `;
-    modal.style.display = 'flex';
-
-    // Apply Real-time Rendering to Modal Canvas
-    const modalCanvas = document.getElementById('modal-canvas');
-    requestAnimationFrame(() => {
-        RenderEngine.renderCanvas(modalCanvas, dna);
-    });
-}
-
-function renderMetric(label, score) {
-    return `
-        <div class="analysis-card">
-            <div class="analysis-header">
-                <span class="analysis-label">${label}</span>
-                <span class="analysis-score">${score}/10</span>
-            </div>
-            <div class="score-bar-bg">
-                <div class="score-bar-fill" style="width: ${score * 10}%"></div>
-            </div>
-        </div>
-    `;
-}
-
-// Mixer Implementation
-let selectA, selectB, mixBtn, hybridOutput;
-
-function populateMixerOptions() {
-    selectA = document.getElementById('select-a');
-    selectB = document.getElementById('select-b');
-    mixBtn = document.getElementById('mix-dna-btn');
-    hybridOutput = document.getElementById('hybrid-output');
-
-    if (!selectA || !selectB) return;
-
-    [selectA, selectB].forEach(select => {
-        select.innerHTML = '<option value="">Select DNA</option>'; // Reset
-        dnaData.forEach(dna => {
-            const opt = document.createElement('option');
-            opt.value = dna.id;
-            opt.innerText = dna.display_title || dna.title;
-            select.appendChild(opt);
-        });
-    });
-
-    if (mixBtn && !mixBtn.dataset.listener) {
-        mixBtn.addEventListener('click', handleMix);
-        mixBtn.dataset.listener = 'true';
+        `;
     }
+
+    const html = `
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="info"></i> Meta Info</div>
+            <div class="prop-row"><span class="prop-key">ID</span> <span class="prop-val">${dna.module_id}</span></div>
+            <div class="prop-row"><span class="prop-key">Name</span> <span class="prop-val">${dna.style_name}</span></div>
+            <div class="prop-row"><span class="prop-key">Role</span> <span class="prop-val">${dna.role_bucket}</span></div>
+        </div>
+
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="palette"></i> Palette</div>
+            ${colorHtml}
+        </div>
+
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="layout-template"></i> Form DNA</div>
+            <div class="prop-row"><span class="prop-key">Composition</span> <span class="prop-val">${d.layout_rules?.composition || '-'}</span></div>
+            <div class="prop-row"><span class="prop-key">Whitespace</span> <span class="prop-val">${(d.layout_rules?.whitespace_ratio * 100) || 0}%</span></div>
+            <div class="prop-row"><span class="prop-key">Flow</span> <span class="prop-val">${d.layout_rules?.reading_flow || '-'}</span></div>
+        </div>
+
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="component"></i> Material</div>
+            <div class="prop-row"><span class="prop-key">Base</span> <span class="prop-val">${d.materiality?.base || '-'}</span></div>
+            <div class="prop-row"><span class="prop-key">Texture</span> <span class="prop-val">${(d.materiality?.texture || []).join(', ')}</span></div>
+        </div>
+
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="type"></i> Typography</div>
+            <div class="prop-row"><span class="prop-key">Headline</span> <span class="prop-val">${d.typography?.headline || '-'}</span></div>
+            <div class="prop-row"><span class="prop-key">Body</span> <span class="prop-val">${d.typography?.body || '-'}</span></div>
+        </div>
+        
+        <div class="prop-group">
+            <div class="prop-header"><i data-lucide="heart-pulse"></i> Emotion</div>
+            <div class="prop-row"><span class="prop-key">Mood</span> <span class="prop-val">${(d.emotional_profile?.mood || []).join(', ')}</span></div>
+        </div>
+        
+        <div class="prop-group">
+            <div class="prop-header">ACTIONS</div>
+            <button class="btn-secondary" onclick="assignSlot('A', '${dna.module_id}')" style="width:100%; margin-bottom:0.5rem">Set as Structure (A)</button>
+            <button class="btn-secondary" onclick="assignSlot('B', '${dna.module_id}')" style="width:100%; margin-bottom:0.5rem">Set as Palette (B)</button>
+            <button class="btn-secondary" onclick="assignSlot('C', '${dna.module_id}')" style="width:100%">Set as Material (C)</button>
+        </div>
+    `;
+    
+    els.inspector.innerHTML = html;
+    if (window.lucide) lucide.createIcons();
+}
+
+// --- Mixer Logic ---
+window.assignSlot = function(slot, id) {
+    const dna = state.library.find(d => d.module_id === id);
+    if (!dna) return;
+    
+    state.mixer[slot] = dna;
+    els.slotValues[slot].innerText = dna.style_name;
+    
+    // Highlight slot
+    els.slots[slot].style.borderColor = 'var(--accent)';
+    setTimeout(() => els.slots[slot].style.borderColor = '', 300);
 }
 
 function handleMix() {
-    const idA = selectA.value;
-    const idB = selectB.value;
-    
-    if (!idA || !idB) return alert("Please select two DNAs.");
-    
-    const dnaA = dnaData.find(d => d.id == idA);
-    const dnaB = dnaData.find(d => d.id == idB);
-    
-    hybridOutput.innerHTML = `
-        <div class="hybrid-card" id="hybrid-render-target">
-             <!-- Hybrid Canvas -->
-            <canvas id="hybrid-canvas" class="canvas-full hybrid-canvas"></canvas>
-            
-            <div class="hybrid-content">
-                <div class="hybrid-badge">NEW HYBRID DNA SYNTHESIZED</div>
-                <h2>${dnaA.title.split('/')[0]} x ${dnaB.title.split('/')[0]}</h2>
-                <div class="analysis-grid" style="margin: 2rem 0;">
-                    <p>Base DNA: ${dnaA.display_title || dnaA.title}</p>
-                    <p>Modifier DNA: ${dnaB.display_title || dnaB.title}</p>
-                </div>
-                <div class="prompt-box-elaborate">
-                    <code>${dnaA.prompt} ${dnaB.prompt}</code>
-                </div>
-                <button class="btn btn-primary" style="margin-top: 2rem;" onclick="copyPrompt('${dnaA.prompt} ${dnaA.prompt === dnaB.prompt ? '' : ' ' + dnaB.prompt}')">COPY HYBRID PROMPT</button>
-            </div>
-        </div>
-    `;
-    hybridOutput.style.display = 'block';
-    
-    // Render Hybrid Canvas
-    const hybridCanvas = document.getElementById('hybrid-canvas');
-    if (typeof RenderEngine !== 'undefined') {
-        requestAnimationFrame(() => {
-            RenderEngine.renderHybridCanvas(hybridCanvas, dnaA, dnaB);
-        });
+    // 3-Way Mix Logic
+    const { A, B, C } = state.mixer;
+    if (!A && !B && !C) {
+        alert("Please load at least one DNA into the slots.");
+        return;
     }
     
-    hybridOutput.scrollIntoView({ behavior: 'smooth' });
+    // Pass to RenderEngine
+    if (window.RenderEngine) {
+        window.RenderEngine.renderHybrid('p5-canvas-container', A, B, C);
+    }
 }
 
-// Modal close shortcuts handled in init()
 
-// Exposure for global calls
-window.openDnaPortal = openDnaPortal;
-window.copyPrompt = copyPrompt;
-
-function copyPrompt(text) {
-    if (!text) return alert("No prompt available.");
-    navigator.clipboard.writeText(text).then(() => {
-        alert("DNA Prompt copied to clipboard.");
+// --- Event Listeners ---
+function setupEventListeners() {
+    // Search
+    els.search.addEventListener('input', () => renderLibrary());
+    
+    // Filter Chips
+    els.filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            els.filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.filter = btn.dataset.filter;
+            renderLibrary();
+        });
+    });
+    
+    // Mix Button
+    els.mixBtn.addEventListener('click', handleMix);
+    
+    // Export Button
+    els.exportBtn.addEventListener('click', () => {
+        if (window.RenderEngine) window.RenderEngine.download();
     });
 }
 
-// Helper to render structured boxes
-function renderStructure(struct) {
-    if (!struct) return '<p>No structured data available.</p>';
-    
-    // We expect struct to have sections based on our python parser
-    // Flatten the sections for display
-    let html = '';
-    
-    // Tone
-    if (struct.Tone) {
-        html += createBox('Tone & Vibe', struct.Tone);
-    }
-    
-    // Visual Identity
-    if (struct["Visual Identity"]) {
-         const vi = struct["Visual Identity"];
-         let content = ``;
-         for (const [key, val] of Object.entries(vi)) {
-             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
-         }
-         html += createBox('Visual Identity', content, true);
-    }
-    
-    // Typography
-    if (struct["Typography"]) {
-         const typo = struct["Typography"];
-         let content = ``;
-         for (const [key, val] of Object.entries(typo)) {
-             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
-         }
-         html += createBox('Typography', content, true);
-    }
-    
-    // Image Style
-    if (struct["Image Style"]) {
-         const img = struct["Image Style"];
-         let content = ``;
-         for (const [key, val] of Object.entries(img)) {
-             content += `<div class="kv-row"><span class="k">${key}:</span> <span class="v">${val}</span></div>`;
-         }
-         html += createBox('Image Style', content, true);
-    }
-    
-    return html;
-}
-
-function createBox(title, content, isHtml = false) {
-    return `
-        <div class="report-box">
-            <h5>${title}</h5>
-            ${isHtml ? content : `<p>${content}</p>`}
-        </div>
-    `;
-}
-
-// Final check: All initialization happens in init() via DOMContentLoaded
-// window.loadData = loadData; // Optional: expose if needed for debug
+// Boot
+document.addEventListener('DOMContentLoaded', init);

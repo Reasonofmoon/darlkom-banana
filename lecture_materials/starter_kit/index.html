@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide DNA - Student Starter</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Minimal Reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: sans-serif; background: #111; color: #fff; padding: 2rem; }
+        header { text-align: center; margin-bottom: 3rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Slide DNA Architect</h1>
+        <p>Student Starter Kit</p>
+    </header>
+
+    <div id="app" class="grid">
+        <!-- Cards will be injected here -->
+    </div>
+
+    <script>
+        // Simple rendering logic
+        async function loadDNA() {
+            const response = await fetch('dna_sample.json');
+            const data = await response.json();
+            const grid = document.getElementById('app');
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="visual" style="background: ${item.palette.background}">
+                        <h3>${item.title}</h3>
+                    </div>
+                    <div class="meta">
+                        <span class="role">${item.role_bucket}</span>
+                        <p class="intent">${item.slide_intent.join(', ')}</p>
+                    </div>
+                    <div class="actions">
+                        <button onclick="copyPrompt('${item.image_prompt_one_line}')">Copy Prompt</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        function copyPrompt(text) {
+            navigator.clipboard.writeText(text);
+            alert('Prompt copied!');
+        }
+
+        loadDNA();
+    </script>
+</body>
+</html>

@@ -86,8 +86,14 @@ def migrate():
                 "avoid_for": []
             },
             "image_prompt_one_line": item.get('image_prompt', ''),
-            "negative_prompt": item.get('negative_prompt', '')
+            "negative_prompt": item.get('negative_prompt', 'clutter, text overlay, chaotic, low resolution, watermark')
         }
+        
+        # Auto-generate prompt if missing
+        if not migrated_item["image_prompt_one_line"]:
+            tone = ", ".join(migrated_item["design_dna"]["tone_keywords"][:3])
+            colors = f"{primary}, {secondary}, {accent}"
+            migrated_item["image_prompt_one_line"] = f"{title} style, {role} layout, {tone}, {colors}, high quality design"
         
         # Naive "Enhancement" based on keywords
         keywords = (title + " " + role).lower()

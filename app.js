@@ -286,9 +286,7 @@ window.copyPrompt = function(id) {
     if (!dna) return;
     
     const text = dna.image_prompt_one_line || "No prompt available.";
-    navigator.clipboard.writeText(text).then(() => {
-        alert("Image Prompt copied clipboard!");
-    });
+    secureCopy(text, "Image Prompt");
 }
 
 window.copyJSON = function(id) {
@@ -296,9 +294,51 @@ window.copyJSON = function(id) {
     if (!dna) return;
     
     const text = JSON.stringify(dna, null, 2);
-    navigator.clipboard.writeText(text).then(() => {
-        alert("DNA JSON copied to clipboard!");
-    });
+    secureCopy(text, "DNA JSON");
+}
+
+// Robust Copy Helper
+function secureCopy(text, label) {
+    // 1. Try Modern API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`${label} copied to clipboard!`);
+        }).catch(err => {
+            console.warn("Clipboard API failed, trying fallback...", err);
+            fallbackCopy(text, label);
+        });
+    } else {
+        // 2. Direct Fallback
+        fallbackCopy(text, label);
+    }
+}
+
+function fallbackCopy(text, label) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    
+    // Avoid scrolling to bottom
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.position = "fixed";
+    
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            alert(`${label} copied! (Fallback)`);
+        } else {
+            alert(`Failed to copy ${label}. Manual copy required.`);
+        }
+    } catch (err) {
+        console.error('Fallback copy failed', err);
+        alert("Copy failed entirely. Check console.");
+    }
+    
+    document.body.removeChild(textarea);
 }
 
 

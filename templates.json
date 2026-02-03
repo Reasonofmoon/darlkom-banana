@@ -7706,6 +7706,2571 @@
       },
       "image_prompt_one_line": "",
       "negative_prompt": "screen grabs, UI, laptop, photography, text overlay, chaotic, low resolution, glossy, metallic, Gemini 3, model numbers, watermark, noise, grunge, dark background, complex pattern, 3d render artifacts"
+    },
+    {
+      "module_id": "DNA_200",
+      "style_name": "Swiss International",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "objective",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FF0000",
+          "secondary": "#FFFFFF",
+          "accent": "#000000"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "objective"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Swiss International style presentation background, Corporate category theme, objective atmosphere, colors: #FF0000, #FFFFFF, #000000, high quality graphic design, architectural composition, objective lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_201",
+      "style_name": "McKinsey Clean",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "professional",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#002D62",
+          "secondary": "#F0F0F0",
+          "accent": "#5E8DA6"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "professional"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "McKinsey Clean style presentation background, Corporate category theme, professional atmosphere, colors: #002D62, #F0F0F0, #5E8DA6, high quality graphic design, architectural composition, professional lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_202",
+      "style_name": "Tech Minimal",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "innovative",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#000000",
+          "secondary": "#FFFFFF",
+          "accent": "#00FF41"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "innovative"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Tech Minimal style presentation background, Corporate category theme, innovative atmosphere, colors: #000000, #FFFFFF, #00FF41, high quality graphic design, architectural composition, innovative lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_203",
+      "style_name": "Big Four Audit",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "bold",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FFFF00",
+          "secondary": "#000000",
+          "accent": "#333333"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "bold"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Big Four Audit style presentation background, Corporate category theme, bold atmosphere, colors: #FFFF00, #000000, #333333, high quality graphic design, architectural composition, bold lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_204",
+      "style_name": "Legal Trust",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "authoritative",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#1C2833",
+          "secondary": "#FDFEFE",
+          "accent": "#C0392B"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "authoritative"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Legal Trust style presentation background, Corporate category theme, authoritative atmosphere, colors: #1C2833, #FDFEFE, #C0392B, high quality graphic design, architectural composition, authoritative lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_205",
+      "style_name": "Startup Pitch",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "energetic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#6C3483",
+          "secondary": "#FFFFFF",
+          "accent": "#F39C12"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "energetic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Startup Pitch style presentation background, Corporate category theme, energetic atmosphere, colors: #6C3483, #FFFFFF, #F39C12, high quality graphic design, architectural composition, energetic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_206",
+      "style_name": "Financial Data",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "trustworthy",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#117864",
+          "secondary": "#F2F3F4",
+          "accent": "#85C1E9"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "trustworthy"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Financial Data style presentation background, Corporate category theme, trustworthy atmosphere, colors: #117864, #F2F3F4, #85C1E9, high quality graphic design, architectural composition, trustworthy lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_207",
+      "style_name": "Global Trade",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "connected",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#1F618D",
+          "secondary": "#F8F9F9",
+          "accent": "#E74C3C"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "connected"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Global Trade style presentation background, Corporate category theme, connected atmosphere, colors: #1F618D, #F8F9F9, #E74C3C, high quality graphic design, architectural composition, connected lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_208",
+      "style_name": "Eco Corporate",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "sustainable",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#2ECC71",
+          "secondary": "#FFFFFF",
+          "accent": "#27AE60"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "sustainable"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Eco Corporate style presentation background, Corporate category theme, sustainable atmosphere, colors: #2ECC71, #FFFFFF, #27AE60, high quality graphic design, architectural composition, sustainable lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_209",
+      "style_name": "Luxury Real Estate",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "premium",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#17202A",
+          "secondary": "#FDFEFE",
+          "accent": "#D4AC0D"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "premium"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Luxury Real Estate style presentation background, Corporate category theme, premium atmosphere, colors: #17202A, #FDFEFE, #D4AC0D, high quality graphic design, architectural composition, premium lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_210",
+      "style_name": "Pharma Clean",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "clinical",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#2980B9",
+          "secondary": "#FFFFFF",
+          "accent": "#A9DFBF"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "clinical"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Pharma Clean style presentation background, Corporate category theme, clinical atmosphere, colors: #2980B9, #FFFFFF, #A9DFBF, high quality graphic design, architectural composition, clinical lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_211",
+      "style_name": "Energy Sector",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "powerful",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#E67E22",
+          "secondary": "#FDFEFE",
+          "accent": "#2E86C1"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "powerful"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Energy Sector style presentation background, Corporate category theme, powerful atmosphere, colors: #E67E22, #FDFEFE, #2E86C1, high quality graphic design, architectural composition, powerful lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_212",
+      "style_name": "Consulting Grid",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "analytical",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#34495E",
+          "secondary": "#ECF0F1",
+          "accent": "#3498DB"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "analytical"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Consulting Grid style presentation background, Corporate category theme, analytical atmosphere, colors: #34495E, #ECF0F1, #3498DB, high quality graphic design, architectural composition, analytical lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_213",
+      "style_name": "Executive Brief",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "concise",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#212F3D",
+          "secondary": "#FBFCFC",
+          "accent": "#95A5A6"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "concise"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Executive Brief style presentation background, Corporate category theme, concise atmosphere, colors: #212F3D, #FBFCFC, #95A5A6, high quality graphic design, architectural composition, concise lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_214",
+      "style_name": "Investor Relations",
+      "role_bucket": "Corporate",
+      "design_dna": {
+        "tone_keywords": [
+          "corporate",
+          "stable",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#154360",
+          "secondary": "#F4F6F7",
+          "accent": "#D68910"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "stable"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Investor Relations style presentation background, Corporate category theme, stable atmosphere, colors: #154360, #F4F6F7, #D68910, high quality graphic design, architectural composition, stable lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_215",
+      "style_name": "Acid Graphics",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "trippy",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#CCFF00",
+          "secondary": "#111111",
+          "accent": "#FF00FF"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "trippy"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Acid Graphics style presentation background, Creative category theme, trippy atmosphere, colors: #CCFF00, #111111, #FF00FF, high quality graphic design, architectural composition, trippy lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_216",
+      "style_name": "Risograph Print",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "textured",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#2E4057",
+          "secondary": "#FFE4E1",
+          "accent": "#FF6B6B"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "textured"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Risograph Print style presentation background, Creative category theme, textured atmosphere, colors: #2E4057, #FFE4E1, #FF6B6B, high quality graphic design, architectural composition, textured lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_217",
+      "style_name": "Collagen Art",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "mixed-media",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FAD7A0",
+          "secondary": "#6E2C00",
+          "accent": "#D35400"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "mixed-media"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Collagen Art style presentation background, Creative category theme, mixed-media atmosphere, colors: #FAD7A0, #6E2C00, #D35400, high quality graphic design, architectural composition, mixed-media lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_218",
+      "style_name": "Brutalism Mono",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "raw",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#000000",
+          "secondary": "#CCCCCC",
+          "accent": "#0000FF"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "raw"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Brutalism Mono style presentation background, Creative category theme, raw atmosphere, colors: #000000, #CCCCCC, #0000FF, high quality graphic design, architectural composition, raw lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_219",
+      "style_name": "Vaporwave Grid",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "retro-future",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FF71CE",
+          "secondary": "#01CDFE",
+          "accent": "#05FFA1"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "retro-future"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Vaporwave Grid style presentation background, Creative category theme, retro-future atmosphere, colors: #FF71CE, #01CDFE, #05FFA1, high quality graphic design, architectural composition, retro-future lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_220",
+      "style_name": "Bauhaus Pop",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "geometric",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#EAECEE",
+          "secondary": "#2C3E50",
+          "accent": "#E74C3C"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "geometric"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Bauhaus Pop style presentation background, Creative category theme, geometric atmosphere, colors: #EAECEE, #2C3E50, #E74C3C, high quality graphic design, architectural composition, geometric lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_221",
+      "style_name": "Y2K Chrome",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "glossy",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#D5D8DC",
+          "secondary": "#17202A",
+          "accent": "#82E0AA"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "glossy"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Y2K Chrome style presentation background, Creative category theme, glossy atmosphere, colors: #D5D8DC, #17202A, #82E0AA, high quality graphic design, architectural composition, glossy lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_222",
+      "style_name": "Paper Cutout",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "crafted",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FEF9E7",
+          "secondary": "#A93226",
+          "accent": "#2471A3"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "crafted"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Paper Cutout style presentation background, Creative category theme, crafted atmosphere, colors: #FEF9E7, #A93226, #2471A3, high quality graphic design, architectural composition, crafted lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_223",
+      "style_name": "Watercolor Flow",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "artistic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FFFFFF",
+          "secondary": "#85C1E9",
+          "accent": "#F7DC6F"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "artistic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Watercolor Flow style presentation background, Creative category theme, artistic atmosphere, colors: #FFFFFF, #85C1E9, #F7DC6F, high quality graphic design, architectural composition, artistic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_224",
+      "style_name": "Graffiti Stencil",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "urban",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#1C2833",
+          "secondary": "#F2F3F4",
+          "accent": "#E74C3C"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "urban"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Graffiti Stencil style presentation background, Creative category theme, urban atmosphere, colors: #1C2833, #F2F3F4, #E74C3C, high quality graphic design, architectural composition, urban lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_225",
+      "style_name": "Pixel Art 8bit",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "digital-retro",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#212F3D",
+          "secondary": "#F4D03F",
+          "accent": "#58D68D"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "digital-retro"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Pixel Art 8bit style presentation background, Creative category theme, digital-retro atmosphere, colors: #212F3D, #F4D03F, #58D68D, high quality graphic design, architectural composition, digital-retro lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_226",
+      "style_name": "Dark Mode Glass",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "sleek",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#000000",
+          "secondary": "#333333",
+          "accent": "#00FFFF"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "sleek"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Dark Mode Glass style presentation background, Creative category theme, sleek atmosphere, colors: #000000, #333333, #00FFFF, high quality graphic design, architectural composition, sleek lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_227",
+      "style_name": "Holographic Foil",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "iridescent",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#D7BDE2",
+          "secondary": "#F9E79F",
+          "accent": "#A3E4D7"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "iridescent"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Holographic Foil style presentation background, Creative category theme, iridescent atmosphere, colors: #D7BDE2, #F9E79F, #A3E4D7, high quality graphic design, architectural composition, iridescent lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_228",
+      "style_name": "Cinematic Noir",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "dramatic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#000000",
+          "secondary": "#111111",
+          "accent": "#AA0000"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "dramatic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Cinematic Noir style presentation background, Creative category theme, dramatic atmosphere, colors: #000000, #111111, #AA0000, high quality graphic design, architectural composition, dramatic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_229",
+      "style_name": "Surreal Dream",
+      "role_bucket": "Creative",
+      "design_dna": {
+        "tone_keywords": [
+          "creative",
+          "dreamy",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#FADBD8",
+          "secondary": "#1A5276",
+          "accent": "#D2B4DE"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "dreamy"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Surreal Dream style presentation background, Creative category theme, dreamy atmosphere, colors: #FADBD8, #1A5276, #D2B4DE, high quality graphic design, architectural composition, dreamy lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_230",
+      "style_name": "Calm Zen",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "peaceful",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#808B96",
+          "secondary": "#FDFEFE",
+          "accent": "#566573"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "peaceful"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Calm Zen style presentation background, Emotional category theme, peaceful atmosphere, colors: #808B96, #FDFEFE, #566573, high quality graphic design, architectural composition, peaceful lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_231",
+      "style_name": "Energetic Sport",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "dynamic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#000000",
+          "secondary": "#FFFF00",
+          "accent": "#FF0000"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "dynamic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Energetic Sport style presentation background, Emotional category theme, dynamic atmosphere, colors: #000000, #FFFF00, #FF0000, high quality graphic design, architectural composition, dynamic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_232",
+      "style_name": "Trustworthy Blue",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "reliable",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#1B4F72",
+          "secondary": "#FFFFFF",
+          "accent": "#AED6F1"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "reliable"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Trustworthy Blue style presentation background, Emotional category theme, reliable atmosphere, colors: #1B4F72, #FFFFFF, #AED6F1, high quality graphic design, architectural composition, reliable lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_233",
+      "style_name": "Hopeful Green",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "optimistic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#196F3D",
+          "secondary": "#EAFAF1",
+          "accent": "#52BE80"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "optimistic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Hopeful Green style presentation background, Emotional category theme, optimistic atmosphere, colors: #196F3D, #EAFAF1, #52BE80, high quality graphic design, architectural composition, optimistic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_234",
+      "style_name": "Urgent Red",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "alert",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#922B21",
+          "secondary": "#F9EBEA",
+          "accent": "#CD6155"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "alert"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Urgent Red style presentation background, Emotional category theme, alert atmosphere, colors: #922B21, #F9EBEA, #CD6155, high quality graphic design, architectural composition, alert lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_235",
+      "style_name": "Melancholy Grey",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "reflective",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#212F3D",
+          "secondary": "#B3B6B7",
+          "accent": "#5D6D7E"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "reflective"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Melancholy Grey style presentation background, Emotional category theme, reflective atmosphere, colors: #212F3D, #B3B6B7, #5D6D7E, high quality graphic design, architectural composition, reflective lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_236",
+      "style_name": "Joyful Yellow",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "happy",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#F1C40F",
+          "secondary": "#FFFFFF",
+          "accent": "#F39C12"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "happy"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Joyful Yellow style presentation background, Emotional category theme, happy atmosphere, colors: #F1C40F, #FFFFFF, #F39C12, high quality graphic design, architectural composition, happy lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_237",
+      "style_name": "Romantic Pink",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "loving",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#C0392B",
+          "secondary": "#FDEDEC",
+          "accent": "#EC7063"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "loving"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Romantic Pink style presentation background, Emotional category theme, loving atmosphere, colors: #C0392B, #FDEDEC, #EC7063, high quality graphic design, architectural composition, loving lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_238",
+      "style_name": "Mysterious Purple",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "mystic",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#4A235A",
+          "secondary": "#F4ECF7",
+          "accent": "#8E44AD"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "mystic"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Mysterious Purple style presentation background, Emotional category theme, mystic atmosphere, colors: #4A235A, #F4ECF7, #8E44AD, high quality graphic design, architectural composition, mystic lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_239",
+      "style_name": "Grounding Earth",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "grounded",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#5D4037",
+          "secondary": "#EFEBE9",
+          "accent": "#8D6E63"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "grounded"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Grounding Earth style presentation background, Emotional category theme, grounded atmosphere, colors: #5D4037, #EFEBE9, #8D6E63, high quality graphic design, architectural composition, grounded lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_240",
+      "style_name": "Innocent White",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "pure",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#D7DBDD",
+          "secondary": "#FFFFFF",
+          "accent": "#F0F3F4"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "pure"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Innocent White style presentation background, Emotional category theme, pure atmosphere, colors: #D7DBDD, #FFFFFF, #F0F3F4, high quality graphic design, architectural composition, pure lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_241",
+      "style_name": "Nostalgic Sepia",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "memories",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#6E2C00",
+          "secondary": "#F6DDCC",
+          "accent": "#DC7633"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "memories"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Nostalgic Sepia style presentation background, Emotional category theme, memories atmosphere, colors: #6E2C00, #F6DDCC, #DC7633, high quality graphic design, architectural composition, memories lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_242",
+      "style_name": "Excited Orange",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "hyped",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#A04000",
+          "secondary": "#FDF2E9",
+          "accent": "#E59866"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "hyped"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Excited Orange style presentation background, Emotional category theme, hyped atmosphere, colors: #A04000, #FDF2E9, #E59866, high quality graphic design, architectural composition, hyped lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_243",
+      "style_name": "Serene Aqua",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "calm",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#0E6251",
+          "secondary": "#E8F8F5",
+          "accent": "#48C9B0"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "calm"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Serene Aqua style presentation background, Emotional category theme, calm atmosphere, colors: #0E6251, #E8F8F5, #48C9B0, high quality graphic design, architectural composition, calm lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
+    },
+    {
+      "module_id": "DNA_244",
+      "style_name": "Focus Indigo",
+      "role_bucket": "Emotional",
+      "design_dna": {
+        "tone_keywords": [
+          "emotional",
+          "concentration",
+          "professional",
+          "v2"
+        ],
+        "color_palette": {
+          "primary": "#1A237E",
+          "secondary": "#E8EAF6",
+          "accent": "#3949AB"
+        },
+        "layout_rules": {
+          "composition": "dynamic",
+          "whitespace_ratio": 0.5,
+          "reading_flow": "z-pattern"
+        },
+        "materiality": {
+          "base": "digital",
+          "texture": [
+            "clean",
+            "matte"
+          ]
+        },
+        "line_shape": {
+          "line_style": "solid",
+          "stroke_variance": "none"
+        },
+        "typography": {
+          "headline": "sans-serif",
+          "body": "sans-serif",
+          "language_support": [
+            "en"
+          ]
+        },
+        "emotional_profile": {
+          "mood": [
+            "concentration"
+          ],
+          "tempo": "moderate",
+          "weight": "balanced"
+        }
+      },
+      "slide_usage": {
+        "best_for": [
+          "presentations",
+          "decks"
+        ],
+        "avoid_for": []
+      },
+      "image_prompt_one_line": "Focus Indigo style presentation background, Emotional category theme, concentration atmosphere, colors: #1A237E, #E8EAF6, #3949AB, high quality graphic design, architectural composition, concentration lighting, 4k resolution",
+      "negative_prompt": "low quality, text overlay, watermark, blurry, distorted"
     }
   ]
 }

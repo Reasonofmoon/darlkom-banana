@@ -285,7 +285,14 @@ window.copyPrompt = function(id) {
     const dna = state.library.find(d => d.module_id === id);
     if (!dna) return;
     
-    const text = dna.image_prompt_one_line || "No prompt available.";
+    let text = dna.image_prompt_one_line;
+    
+    // Auto-generate if missing or empty
+    if (!text || text.length < 10) {
+        console.log("Prompt missing, generating dynamically...");
+        text = generatePromptFromDNA(dna);
+    }
+    
     secureCopy(text, "Image Prompt");
 }
 
@@ -295,6 +302,20 @@ window.copyJSON = function(id) {
     
     const text = JSON.stringify(dna, null, 2);
     secureCopy(text, "DNA JSON");
+}
+
+// Client-side Prompt Generator
+function generatePromptFromDNA(dna) {
+    const d = dna.design_dna || {};
+    const colors = d.color_palette || {};
+    const mood = (d.emotional_profile?.mood || []).join(', ');
+    const tones = (d.tone_keywords || []).join(', ');
+    const mat = d.materiality?.base || 'digital';
+    
+    const colorStr = `${colors.primary || ''} ${colors.secondary || ''} ${colors.accent || ''}`.trim();
+    
+    // Construct robust prompt
+    return `${dna.style_name} style, ${tones}, ${mood}, Colors: ${colorStr}, Material: ${mat}, high quality structured design, 8k resolution, architectural composition`;
 }
 
 // Robust Copy Helper

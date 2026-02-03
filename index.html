@@ -39,6 +39,7 @@
             <div class="nav-group">
                 <div class="nav-label">FILTERS</div>
                 <div class="filter-item active" data-filter="all"><i data-lucide="layers"></i> All</div>
+                <div class="filter-item" data-filter="user"><i data-lucide="user"></i> My Designs</div>
                 <div class="filter-item" data-filter="opening"><i data-lucide="zap"></i> Opening</div>
                 <div class="filter-item" data-filter="structure"><i data-lucide="layout"></i> Structure</div>
                 <div class="filter-item" data-filter="high impact"><i data-lucide="monitor-play"></i> High Impact</div>
@@ -71,6 +72,7 @@
                     <div class="panel-header">
                         <h3><i data-lucide="flask-conical"></i> DNA HYBRIDIZER</h3>
                         <div class="mixer-controls">
+                            <button class="btn-secondary" onclick="saveHybrid()"><i data-lucide="save"></i> SAVE AS DNA</button>
                             <button id="btn-mix" class="btn-primary"><i data-lucide="wand-2"></i> SYNTHESIZE</button>
                             <button id="btn-export" class="btn-secondary"><i data-lucide="download"></i> EXPORT PNG</button>
                         </div>

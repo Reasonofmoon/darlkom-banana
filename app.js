@@ -51,8 +51,12 @@ async function loadLibrary() {
     try {
         const res = await fetch('templates.json');
         const data = await res.json();
-        // Support both v2 and legacy schemas if needed, but prefer v2
-        state.library = data.styles_v2 || data.styles_001_100 || [];
+        const serverLibrary = data.styles_v2 || data.styles_001_100 || [];
+
+        // Load User Designs from LocalStorage
+        const userLibrary = JSON.parse(localStorage.getItem('darlkom_user_designs') || '[]');
+
+        state.library = [...userLibrary, ...serverLibrary];
         renderLibrary();
     } catch (e) {
         console.error("Failed to load library:", e);
@@ -70,7 +74,10 @@ function renderLibrary() {
         // Filter Logic
         if (state.filter !== 'all') {
             const role = (dna.role_bucket || '').toLowerCase();
-            if (!role.includes(state.filter)) return false;
+            // Special filter for user designs
+            if (state.filter === 'user' && !dna.module_id.startsWith('USER_')) return false;
+            // Normal filter
+            if (state.filter !== 'user' && !role.includes(state.filter)) return false;
         }
         // Search Logic
         if (term) {
@@ -81,8 +88,9 @@ function renderLibrary() {
     });
 
     filtered.forEach(dna => {
+        const isUserFor = dna.module_id.startsWith('USER_');
         const item = document.createElement('div');
-        item.className = `dna-item ${state.selection === dna.module_id ? 'selected' : ''}`;
+        item.className = `dna-item ${state.selection === dna.module_id ? 'selected' : ''} ${isUserFor ? 'user-dna' : ''}`;
         item.onclick = () => selectDNA(dna.module_id);
         
         // Thumbnail Logic (p5 instance later?)
@@ -93,7 +101,7 @@ function renderLibrary() {
             <div class="dna-thumb" id="${thumbID}"></div>
             <div class="dna-info">
                 <div class="dna-title">${dna.style_name}</div>
-                <div class="dna-role">${dna.role_bucket}</div>
+                <div class="dna-role">${isUserFor ? 'USER DESIGN' : dna.role_bucket}</div>
             </div>
         `;
         
@@ -183,6 +191,16 @@ function renderInspector(dna) {
             <button class="btn-secondary" onclick="assignSlot('B', '${dna.module_id}')" style="width:100%; margin-bottom:0.5rem">Set as Palette (B)</button>
             <button class="btn-secondary" onclick="assignSlot('C', '${dna.module_id}')" style="width:100%">Set as Material (C)</button>
         </div>
+        
+        <div class="prop-group">
+             <div class="prop-header">EXPORT / COPY</div>
+             <button class="btn-primary" style="width:100%; margin-bottom:0.5rem" onclick="copyPrompt('${dna.module_id}')">
+                <i data-lucide="copy"></i> COPY IMAGE PROMPT
+             </button>
+             <button class="btn-secondary" style="width:100%" onclick="copyJSON('${dna.module_id}')">
+                <i data-lucide="code"></i> COPY DNA JSON
+             </button>
+        </div>
     `;
     
     els.inspector.innerHTML = html;
@@ -214,6 +232,73 @@ function handleMix() {
     if (window.RenderEngine) {
         window.RenderEngine.renderHybrid('p5-canvas-container', A, B, C);
     }
+}
+
+// --- New Features: Save & Copy ---
+
+window.saveHybrid = function() {
+    const { A, B, C } = state.mixer;
+    
+    if (!A && !B && !C) {
+        alert("Compose a hybrid design first!");
+        return;
+    }
+    
+    // Merge Logic (Preference: A=Start, B=Colors, C=Material)
+    // Fallback logic if a slot is empty
+    const base = A || B || C;
+    const paletteSrc = B || A || C;
+    const matSrc = C || A || B;
+    
+    const newName = prompt("Name your new Hybrid Design:", `Hybrid ${base.style_name.split(' ')[0]}`);
+    if (!newName) return;
+    
+    const newDNA = {
+        module_id: `USER_${Date.now()}`, // Unique ID
+        style_name: newName,
+        role_bucket: "Hybrid User Design",
+        design_dna: {
+            tone_keywords: [...(base.design_dna?.tone_keywords || []), 'hybrid'],
+            color_palette: paletteSrc.design_dna?.color_palette,
+            layout_rules: base.design_dna?.layout_rules,
+            materiality: matSrc.design_dna?.materiality,
+            line_shape: base.design_dna?.line_shape,
+            typography: base.design_dna?.typography,
+            emotional_profile: paletteSrc.design_dna?.emotional_profile
+        },
+        slide_usage: base.slide_usage,
+        image_prompt_one_line: `Hybrid design combining structure of ${base.style_name}, colors of ${paletteSrc.style_name}, and material of ${matSrc.style_name}. ${paletteSrc.image_prompt_one_line || ''}`
+    };
+    
+    // Save to LocalStorage
+    const userDesigns = JSON.parse(localStorage.getItem('darlkom_user_designs') || '[]');
+    userDesigns.unshift(newDNA);
+    localStorage.setItem('darlkom_user_designs', JSON.stringify(userDesigns));
+    
+    // Reload
+    loadLibrary();
+    selectDNA(newDNA.module_id);
+    alert("Design Saved locally!");
+}
+
+window.copyPrompt = function(id) {
+    const dna = state.library.find(d => d.module_id === id);
+    if (!dna) return;
+    
+    const text = dna.image_prompt_one_line || "No prompt available.";
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Image Prompt copied clipboard!");
+    });
+}
+
+window.copyJSON = function(id) {
+    const dna = state.library.find(d => d.module_id === id);
+    if (!dna) return;
+    
+    const text = JSON.stringify(dna, null, 2);
+    navigator.clipboard.writeText(text).then(() => {
+        alert("DNA JSON copied to clipboard!");
+    });
 }
 
 

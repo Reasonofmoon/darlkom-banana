@@ -1,6 +1,18 @@
 // Darlkom v2.0 Controller
 console.log("Darlkom v2.0 Workstation Initializing...");
 
+// ── Toast Notification ────────────────────────
+function showToast(msg, icon = '✓') {
+    const toast = document.getElementById('toast');
+    const msgEl = document.getElementById('toast-msg');
+    if (!toast || !msgEl) return;
+    toast.querySelector('.toast-icon').textContent = icon;
+    msgEl.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
 // State
 const state = {
     library: [],
@@ -40,11 +52,33 @@ const els = {
 async function init() {
     await loadLibrary();
     setupEventListeners();
-    
+    setupNavItems();
+
     // Auto-select first item if available
     if (state.library.length > 0) {
         selectDNA(state.library[0].module_id);
     }
+}
+
+// ── View Switching ─────────────────────────────
+function setupNavItems() {
+    document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item[data-view]').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            const view = item.dataset.view;
+            const dnaView = document.getElementById('dna-view');
+            const annoView = document.getElementById('annotation-view');
+            if (view === 'annotations') {
+                dnaView.style.display = 'none';
+                annoView.style.display = 'block';
+                renderAnnotationView();
+            } else {
+                dnaView.style.display = 'block';
+                annoView.style.display = 'none';
+            }
+        });
+    });
 }
 
 async function loadLibrary() {
@@ -58,28 +92,34 @@ async function loadLibrary() {
 
         state.library = [...userLibrary, ...serverLibrary];
         renderLibrary();
+        updateSidebarStats();
     } catch (e) {
         console.error("Failed to load library:", e);
         els.grid.innerHTML = `<div class="error">Failed to load DNA Module Database. Check console.</div>`;
     }
 }
 
+function updateSidebarStats() {
+    const total = state.library.length;
+    const userCount = state.library.filter(d => d.module_id.startsWith('USER_')).length;
+    const el = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+    el('stat-total', total);
+    el('stat-shown', total);
+    el('stat-user', userCount);
+}
+
 // --- Rendering ---
 function renderLibrary() {
     els.grid.innerHTML = '';
-    
+
     const term = els.search.value.toLowerCase();
-    
+
     const filtered = state.library.filter(dna => {
-        // Filter Logic
         if (state.filter !== 'all') {
             const role = (dna.role_bucket || '').toLowerCase();
-            // Special filter for user designs
             if (state.filter === 'user' && !dna.module_id.startsWith('USER_')) return false;
-            // Normal filter
             if (state.filter !== 'user' && !role.includes(state.filter)) return false;
         }
-        // Search Logic
         if (term) {
             const haystack = JSON.stringify(dna).toLowerCase();
             if (!haystack.includes(term)) return false;
@@ -87,16 +127,17 @@ function renderLibrary() {
         return true;
     });
 
+    // Update shown stat
+    const shownEl = document.getElementById('stat-shown');
+    if (shownEl) shownEl.textContent = filtered.length;
+
     filtered.forEach(dna => {
         const isUserFor = dna.module_id.startsWith('USER_');
         const item = document.createElement('div');
         item.className = `dna-item ${state.selection === dna.module_id ? 'selected' : ''} ${isUserFor ? 'user-dna' : ''}`;
         item.onclick = () => selectDNA(dna.module_id);
-        
-        // Thumbnail Logic (p5 instance later?)
-        // For now, simple ID-based placeholder or p5 rendering
+
         const thumbID = `thumb-${dna.module_id}`;
-        
         item.innerHTML = `
             <div class="dna-thumb" id="${thumbID}"></div>
             <div class="dna-info">
@@ -104,14 +145,10 @@ function renderLibrary() {
                 <div class="dna-role">${isUserFor ? 'USER DESIGN' : dna.role_bucket}</div>
             </div>
         `;
-        
-        els.grid.appendChild(item);
 
-        // Async render thumbnail
+        els.grid.appendChild(item);
         requestAnimationFrame(() => {
-            if (window.RenderEngine) {
-                window.RenderEngine.renderThumbnail(thumbID, dna);
-            }
+            if (window.RenderEngine) window.RenderEngine.renderThumbnail(thumbID, dna);
         });
     });
 }
@@ -318,48 +355,25 @@ function generatePromptFromDNA(dna) {
     return `${dna.style_name} style, ${tones}, ${mood}, Colors: ${colorStr}, Material: ${mat}, high quality structured design, 8k resolution, architectural composition`;
 }
 
-// Robust Copy Helper
+// Robust Copy Helper (toast-based)
 function secureCopy(text, label) {
-    // 1. Try Modern API
+    const doFallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        Object.assign(ta.style, { top:0, left:0, position:'fixed', opacity:0 });
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try {
+            document.execCommand('copy');
+            showToast(`${label} copied!`, '📋');
+        } catch { showToast(`Copy failed. Please copy manually.`, '✗'); }
+        document.body.removeChild(ta);
+    };
     if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert(`${label} copied to clipboard!`);
-        }).catch(err => {
-            console.warn("Clipboard API failed, trying fallback...", err);
-            fallbackCopy(text, label);
-        });
-    } else {
-        // 2. Direct Fallback
-        fallbackCopy(text, label);
-    }
-}
-
-function fallbackCopy(text, label) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    
-    // Avoid scrolling to bottom
-    textarea.style.top = "0";
-    textarea.style.left = "0";
-    textarea.style.position = "fixed";
-    
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
-    
-    try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-            alert(`${label} copied! (Fallback)`);
-        } else {
-            alert(`Failed to copy ${label}. Manual copy required.`);
-        }
-    } catch (err) {
-        console.error('Fallback copy failed', err);
-        alert("Copy failed entirely. Check console.");
-    }
-    
-    document.body.removeChild(textarea);
+        navigator.clipboard.writeText(text)
+            .then(() => showToast(`${label} copied!`, '📋'))
+            .catch(doFallback);
+    } else { doFallback(); }
 }
 
 
@@ -385,6 +399,115 @@ function setupEventListeners() {
     els.exportBtn.addEventListener('click', () => {
         if (window.RenderEngine) window.RenderEngine.download();
     });
+}
+
+// ── Annotation Guide Renderer ──────────────────
+const ANNO_TAGS = ['layout','typo','color','spatial','motion','data','korean','english','academic','minimal'];
+
+function renderAnnotationView() {
+    const container = document.getElementById('annotation-view');
+    if (!container || container.dataset.rendered) return;
+    container.dataset.rendered = '1';
+
+    // Hero
+    container.innerHTML = `
+        <div class="anno-hero">
+            <div class="anno-hero-inner">
+                <div class="anno-badge">✦ Spatial Design Guidelines v2.0</div>
+                <h1>고급 주석 인포그래픽 <em>50가지 디자인 지침</em></h1>
+                <p class="anno-hero-sub">원문의 가독성을 해치지 않으면서도 분석적 주석이 고급스럽게 배치된 인포그래픽을 생성하기 위한 공간 설계(Spatial Design) 관점의 프롬프트 전략 50종</p>
+                <div class="anno-stats">
+                    <div><div class="anno-stat-num">50</div><div class="anno-stat-label">Versions</div></div>
+                    <div><div class="anno-stat-num">10</div><div class="anno-stat-label">Categories</div></div>
+                    <div><div class="anno-stat-num">∞</div><div class="anno-stat-label">Contexts</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="anno-filter-bar">
+            <span class="anno-filter-label">Filter</span>
+            <button class="anno-filter-btn active" data-af="all">전체 All</button>
+            ${ANNO_TAGS.map(t => `<button class="anno-filter-btn" data-af="${t}">${t}</button>`).join('')}
+        </div>
+        <div id="anno-content"></div>
+    `;
+
+    // Filter listeners
+    container.querySelectorAll('.anno-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            container.querySelectorAll('.anno-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderAnnoCards(btn.dataset.af);
+        });
+    });
+
+    renderAnnoCards('all');
+}
+
+function renderAnnoCards(filterTag) {
+    const contentEl = document.getElementById('anno-content');
+    if (!contentEl) return;
+    contentEl.innerHTML = '';
+
+    // Build categories from raw script in the annotation HTML file
+    // We load the guidelines array from the embedded script tag
+    const guideStore = window.__annoGuidelines;
+    if (!guideStore || !guideStore.length) {
+        contentEl.innerHTML = '<p style="color:var(--text-muted);padding:2rem;">가이드라인 데이터를 불러오는 중...</p>';
+        loadAnnoGuidelines().then(() => renderAnnoCards(filterTag));
+        return;
+    }
+
+    const cats = {};
+    const order = [];
+    guideStore.forEach(g => {
+        if (!cats[g.cat]) { cats[g.cat] = { items:[], catEn: g.catEn||'', catNum: g.catNum }; order.push(g.cat); }
+        const match = filterTag === 'all' || g.tags.includes(filterTag);
+        if (match) cats[g.cat].items.push(g);
+    });
+
+    order.forEach(catName => {
+        const cat = cats[catName];
+        if (!cat.items.length) return;
+        const sec = document.createElement('div');
+        sec.className = 'anno-category';
+        sec.innerHTML = `
+            <div class="anno-cat-header">
+                <div class="anno-cat-num">${cat.catNum}</div>
+                <div>
+                    <div class="anno-cat-title">${catName}</div>
+                    <div style="font-size:0.7rem;color:var(--text-muted);margin-top:1px;">${cat.catEn}</div>
+                </div>
+                <div class="anno-cat-count">${cat.items.length} guides</div>
+            </div>
+            <div class="anno-grid">
+                ${cat.items.map(g => `
+                    <div class="anno-card">
+                        <button class="anno-copy-btn" onclick="secureCopy(\`${g.prompt.replace(/`/g,"'")}\`, '${g.id} Prompt')">COPY</button>
+                        <div class="anno-card-top">
+                            <div class="anno-card-id">${g.id}</div>
+                            <div class="anno-card-tags">${g.tags.map(t => `<span class="tag tag-${t}">${t}</span>`).join('')}</div>
+                        </div>
+                        <div class="anno-card-title">${g.title}<span class="anno-card-title-en">${g.titleEn}</span></div>
+                        <div class="anno-card-desc">${g.desc}</div>
+                        <div class="anno-card-prompt">${g.prompt.replace(/\n/g,'<br>')}</div>
+                        <div class="anno-card-specs">
+                            ${g.specs.map(s => `<div class="anno-card-spec"><div class="spec-dot" style="background:${s.color}"></div><span>${s.label}</span></div>`).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        contentEl.appendChild(sec);
+    });
+}
+
+async function loadAnnoGuidelines() {
+    try {
+        const res = await fetch('annotation-design-guidelines-50.html');
+        const html = await res.text();
+        const match = html.match(/const guidelines = (\[.*?\]);\s*\/\/ Group/s);
+        if (match) window.__annoGuidelines = eval(match[1]);
+    } catch(e) { console.error('Failed to load annotation guidelines:', e); }
 }
 
 // Boot

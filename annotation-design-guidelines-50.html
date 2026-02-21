@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Annotation Infographic Design Guidelines</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable.min.css" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --paper: #fafaf8;
+    --accent-blue: #2563eb;
+    --accent-red: #dc2626;
+    --accent-emerald: #059669;
+    --accent-amber: #d97706;
+    --accent-violet: #7c3aed;
+    --border: #e5e5e0;
+    --muted: #737373;
+    --card-bg: #ffffff;
+    --tag-bg: #f3f4f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard Variable', 'IBM Plex Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: white;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px
+    );
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(99,102,241,0.2);
+    border: 1px solid rgba(99,102,241,0.4);
+    color: #a5b4fc;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(120deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: #94a3b8;
+    max-width: 680px;
+    line-height: 1.8;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat-num {
+    font-size: 36px;
+    font-weight: 700;
+    color: #60a5fa;
+  }
+
+  .hero-stat-label {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* Navigation / Filter */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 40px;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .nav-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 4px;
+  }
+
+  .filter-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: white;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+  .filter-btn.active {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  /* Main Content */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  /* Category Section */
+  .category-section {
+    margin-bottom: 64px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .category-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background: var(--ink);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .category-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--tag-bg);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-left: auto;
+  }
+
+  /* Card Grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+  }
+
+  /* Guideline Card */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    transition: all 0.25s;
+    cursor: default;
+  }
+
+  .card:hover {
+    border-color: #c7c7c0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .card-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .tag-layout { background: #dbeafe; color: #1d4ed8; }
+  .tag-typo { background: #fce7f3; color: #be185d; }
+  .tag-color { background: #d1fae5; color: #047857; }
+  .tag-spatial { background: #fef3c7; color: #92400e; }
+  .tag-motion { background: #ede9fe; color: #5b21b6; }
+  .tag-data { background: #e0e7ff; color: #3730a3; }
+  .tag-korean { background: #fee2e2; color: #991b1b; }
+  .tag-english { background: #cffafe; color: #155e75; }
+  .tag-academic { background: #f3e8ff; color: #6b21a8; }
+  .tag-minimal { background: #f5f5f4; color: #44403c; }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .card-title-en {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    display: block;
+    margin-top: 4px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: #525252;
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .card-prompt {
+    background: #f8f8f6;
+    border: 1px solid #ececea;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #374151;
+    position: relative;
+  }
+
+  .card-prompt::before {
+    content: 'PROMPT';
+    position: absolute;
+    top: -9px;
+    left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: #f8f8f6;
+    padding: 0 6px;
+    letter-spacing: 1px;
+  }
+
+  .card-specs {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .card-spec {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .spec-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .card:hover .copy-btn { opacity: 1; }
+  .copy-btn:hover { color: var(--accent-blue); }
+
+  /* Footer */
+  .footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero { padding: 48px 20px 40px; }
+    .hero h1 { font-size: 28px; }
+    .hero-stats { gap: 24px; }
+    .main { padding: 24px 16px; }
+    .nav-bar { padding: 10px 16px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Scroll-to-top */
+  .scroll-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 99;
+  }
+
+  .scroll-top.visible { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Spatial Design Guidelines v2.0</div>
+    <h1>고급 주석 인포그래픽<br><em>50가지 디자인 지침</em></h1>
+    <p class="hero-sub">
+      원문의 가독성을 해치지 않으면서도 분석적 주석이 고급스럽게 배치된 인포그래픽을 생성하기 위한 
+      공간 설계(Spatial Design) 관점의 프롬프트 전략 50종
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">50</div>
+        <div class="hero-stat-label">Design Versions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10</div>
+        <div class="hero-stat-label">Categories</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">∞</div>
+        <div class="hero-stat-label">Adaptable Contexts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <div class="nav-inner">
+    <span class="nav-label">Filter</span>
+    <button class="filter-btn active" data-filter="all">전체 All</button>
+    <button class="filter-btn" data-filter="layout">레이아웃</button>
+    <button class="filter-btn" data-filter="typo">타이포그래피</button>
+    <button class="filter-btn" data-filter="color">색상 체계</button>
+    <button class="filter-btn" data-filter="spatial">공간 설계</button>
+    <button class="filter-btn" data-filter="motion">인터랙션</button>
+    <button class="filter-btn" data-filter="korean">한국어</button>
+    <button class="filter-btn" data-filter="english">영어</button>
+    <button class="filter-btn" data-filter="academic">학술</button>
+  </div>
+</div>
+
+<div class="main" id="main-content">
+  <!-- Content is generated by JavaScript -->
+</div>
+
+<div class="footer">
+  <p>Annotation Infographic Design Guidelines — 50 Versions for Educational Spatial Design</p>
+  <p style="margin-top:8px;">Copy any prompt and paste into GenUI / NotebookLM / Figma / Canva guidelines</p>
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const guidelines = [
+  // ===== Category 1: 계층적 공간 설계 (Hierarchical Spatial Design) =====
+  {
+    id: "V01",
+    cat: "계층적 공간 설계",
+    catEn: "Hierarchical Spatial Design",
+    catNum: "01",
+    title: "클래식 마진 주석",
+    titleEn: "Classic Margin Annotation",
+    tags: ["layout", "spatial", "korean"],
+    desc: "중세 필사본의 마지날리아(Marginalia) 전통을 현대적으로 재해석. 원문을 좌측 65%에 배치하고, 우측 35% 여백에 키워드별 주석을 가는 지시선으로 연결합니다.",
+    prompt: `[Layout] 좌측 65%에 원문을 세리프체로 배치. 각 핵심 어구에서 0.5pt 두께의 수평 지시선(call-out line)을 인출하여 우측 여백에 산세리프 주석을 배치.\n[Typography] 원문: 나눔명조 16pt / 주석: Pretendard 11pt Light\n[Color] 지시선은 #CBD5E1, 핵심어 하이라이트는 #DBEAFE 배경\n[Constraint] 주석 간 최소 간격 12px, 한 화면 최대 주석 5개`,
+    specs: [
+      { color: "#2563eb", label: "Layout: 65/35" },
+      { color: "#dc2626", label: "주석: ≤5개" },
+      { color: "#059669", label: "지시선: 0.5pt" }
+    ]
+  },
+  {
+    id: "V02",
+    cat: "계층적 공간 설계",
+    catNum: "01",
+    title: "센터 스테이지 양측 주석",
+    titleEn: "Center Stage Bilateral Annotation",
+    tags: ["layout", "spatial"],
+    desc: "원문을 중앙 50%에 배치하고, 좌측에는 구조 분석(기-승-전-결), 우측에는 어휘·문법 해설을 배치하여 양날개 구조로 설계합니다.",
+    prompt: `[Layout] 3-Column 구조: 좌측 25% = 구조적 주석(시상 전개, 운율 분석), 중앙 50% = 원문(대형 서체), 우측 25% = 어휘/문법 주석\n[Visual] 중앙 원문 영역에 미색(#FFFDF7) 배경, 양측 주석 영역은 #F8FAFC\n[Lines] 수평 지시선은 점선(dotted) 스타일, 색상 #94A3B8\n[Hierarchy] 원문 20pt, 1차 주석 12pt, 2차 주석 10pt`,
+    specs: [
+      { color: "#2563eb", label: "3-Column" },
+      { color: "#d97706", label: "양측 배치" },
+      { color: "#059669", label: "3-Level 위계" }
+    ]
+  },
+  {
+    id: "V03",
+    cat: "계층적 공간 설계",
+    catNum: "01",
+    title: "수직 타임라인 사이드바",
+    titleEn: "Vertical Timeline Sidebar",
+    tags: ["layout", "spatial", "academic"],
+    desc: "최우측에 수직 진행 바를 배치하여 작품의 전개 구조(기-서-결 / 서론-본론-결론)를 시각적으로 표현. 현재 읽고 있는 부분의 위치를 즉시 파악할 수 있습니다.",
+    prompt: `[Layout] 좌측 70%에 원문+인라인 주석, 우측 8%에 수직 타임라인 바 배치\n[Timeline] 색상 그라데이션으로 구간 표시: 서론=#93C5FD, 전개=#60A5FA, 절정=#2563EB, 결말=#1E40AF\n[Markers] 각 구간 전환점에 원형 노드(12px) 배치, 노드에서 좌측 원문으로 가는 수평 점선 연결\n[Label] 각 노드 옆에 '起', '承', '轉', '結' 또는 해당 구조 명칭 표기`,
+    specs: [
+      { color: "#2563eb", label: "Timeline Bar" },
+      { color: "#7c3aed", label: "그라데이션" },
+      { color: "#dc2626", label: "구조 노드" }
+    ]
+  },
+  {
+    id: "V04",
+    cat: "계층적 공간 설계",
+    catNum: "01",
+    title: "레이어드 카드 스택",
+    titleEn: "Layered Card Stack",
+    tags: ["layout", "spatial"],
+    desc: "원문 행 아래에 접을 수 있는(collapsible) 주석 카드를 배치하여, 필요할 때만 펼쳐 볼 수 있는 계층 구조. 인터랙티브 환경에 최적화됩니다.",
+    prompt: `[Layout] 원문 각 행(또는 연) 아래에 1px border-top으로 구분된 주석 카드 영역 배치\n[Card Style] 카드 배경 #F9FAFB, border-radius 8px, padding 16px, 좌측에 4px 두께의 색상 바(카테고리별 색 구분)\n[Interaction] 기본 상태에서 카드는 1줄 요약만 노출, 클릭 시 전체 해설 확장\n[Category Colors] 어휘=#3B82F6, 문법=#10B981, 배경지식=#F59E0B, 감상=#EF4444`,
+    specs: [
+      { color: "#2563eb", label: "Collapsible" },
+      { color: "#059669", label: "4-Color 코드" },
+      { color: "#d97706", label: "인터랙티브" }
+    ]
+  },
+  {
+    id: "V05",
+    cat: "계층적 공간 설계",
+    catNum: "01",
+    title: "Z-패턴 시선 유도",
+    titleEn: "Z-Pattern Eye Flow",
+    tags: ["layout", "spatial"],
+    desc: "웹 가독성 연구의 Z-패턴을 활용하여 좌상→우상→좌하→우하 순서로 정보 위계를 배치. 제목→핵심주석→원문→상세해설 순서로 자연스러운 시선 이동을 유도합니다.",
+    prompt: `[Layout] Z-Pattern 4분면:\n- 좌상: 작품 제목 + 작가 + 시대 (큰 세리프체)\n- 우상: 핵심 감상 포인트 3가지 (번호 매기기)\n- 좌하: 원문 전체 (중앙 정렬, 충분한 행간)\n- 우하: 상세 어휘/문법 해설 (작은 글씨, 2단 구성)\n[Visual] 각 분면 사이 24px 간격, 분면 경계에 미세한 #E5E7EB 실선\n[Emphasis] 좌상→우하 대각선 방향으로 글자 크기가 점차 감소하여 자연스러운 위계 형성`,
+    specs: [
+      { color: "#2563eb", label: "Z-Pattern" },
+      { color: "#dc2626", label: "4-Quadrant" },
+      { color: "#059669", label: "점진적 위계" }
+    ]
+  },
+
+  // ===== Category 2: 타이포그래피 중심 설계 (Typography-Driven Design) =====
+  {
+    id: "V06",
+    cat: "타이포그래피 중심 설계",
+    catEn: "Typography-Driven Design",
+    catNum: "02",
+    title: "이중 서체 대비 시스템",
+    titleEn: "Dual Typeface Contrast System",
+    tags: ["typo", "korean"],
+    desc: "원문은 전통 명조(세리프)로 고전적 품격을, 주석은 현대적 고딕(산세리프)으로 분석적 명료함을 동시에 전달. 서체 자체가 정보의 성격을 구분하는 시각 단서가 됩니다.",
+    prompt: `[Typography Pairing]\n- 원문: 나눔명조 또는 KoPub바탕체, 18pt, letter-spacing 0.5px, line-height 2.0\n- 주석 제목: Pretendard SemiBold 12pt\n- 주석 본문: Pretendard Regular 11pt, color #4B5563\n- 메타데이터: JetBrains Mono 10pt (작가명, 연도, 출처 등)\n[Contrast Rule] 원문과 주석의 글자 크기 비율은 최소 1.5:1 유지\n[Spacing] 원문 행간 200%, 주석 행간 160%`,
+    specs: [
+      { color: "#be185d", label: "명조/고딕 대비" },
+      { color: "#d97706", label: "비율 1.5:1" },
+      { color: "#059669", label: "행간 200%" }
+    ]
+  },
+  {
+    id: "V07",
+    cat: "타이포그래피 중심 설계",
+    catNum: "02",
+    title: "글자 크기 계단식 위계",
+    titleEn: "Typographic Scale Hierarchy",
+    tags: ["typo", "spatial"],
+    desc: "완벽한 4도(Perfect Fourth, 1.333) 비율의 타이포그래피 스케일을 적용하여 제목→소제목→원문→1차주석→2차주석→메타데이터까지 6단계 위계를 형성합니다.",
+    prompt: `[Type Scale] Perfect Fourth (1.333 ratio):\n- Level 1 (제목): 32pt\n- Level 2 (소제목/섹션): 24pt\n- Level 3 (원문): 18pt\n- Level 4 (1차 주석): 14pt\n- Level 5 (2차 주석/보조): 11pt\n- Level 6 (메타/출처): 9pt\n[Weight] Level 1-2: Bold, Level 3: Regular, Level 4-6: Light\n[Color Fade] Level이 내려갈수록 색상 명도 증가: #111→#374151→#6B7280→#9CA3AF`,
+    specs: [
+      { color: "#be185d", label: "6-Level Scale" },
+      { color: "#7c3aed", label: "1.333 Ratio" },
+      { color: "#059669", label: "Color Fade" }
+    ]
+  },
+  {
+    id: "V08",
+    cat: "타이포그래피 중심 설계",
+    catNum: "02",
+    title: "루비 텍스트 후리가나 방식",
+    titleEn: "Ruby Text (Furigana) Annotation",
+    tags: ["typo", "korean", "english"],
+    desc: "일본어 후리가나 방식을 차용하여 원문 텍스트 바로 위에 작은 글씨로 현대어 풀이, 발음, 또는 영어 번역을 병기합니다. 원문의 흐름을 끊지 않는 최소 침습적 주석 방식.",
+    prompt: `[Ruby Annotation] 원문의 고어/한자/핵심어구 바로 위에 60% 크기의 보조 텍스트 배치\n[Implementation] HTML: <ruby> 태그 활용, Print: 원문 행간을 250%로 넓혀 상단에 보조 텍스트 삽입\n[Style] 루비 텍스트 색상 #6B7280 (원문보다 연한 회색), 서체는 산세리프\n[Rule] 한 행에 루비 주석 최대 3개, 연속 배치 금지 (최소 2어절 간격 유지)`,
+    specs: [
+      { color: "#be185d", label: "Ruby Text" },
+      { color: "#dc2626", label: "행당 ≤3개" },
+      { color: "#059669", label: "60% 축소" }
+    ]
+  },
+  {
+    id: "V09",
+    cat: "타이포그래피 중심 설계",
+    catNum: "02",
+    title: "모노스페이스 코드 주석",
+    titleEn: "Monospace Code-Style Annotation",
+    tags: ["typo", "english", "academic"],
+    desc: "프로그래밍 코드 리뷰 UI에서 영감을 받은 스타일. 원문 행 번호를 부여하고, 특정 행에 대한 주석을 코드 커멘트 스타일로 배치하여 학술적 정밀함을 표현합니다.",
+    prompt: `[Layout] 좌측 40px에 행 번호 (모노스페이스, #9CA3AF), 이후 원문 영역\n[Annotation] 특정 행 아래에 코드 커멘트 스타일 삽입:\n  // 배경 #FEF3C7, 좌측 3px amber 바, padding 12px\n  // 텍스트 시작에 '💡' 또는 '📝' 또는 '⚠️' 이모지로 주석 유형 구분\n[Font] 원문: Georgia 또는 Source Serif Pro, 주석: JetBrains Mono 또는 Fira Code\n[Diff Style] 원문 변화(고어→현대어)는 -빨강/+초록 diff 표기법 적용`,
+    specs: [
+      { color: "#d97706", label: "Code Review" },
+      { color: "#be185d", label: "Monospace" },
+      { color: "#059669", label: "Diff 스타일" }
+    ]
+  },
+  {
+    id: "V10",
+    cat: "타이포그래피 중심 설계",
+    catNum: "02",
+    title: "글자 무게 기반 강조 맵",
+    titleEn: "Font Weight Emphasis Map",
+    tags: ["typo", "minimal"],
+    desc: "색상을 최소화하고 오직 글자 무게(weight)의 변화만으로 중요도를 표현. ExtraLight부터 Black까지 글자 무게가 곧 정보의 위계를 나타내는 미니멀한 접근.",
+    prompt: `[Single Font] Pretendard Variable 단일 서체 사용, 크기 고정 14pt\n[Weight Map]\n  - 핵심 키워드: 900 (Black)\n  - 원문 본문: 500 (Medium)\n  - 1차 주석: 400 (Regular)\n  - 2차 주석: 300 (Light)\n  - 메타데이터: 200 (ExtraLight)\n[Color] 전체 단일 색상 #1F2937, 배경 순백 #FFFFFF\n[Spacing] 무게가 무거운 텍스트 주변에 더 넓은 여백 배정 (시각적 호흡)`,
+    specs: [
+      { color: "#44403c", label: "Weight Only" },
+      { color: "#be185d", label: "단일 서체" },
+      { color: "#059669", label: "미니멀" }
+    ]
+  },
+
+  // ===== Category 3: 색상 코딩 전략 (Color Coding Strategies) =====
+  {
+    id: "V11",
+    cat: "색상 코딩 전략",
+    catEn: "Color Coding Strategies",
+    catNum: "03",
+    title: "감정-문법-배경 3색 체계",
+    titleEn: "Emotion-Grammar-Context Tricolor",
+    tags: ["color", "korean"],
+    desc: "주석의 성격을 3가지 색상으로 즉시 식별. 빨강=감정·정서, 파랑=문법·구조, 회색=배경지식·맥락. 색상 범례(Legend)를 항상 포함하여 학습자의 인지 부하를 낮춥니다.",
+    prompt: `[Color System] 3-Color Semantic Coding:\n  - 🔴 감정/정서 주석: #DC2626 (하이라이트 배경 #FEE2E2)\n  - 🔵 문법/구조 주석: #2563EB (하이라이트 배경 #DBEAFE)\n  - ⚫ 배경지식/맥락: #6B7280 (하이라이트 배경 #F3F4F6)\n[Legend] 상단 또는 하단에 색상 범례 박스를 항상 포함\n[Application] 원문 내 해당 어구에 색상별 밑줄, 우측 주석에 동일 색상 좌측 바 4px\n[Constraint] 한 행에 2색 이상 겹치지 않도록 배치 조절`,
+    specs: [
+      { color: "#dc2626", label: "감정 Red" },
+      { color: "#2563eb", label: "문법 Blue" },
+      { color: "#6b7280", label: "배경 Gray" }
+    ]
+  },
+  {
+    id: "V12",
+    cat: "색상 코딩 전략",
+    catNum: "03",
+    title: "난이도 그라데이션 스펙트럼",
+    titleEn: "Difficulty Gradient Spectrum",
+    tags: ["color", "academic"],
+    desc: "주석의 학습 난이도를 색상 온도로 표현. 초급(차가운 파랑)→중급(따뜻한 노랑)→고급(뜨거운 빨강)으로 학습자가 자신의 수준에 맞는 주석을 선택적으로 학습할 수 있습니다.",
+    prompt: `[Difficulty Color Gradient]\n  - 초급 (Basic): #3B82F6 파랑 계열 — 어휘 뜻풀이, 직역\n  - 중급 (Intermediate): #F59E0B 앰버 계열 — 문법 분석, 수사법\n  - 고급 (Advanced): #EF4444 레드 계열 — 역사적 맥락, 비평적 해석\n[Visual] 각 주석 카드 상단에 난이도 색상 바 3px, 좌측에 ★/★★/★★★ 표기\n[Filter Hint] "초급만 보기 / 전체 보기" 옵션 텍스트를 범례 옆에 배치\n[Ratio] 초급 50% : 중급 30% : 고급 20% 비율 권장`,
+    specs: [
+      { color: "#3b82f6", label: "초급 Cool" },
+      { color: "#f59e0b", label: "중급 Warm" },
+      { color: "#ef4444", label: "고급 Hot" }
+    ]
+  },
+  {
+    id: "V13",
+    cat: "색상 코딩 전략",
+    catNum: "03",
+    title: "파스텔 하이라이터 노트",
+    titleEn: "Pastel Highlighter Notes",
+    tags: ["color", "minimal"],
+    desc: "형광펜으로 직접 밑줄 친 듯한 파스텔 하이라이트. 실제 교과서에 필기하는 경험을 디지털로 재현하여 학습자 친화적인 시각 경험을 제공합니다.",
+    prompt: `[Highlight Colors] 파스텔 하이라이터 팔레트:\n  - 핵심 개념: #FEF08A (연한 노랑)\n  - 인물/지명: #BBF7D0 (연한 초록)\n  - 시간/시대: #BFDBFE (연한 파랑)\n  - 감정 표현: #FECDD3 (연한 핑크)\n[Style] 하이라이트는 text-decoration이 아닌 background-color로 적용, border-radius 2px로 부드럽게\n[Annotation] 하이라이트된 텍스트에 마우스 호버 시 말풍선(tooltip) 형태로 주석 표시\n[Density] 원문 전체의 30% 이하만 하이라이트 (과도한 강조 방지)`,
+    specs: [
+      { color: "#fef08a", label: "노랑 핵심" },
+      { color: "#bbf7d0", label: "초록 인물" },
+      { color: "#fecdd3", label: "핑크 감정" }
+    ]
+  },
+  {
+    id: "V14",
+    cat: "색상 코딩 전략",
+    catNum: "03",
+    title: "다크 모드 학술 배색",
+    titleEn: "Dark Mode Academic Palette",
+    tags: ["color", "academic"],
+    desc: "어두운 배경(#0F172A)에 밝은 원문과 네온 계열 주석을 배치하여 장시간 학습 시 눈의 피로를 줄이면서도 정보의 구분을 명확히 하는 다크 모드 전용 배색.",
+    prompt: `[Dark Theme]\n  - 배경: #0F172A (슬레이트 네이비)\n  - 원문: #F1F5F9 (밝은 회백)\n  - 1차 주석: #38BDF8 (스카이 블루 네온)\n  - 2차 주석: #A78BFA (바이올렛)\n  - 강조: #FB923C (앰버 네온)\n  - 구분선: #1E293B\n[Glow Effect] 핵심 키워드에 미세한 text-shadow 0 0 8px rgba(56,189,248,0.3)\n[Card] 주석 카드 배경 #1E293B, border 1px solid #334155\n[Accessibility] 원문과 배경의 명도 대비 최소 7:1 (WCAG AAA)`,
+    specs: [
+      { color: "#38bdf8", label: "네온 블루" },
+      { color: "#a78bfa", label: "바이올렛" },
+      { color: "#fb923c", label: "앰버 네온" }
+    ]
+  },
+  {
+    id: "V15",
+    cat: "색상 코딩 전략",
+    catNum: "03",
+    title: "단색 잉크 농담 표현",
+    titleEn: "Monochrome Ink Wash",
+    tags: ["color", "korean", "minimal"],
+    desc: "한국 전통 수묵화의 농담(濃淡) 기법에서 영감을 받은 단색 그레이스케일 설계. 하나의 색(먹색)의 농도만으로 모든 위계를 표현하여 절제된 아름다움을 구현합니다.",
+    prompt: `[Monochrome Scale] 단일 Hue(#1a1a2e) 기반 5단계 농담:\n  - 농(濃) 100%: #1a1a2e — 제목, 핵심 키워드\n  - 중농(中濃) 70%: #4a4a5e — 원문 본문\n  - 중(中) 50%: #7a7a8e — 1차 주석\n  - 담(淡) 30%: #aaaabe — 2차 주석\n  - 극담(極淡) 15%: #d5d5e0 — 메타데이터, 배경 요소\n[Background] #FAFAF5 (미색, 한지 느낌)\n[Accent] 유일한 유채색: 주홍 #B91C1C를 '핵심 감상 포인트' 1개소에만 사용\n[Texture] 배경에 미세한 한지 노이즈 텍스처 (opacity 3%)`,
+    specs: [
+      { color: "#1a1a2e", label: "5단계 농담" },
+      { color: "#b91c1c", label: "단일 주홍" },
+      { color: "#aaaabe", label: "한지 질감" }
+    ]
+  },
+
+  // ===== Category 4: 영어 지문 전용 설계 (English Text Specific) =====
+  {
+    id: "V16",
+    cat: "영어 지문 전용 설계",
+    catEn: "English Text Specific Design",
+    catNum: "04",
+    title: "인터리니어 글로스 (행간 주석)",
+    titleEn: "Interlinear Gloss",
+    tags: ["english", "layout", "typo"],
+    desc: "언어학의 인터리니어 글로스 표기법을 채택. 영어 원문 아래에 한국어 직역→의역→문법 분석을 3단으로 배치하여 문장 단위의 깊이 있는 이해를 돕습니다.",
+    prompt: `[Interlinear Layout] 각 영어 문장 아래 3단 행간 주석:\n  Line 1: 영어 원문 (Source Serif Pro 16pt, Bold)\n  Line 2: 한국어 직역 (Pretendard 13pt, #4B5563)\n  Line 3: 의역/자연스러운 해석 (Pretendard 12pt, Italic, #7C3AED)\n  Line 4 (선택): 문법 구조 분석 [S+V+O+C] (JetBrains Mono 10pt, #9CA3AF)\n[Spacing] 원문과 직역 사이 4px, 직역과 의역 사이 2px, 문장 단위 간 24px\n[Alignment] 영어 원문은 좌측 정렬, 한국어 주석도 좌측 정렬 (동일 들여쓰기)`,
+    specs: [
+      { color: "#2563eb", label: "3-Line Gloss" },
+      { color: "#7c3aed", label: "직역/의역" },
+      { color: "#059669", label: "문법 태깅" }
+    ]
+  },
+  {
+    id: "V17",
+    cat: "영어 지문 전용 설계",
+    catNum: "04",
+    title: "구문 분석 트리 오버레이",
+    titleEn: "Syntax Tree Overlay",
+    tags: ["english", "academic", "spatial"],
+    desc: "영어 문장의 구문 구조(Parse Tree)를 원문 위에 시각적으로 표현. 주어-동사-목적어 관계를 아치(arc)와 괄호로 표현하여 복잡한 문장 구조의 해독을 지원합니다.",
+    prompt: `[Syntax Overlay] 원문 위에 구문 분석 아치(arc) 배치:\n  - 주어-동사 연결: 파란 아치 (#2563EB, 2px)\n  - 동사-목적어 연결: 초록 아치 (#059669, 2px)\n  - 수식어 관계: 회색 점선 아치 (#9CA3AF, 1px dashed)\n[Bracket] 절(clause) 단위로 대괄호 표시: 주절=실선, 종속절=점선\n[Labels] 아치 중앙 상단에 약어 태그: S, V, O, C, M (8pt 모노스페이스)\n[Below Line] 원문 아래에 한국어 해석과 핵심 어휘 뜻 배치`,
+    specs: [
+      { color: "#2563eb", label: "S-V Arc" },
+      { color: "#059669", label: "V-O Arc" },
+      { color: "#9ca3af", label: "수식어 점선" }
+    ]
+  },
+  {
+    id: "V18",
+    cat: "영어 지문 전용 설계",
+    catNum: "04",
+    title: "어휘 난이도 히트맵",
+    titleEn: "Vocabulary Difficulty Heatmap",
+    tags: ["english", "color", "data"],
+    desc: "영어 지문의 각 단어를 CEFR 레벨(A1~C2) 기반으로 색상 온도 표시. 학습자가 자신의 수준에서 집중해야 할 어휘를 한눈에 파악할 수 있는 히트맵 방식.",
+    prompt: `[Heatmap] 단어별 CEFR 레벨 배경색:\n  - A1-A2 (기초): 투명 (하이라이트 없음)\n  - B1 (중급): #DBEAFE 연파랑\n  - B2 (중상급): #FEF3C7 연노랑\n  - C1 (고급): #FED7AA 연오렌지\n  - C2 (최고급): #FECACA 연빨강\n[Tooltip] 색칠된 단어 호버 시: 발음기호 + 한국어 뜻 + 예문 1개\n[Summary Bar] 지문 하단에 수평 막대 그래프로 난이도 분포 시각화\n[Legend] 우상단에 CEFR 색상 범례 고정`,
+    specs: [
+      { color: "#3b82f6", label: "CEFR 기반" },
+      { color: "#f59e0b", label: "히트맵" },
+      { color: "#dc2626", label: "C2 High" }
+    ]
+  },
+  {
+    id: "V19",
+    cat: "영어 지문 전용 설계",
+    catNum: "04",
+    title: "청킹(Chunking) 블록 분석",
+    titleEn: "Chunking Block Analysis",
+    tags: ["english", "layout"],
+    desc: "영어 문장을 의미 단위(Chunk)로 분절하여 블록 표시. 끊어읽기가 곧 이해의 핵심인 긴 영어 문장에 특히 효과적인 시각화 전략입니다.",
+    prompt: `[Chunking] 영어 문장을 의미 단위로 / 슬래시 분절 후 각 청크를 시각적 블록으로 표현:\n  - 블록 배경: 교대로 #F0F9FF와 #FFFFFF (미세한 줄무늬 효과)\n  - 청크 사이 2px 간격\n  - 각 블록 하단에 한국어 의미 1줄 배치 (10pt, #6B7280)\n[Numbering] 청크 좌상단에 원형 번호 ①②③ (14px, #3B82F6)\n[Flow Arrow] 청크 사이에 →로 읽기 방향 암시\n[Master Sentence] 하단에 원문 전체를 한 줄로 재배치 (연결 확인용)`,
+    specs: [
+      { color: "#2563eb", label: "Chunk 블록" },
+      { color: "#059669", label: "의미 분절" },
+      { color: "#d97706", label: "Flow Arrow" }
+    ]
+  },
+  {
+    id: "V20",
+    cat: "영어 지문 전용 설계",
+    catNum: "04",
+    title: "빈칸 추론 인터랙티브",
+    titleEn: "Fill-in-the-Blank Interactive",
+    tags: ["english", "motion"],
+    desc: "핵심 어휘를 빈칸으로 처리한 원문과, 빈칸의 정답+해설을 별도 영역에 배치하여 능동적 학습을 유도하는 테스트형 인포그래픽.",
+    prompt: `[Cloze Layout] 원문에서 핵심 어휘/표현을 [_____] 빈칸 처리 (밑줄 스타일, #D1D5DB)\n[Answer Zone] 원문 하단에 번호별 정답 카드 배치:\n  - 카드 스타일: border 1px solid #E5E7EB, 배경 #FAFAFA, padding 12px\n  - 구성: ① 정답 단어 (16pt Bold) ② 발음 (10pt 모노) ③ 뜻 (12pt) ④ 용례 (11pt Italic)\n[Interactive Hint] 빈칸 위에 난이도 별표 (★~★★★) 표시\n[Scoring] 우측에 자기 채점 체크박스 또는 ✓/✗ 토글 영역`,
+    specs: [
+      { color: "#2563eb", label: "Cloze Test" },
+      { color: "#dc2626", label: "정답 카드" },
+      { color: "#d97706", label: "Self-Check" }
+    ]
+  },
+
+  // ===== Category 5: 한국 고전문학 전용 (Korean Classical Literature) =====
+  {
+    id: "V21",
+    cat: "한국 고전문학 전용",
+    catEn: "Korean Classical Literature",
+    catNum: "05",
+    title: "한지 두루마리 레이아웃",
+    titleEn: "Hanji Scroll Layout",
+    tags: ["korean", "layout", "spatial"],
+    desc: "전통 두루마리 형태를 수평 스크롤로 구현. 원문이 좌에서 우로 펼쳐지며, 상단과 하단에 고급 주석이 전통 한지 질감 위에 배치되는 몰입형 경험.",
+    prompt: `[Scroll Layout] 수평 스크롤 형태, 전체 너비 200%~300%\n[Background] 한지 텍스처 (미색 #F5F0E8, 섬유질 노이즈 2%)\n[Text Direction] 원문은 세로쓰기(writing-mode: vertical-rl) 또는 수평 배치 선택\n[Annotation Zones]\n  - 상단 띠: 시대적 배경, 작가 정보 (10pt, 연한 먹색)\n  - 중앙: 원문 (붓글씨 느낌의 세리프체 22pt)\n  - 하단 띠: 현대어 풀이 + 감상 (12pt 고딕)\n[Decorative] 섹션 구분에 전통 문양(태극, 당초문) 미세한 워터마크`,
+    specs: [
+      { color: "#92400e", label: "한지 텍스처" },
+      { color: "#1a1a2e", label: "세로쓰기" },
+      { color: "#059669", label: "전통 문양" }
+    ]
+  },
+  {
+    id: "V22",
+    cat: "한국 고전문학 전용",
+    catNum: "05",
+    title: "기-승-전-결 4단 패널",
+    titleEn: "Ki-Seung-Jeon-Gyeol 4-Panel",
+    tags: ["korean", "layout", "academic"],
+    desc: "작품의 기승전결 구조를 4개의 수직 패널로 시각화. 각 패널에 해당 구간의 원문과 주석이 함께 배치되어 구조적 이해와 세부 분석을 동시에 제공합니다.",
+    prompt: `[4-Panel Layout] 수평으로 4등분된 패널:\n  Panel 1 (起): 배경 #EFF6FF, 상단 라벨 "起 — 시작"\n  Panel 2 (承): 배경 #F0FDF4, 상단 라벨 "承 — 전개"\n  Panel 3 (轉): 배경 #FEF3C7, 상단 라벨 "轉 — 전환"\n  Panel 4 (結): 배경 #FEE2E2, 상단 라벨 "結 — 마무리"\n[Per Panel] 상단 1/3: 원문 발췌, 하단 2/3: 핵심 주석 + 감상 포인트\n[Connection] 패널 사이에 → 화살표로 시상의 흐름 표시\n[Bottom Bar] 전체 하단에 통합 감상평 또는 시대적 배경 1줄`,
+    specs: [
+      { color: "#2563eb", label: "4-Panel" },
+      { color: "#f59e0b", label: "轉 강조" },
+      { color: "#dc2626", label: "구조 시각화" }
+    ]
+  },
+  {
+    id: "V23",
+    cat: "한국 고전문학 전용",
+    catNum: "05",
+    title: "아래아·반시옷 보존 모드",
+    titleEn: "Archaic Hangul Preservation Mode",
+    tags: ["korean", "typo"],
+    desc: "고어(아래아ㆍ, 반시옷ㅿ 등)의 정확한 렌더링을 최우선으로 보장하는 설계. SVG 기반 텍스트 처리와 전용 폰트 지정으로 문자가 깨지는 문제를 원천 방지합니다.",
+    prompt: `[Font Stack] 고어 전용 폰트 우선순위:\n  1. 'Noto Serif KR' (유니코드 한글 자모 영역 지원)\n  2. 'HCR Batang' 또는 'UnBatang'\n  3. SVG 텍스트로 직접 렌더링 (최종 대안)\n[Encoding] UTF-8 인코딩 필수, 아래아(ᆞ U+119E), 반시옷(ㅿ U+317F) 확인\n[Fallback] 렌더링 불가 문자는 [원문자] + (현대어 표기) 병기\n[Annotation] 고어 원형 바로 아래에 현대어 표기를 루비 텍스트로 배치\n[Test] 출력 전 반드시 아래아·반시옷·여린히읗 렌더링 검증`,
+    specs: [
+      { color: "#dc2626", label: "아래아 보존" },
+      { color: "#be185d", label: "SVG 폴백" },
+      { color: "#059669", label: "인코딩 검증" }
+    ]
+  },
+  {
+    id: "V24",
+    cat: "한국 고전문학 전용",
+    catNum: "05",
+    title: "정서법 변천 대조표",
+    titleEn: "Orthographic Evolution Comparison",
+    tags: ["korean", "academic", "data"],
+    desc: "고어→중세국어→근대국어→현대국어의 표기 변천을 대조표로 시각화. 세로축에 시대, 가로축에 원문 구절을 배치하여 언어 변화의 흐름을 한눈에 비교합니다.",
+    prompt: `[Comparison Table] 4행 대조표:\n  Row 1: 원문(고어) — 배경 #FFF7ED, 세리프체, 가장 큰 글씨\n  Row 2: 중세국어 표기 — 배경 #FEF3C7\n  Row 3: 근대국어 표기 — 배경 #ECFDF5\n  Row 4: 현대국어 해석 — 배경 #EFF6FF, 산세리프체\n[Highlight] 변화가 있는 글자/어구에 하이라이트 처리\n[Arrow] 각 행 좌측에 시대 라벨 + 하향 화살표로 시간 흐름 표시\n[Footnote] 표 하단에 주요 음운 변화 규칙 요약 (예: ㆍ>ㅏ, ㅿ>ㅇ 탈락)`,
+    specs: [
+      { color: "#d97706", label: "4시대 대조" },
+      { color: "#059669", label: "변화 하이라이트" },
+      { color: "#2563eb", label: "음운 규칙" }
+    ]
+  },
+  {
+    id: "V25",
+    cat: "한국 고전문학 전용",
+    catNum: "05",
+    title: "감정선 그래프 오버레이",
+    titleEn: "Emotional Arc Graph Overlay",
+    tags: ["korean", "data", "spatial"],
+    desc: "작품의 감정 변화(정서적 곡선)를 원문 위에 반투명 선 그래프로 오버레이. 기쁨/슬픔의 진폭이 원문의 어느 부분에서 극대·극소가 되는지 시각적으로 표현합니다.",
+    prompt: `[Graph Overlay] 원문 텍스트 위에 감정선 그래프를 반투명 오버레이:\n  - X축: 원문의 진행 (행 또는 연 단위)\n  - Y축: 감정 강도 (+ 기쁨/희망, - 슬픔/탄식)\n  - 선 스타일: stroke #DC2626, strokeWidth 2.5px, opacity 0.6\n  - 극점(peak/valley) 에 원형 마커 + 해당 감정어 라벨\n[Text Layer] 원문은 그래프 아래에 배치, 그래프 극점과 원문 위치 수직 정렬\n[Background] 양(+) 영역 #FEE2E2 10% opacity, 음(-) 영역 #DBEAFE 10% opacity`,
+    specs: [
+      { color: "#dc2626", label: "감정선 곡선" },
+      { color: "#2563eb", label: "XY 그래프" },
+      { color: "#059669", label: "극점 마커" }
+    ]
+  },
+
+  // ===== Category 6: 데이터 시각화 통합 (Data Visualization Integration) =====
+  {
+    id: "V26",
+    cat: "데이터 시각화 통합",
+    catEn: "Data Visualization Integration",
+    catNum: "06",
+    title: "어휘 빈도 워드클라우드 사이드바",
+    titleEn: "Word Frequency Cloud Sidebar",
+    tags: ["data", "layout"],
+    desc: "원문에 등장하는 핵심 어휘의 빈도를 워드클라우드로 시각화하여 사이드바에 배치. 가장 많이 등장하는 단어가 가장 크게 표시되어 작품의 핵심 테마를 직관적으로 파악합니다.",
+    prompt: `[Layout] 좌측 70%: 원문 + 주석, 우측 30%: 워드클라우드 사이드바\n[Word Cloud] 등장 빈도에 비례하여 글자 크기 조절 (최소 10pt ~ 최대 36pt)\n  - 명사: #1E40AF, 동사: #047857, 형용사: #B91C1C\n  - 배경 #F8FAFC, padding 20px\n[Interaction] 워드클라우드의 단어 클릭 시 원문에서 해당 단어 하이라이트\n[Stats] 워드클라우드 하단에 총 어휘 수, 고유 어휘 수, 어휘 다양도 지수 표시`,
+    specs: [
+      { color: "#1e40af", label: "명사 Blue" },
+      { color: "#047857", label: "동사 Green" },
+      { color: "#b91c1c", label: "형용사 Red" }
+    ]
+  },
+  {
+    id: "V27",
+    cat: "데이터 시각화 통합",
+    catNum: "06",
+    title: "운율·음보 리듬 시각화",
+    titleEn: "Prosody & Rhythm Visualization",
+    tags: ["data", "korean", "spatial"],
+    desc: "시의 음보(音步)와 운율 패턴을 음파(waveform) 형태로 시각화. 3음보/4음보의 리듬감을 시각적으로 체험할 수 있어 고전 시가의 음악성을 이해하는 데 도움을 줍니다.",
+    prompt: `[Rhythm Bar] 각 행 아래에 음보 단위 리듬 바 배치:\n  - 음보 1개 = 1블록, 블록 높이로 강세 표현 (강=20px, 약=8px)\n  - 블록 색상: 3음보=#3B82F6, 4음보=#10B981, 불규칙=#F59E0B\n[Waveform] 전체 작품의 리듬 패턴을 연속 파형(sine wave)으로 하단에 배치\n[Annotation] 파형의 특이점(리듬 변화)에 주석 마커 배치\n[Legend] "3음보 ■ / 4음보 ■ / 변칙 ■" 범례 상단 고정`,
+    specs: [
+      { color: "#3b82f6", label: "3음보" },
+      { color: "#10b981", label: "4음보" },
+      { color: "#f59e0b", label: "변칙" }
+    ]
+  },
+  {
+    id: "V28",
+    cat: "데이터 시각화 통합",
+    catNum: "06",
+    title: "관계망 다이어그램",
+    titleEn: "Relationship Network Diagram",
+    tags: ["data", "spatial", "academic"],
+    desc: "작품에 등장하는 인물, 개념, 상징 간의 관계를 네트워크 그래프로 시각화. 중심 노드에서 뻗어나가는 연결선으로 복잡한 상호작용을 직관적으로 이해합니다.",
+    prompt: `[Network Graph] 중앙에 작품 제목/핵심 테마 노드, 주변에 관련 요소 노드 배치:\n  - 노드 유형별 색상: 인물=#3B82F6, 공간=#10B981, 감정=#EF4444, 상징=#8B5CF6\n  - 노드 크기: 중요도에 비례 (24px~60px)\n  - 연결선: 실선=직접 관계, 점선=간접/상징적 관계\n[Labels] 연결선 중앙에 관계 설명 라벨 (8pt, #6B7280)\n[Side Panel] 우측에 선택된 노드의 상세 해설 영역\n[Background] #FAFAFA, 그래프 영역에 미세한 그리드 패턴`,
+    specs: [
+      { color: "#3b82f6", label: "인물 노드" },
+      { color: "#8b5cf6", label: "상징 노드" },
+      { color: "#ef4444", label: "감정 노드" }
+    ]
+  },
+  {
+    id: "V29",
+    cat: "데이터 시각화 통합",
+    catNum: "06",
+    title: "대비 분석 벤 다이어그램",
+    titleEn: "Comparative Venn Diagram",
+    tags: ["data", "academic"],
+    desc: "두 작품 또는 두 해석 관점을 벤 다이어그램으로 대조. 공통점은 교집합에, 차이점은 각 원에 배치하여 비교문학적 분석을 시각적으로 정리합니다.",
+    prompt: `[Venn Layout] 두 개의 대형 원형 영역 (각 직경 40%, 30% 겹침):\n  - 좌원: 작품A 또는 관점A (#DBEAFE 배경, #2563EB 테두리)\n  - 우원: 작품B 또는 관점B (#D1FAE5 배경, #059669 테두리)\n  - 교집합: 공통 요소 (#F3E8FF 배경)\n[Content] 각 영역에 핵심 포인트를 간결한 키워드/구절로 배치 (최대 5개씩)\n[Header] 각 원 상단에 작품명/관점명 라벨\n[Footer] 하단에 종합 비교 분석 1~2문장`,
+    specs: [
+      { color: "#2563eb", label: "작품 A" },
+      { color: "#059669", label: "작품 B" },
+      { color: "#7c3aed", label: "교집합" }
+    ]
+  },
+  {
+    id: "V30",
+    cat: "데이터 시각화 통합",
+    catNum: "06",
+    title: "마인드맵 확장형 주석",
+    titleEn: "Mind Map Expansion Annotation",
+    tags: ["data", "spatial"],
+    desc: "원문의 핵심 구절을 중심 노드로 두고, 관련 주석(어휘, 문법, 배경, 감상)이 가지(branch)로 뻗어나가는 마인드맵 스타일. 연상 학습에 최적화된 구조.",
+    prompt: `[Mind Map] 중앙에 핵심 구절 노드 (큰 원, 배경 #1E40AF, 흰 글씨 18pt)\n[Branches] 4방향으로 가지 확장:\n  - 상단: 어휘 풀이 (파랑 가지 #3B82F6)\n  - 우측: 문법 분석 (초록 가지 #10B981)\n  - 하단: 배경 지식 (앰버 가지 #F59E0B)\n  - 좌측: 감상/비평 (레드 가지 #EF4444)\n[Sub-nodes] 각 가지에서 2~3개의 하위 노드 분기\n[Style] 가지는 곡선(cubic-bezier), 노드는 둥근 사각형\n[Background] 미색 위에 미세한 도트 그리드 (10px 간격, #E5E7EB)`,
+    specs: [
+      { color: "#1e40af", label: "중심 노드" },
+      { color: "#10b981", label: "문법 가지" },
+      { color: "#f59e0b", label: "배경 가지" }
+    ]
+  },
+
+  // ===== Category 7: 인터랙티브/모션 설계 (Interactive & Motion) =====
+  {
+    id: "V31",
+    cat: "인터랙티브 & 모션 설계",
+    catEn: "Interactive & Motion Design",
+    catNum: "07",
+    title: "프로그레시브 디스클로저",
+    titleEn: "Progressive Disclosure",
+    tags: ["motion", "layout"],
+    desc: "정보를 한 번에 보여주지 않고 단계별로 공개하는 전략. 1단계: 원문만 표시 → 2단계: 핵심 키워드 하이라이트 → 3단계: 주석 출현. 인지 과부하를 방지합니다.",
+    prompt: `[Progressive Layers]\n  Layer 0: 깨끗한 원문만 표시 (방해 요소 없음)\n  Layer 1: 핵심 키워드에 밑줄 또는 미세 하이라이트 출현 (transition 0.5s)\n  Layer 2: 밑줄 친 키워드에서 지시선 인출, 주석 카드 fade-in\n  Layer 3: 구조 분석 사이드바 + 종합 감상 하단 패널 출현\n[Control] 슬라이더 또는 "더 보기" 버튼으로 레이어 전환\n[Animation] opacity 0→1, translateY(10px→0) 조합, duration 400ms, ease-out\n[Default] 최초 진입 시 Layer 0 상태`,
+    specs: [
+      { color: "#7c3aed", label: "4-Layer" },
+      { color: "#2563eb", label: "Fade-in" },
+      { color: "#059669", label: "슬라이더" }
+    ]
+  },
+  {
+    id: "V32",
+    cat: "인터랙티브 & 모션 설계",
+    catNum: "07",
+    title: "호버 확장 주석 팝업",
+    titleEn: "Hover-Expand Annotation Popup",
+    tags: ["motion", "spatial"],
+    desc: "원문의 키워드에 마우스를 올리면(호버) 해당 위치에서 주석이 팝업으로 부드럽게 확장되는 방식. 원문의 레이아웃을 전혀 변경하지 않는 비침습적 주석.",
+    prompt: `[Trigger] 핵심 키워드에 cursor:pointer, 미세한 점선 밑줄 (#CBD5E1)\n[Popup Style] 호버 시 해당 단어 위/아래에 말풍선 팝업:\n  - 배경: white, box-shadow: 0 8px 24px rgba(0,0,0,0.12)\n  - border-radius: 12px, padding: 16px 20px\n  - 최대 너비 280px, 최소 너비 200px\n[Content] 팝업 내부: 단어(Bold) + 뜻풀이 + 용례 (있을 경우)\n[Animation] scale(0.95)→scale(1), opacity 0→1, duration 200ms\n[Constraint] 동시에 1개의 팝업만 표시, 팝업이 화면 밖으로 넘어가지 않도록 위치 자동 조정`,
+    specs: [
+      { color: "#7c3aed", label: "Hover 팝업" },
+      { color: "#2563eb", label: "비침습적" },
+      { color: "#059669", label: "Scale 애니" }
+    ]
+  },
+  {
+    id: "V33",
+    cat: "인터랙티브 & 모션 설계",
+    catNum: "07",
+    title: "스크롤 연동 주석 등장",
+    titleEn: "Scroll-Triggered Annotation",
+    tags: ["motion", "spatial"],
+    desc: "스크롤 위치에 따라 해당 영역의 주석이 자동으로 등장하는 Scrollytelling 방식. 긴 지문에서 사용자의 읽기 속도에 맞춰 정보가 자연스럽게 펼쳐집니다.",
+    prompt: `[Scroll Trigger] IntersectionObserver를 사용하여 원문 각 단락/연이 뷰포트 중앙에 도달할 때 해당 주석 활성화\n[Animation] 주석 카드: translateX(20px)→0, opacity 0→1, duration 500ms\n[Sticky Text] 원문 영역을 position:sticky로 고정하고, 주석만 스크롤에 따라 교체\n[Progress] 상단에 얇은 프로그레스 바 (배경 #E5E7EB, 진행 #2563EB, height 3px)\n[Highlight] 현재 읽고 있는 원문 행에 미세한 좌측 바 (4px, #2563EB) 표시`,
+    specs: [
+      { color: "#7c3aed", label: "Scrollytelling" },
+      { color: "#2563eb", label: "Sticky Text" },
+      { color: "#059669", label: "Progress Bar" }
+    ]
+  },
+  {
+    id: "V34",
+    cat: "인터랙티브 & 모션 설계",
+    catNum: "07",
+    title: "토글 레이어 필터",
+    titleEn: "Toggle Layer Filter",
+    tags: ["motion", "color"],
+    desc: "주석 카테고리(어휘/문법/배경/감상)를 체크박스로 토글하여 원하는 레이어만 표시/숨기기. 학습 목적에 따라 정보 밀도를 학습자가 직접 제어합니다.",
+    prompt: `[Filter Bar] 상단 고정 바에 4개 토글 체크박스:\n  ☑ 어휘 (🔵 #3B82F6)  ☑ 문법 (🟢 #10B981)  ☑ 배경 (🟡 #F59E0B)  ☑ 감상 (🔴 #EF4444)\n[Toggle Effect] 체크 해제 시 해당 카테고리 주석이 opacity 0.15로 페이드, 0.3초\n[Count] 각 토글 옆에 해당 카테고리 주석 개수 표시 (badge 스타일)\n[Persist] 토글 상태는 세션 동안 유지\n[Shortcut] 키보드 단축키 1/2/3/4로 토글 가능 (접근성)`,
+    specs: [
+      { color: "#7c3aed", label: "4-Toggle" },
+      { color: "#3b82f6", label: "Fade 효과" },
+      { color: "#f59e0b", label: "키보드 단축" }
+    ]
+  },
+  {
+    id: "V35",
+    cat: "인터랙티브 & 모션 설계",
+    catNum: "07",
+    title: "비교 슬라이더 (원문↔해석)",
+    titleEn: "Comparison Slider (Original↔Translation)",
+    tags: ["motion", "english", "korean"],
+    desc: "좌우 슬라이더를 드래그하여 원문(좌)과 해석/현대어 풀이(우)를 동시에 비교. 이미지 비교 슬라이더 UI를 텍스트에 적용한 혁신적 접근.",
+    prompt: `[Slider UI] 수직 분할선을 드래그하여 좌/우 영역 비율 조절:\n  - 좌측: 원문 (배경 #FFFDF7, 세리프체)\n  - 우측: 현대어 풀이/번역 (배경 #F0F9FF, 산세리프체)\n[Sync Scroll] 좌우 영역의 스크롤이 동기화되어 같은 부분을 항상 비교 가능\n[Divider] 분할선: 2px solid #CBD5E1, 중앙에 핸들 아이콘 (⇔)\n[Highlight] 분할선이 지나는 행에 양쪽 모두 미세 하이라이트\n[Default] 초기 비율 60:40 (원문 강조)`,
+    specs: [
+      { color: "#7c3aed", label: "Slider UI" },
+      { color: "#2563eb", label: "Sync Scroll" },
+      { color: "#059669", label: "60:40 기본" }
+    ]
+  },
+
+  // ===== Category 8: 학술 논문 스타일 (Academic Paper Style) =====
+  {
+    id: "V36",
+    cat: "학술 논문 스타일",
+    catEn: "Academic Paper Style",
+    catNum: "08",
+    title: "각주·미주 하이브리드",
+    titleEn: "Footnote-Endnote Hybrid",
+    tags: ["academic", "layout"],
+    desc: "학술 논문의 각주(footnote)와 미주(endnote) 체계를 결합. 간단한 어휘 풀이는 각주로, 심층 분석은 미주로 분리하여 읽기 흐름과 학술적 깊이를 동시에 확보합니다.",
+    prompt: `[Footnote] 원문 내 키워드에 윗첨자 번호¹²³ (8pt, #3B82F6)\n  - 페이지 하단에 가는 수평선(0.5pt, #D1D5DB) 아래 각주 배치\n  - 각주: 9pt, 한 줄 이내의 간결한 어휘 풀이\n[Endnote] 전체 문서 끝에 별표* 참조의 심층 분석 배치\n  - 소제목 + 2~3문장의 상세 해설\n  - 관련 참고문헌/출처 포함\n[Navigation] 각주 번호 클릭 시 해당 각주로 이동, 각주에서 다시 원문으로 복귀 링크\n[Visual] 각주 영역 배경 #FAFAFA, 미주 영역 배경 #F0F4F8`,
+    specs: [
+      { color: "#3b82f6", label: "각주 번호" },
+      { color: "#6b7280", label: "미주 심층" },
+      { color: "#059669", label: "Navigation" }
+    ]
+  },
+  {
+    id: "V37",
+    cat: "학술 논문 스타일",
+    catNum: "08",
+    title: "비평적 에디션 레이아웃",
+    titleEn: "Critical Edition Layout",
+    tags: ["academic", "layout", "korean"],
+    desc: "서양의 비평적 편집(Critical Edition) 전통을 따르는 레이아웃. 원문(본문), 교감주(textual notes), 해석주(explanatory notes)를 3단으로 분리하여 학술적 엄밀성을 추구합니다.",
+    prompt: `[3-Tier Layout] 수직 3단 구성:\n  Tier 1 (상단 60%): 원문 본문 — 가장 큰 글씨, 넉넉한 행간\n  Tier 2 (중단 20%): 교감주 (Textual Notes) — 이본(異本) 대조, 판본 차이\n  Tier 3 (하단 20%): 해석주 (Explanatory Notes) — 어휘, 문법, 배경 해설\n[Separator] 각 Tier 사이 1px solid #D1D5DB 수평선\n[Reference] 원문 단어에 상첨자 기호: ᵃᵇᶜ (교감주), ¹²³ (해석주)\n[Typography] Tier 1: 세리프 17pt, Tier 2: 모노스페이스 10pt, Tier 3: 산세리프 11pt`,
+    specs: [
+      { color: "#2563eb", label: "3-Tier" },
+      { color: "#dc2626", label: "교감주" },
+      { color: "#059669", label: "해석주" }
+    ]
+  },
+  {
+    id: "V38",
+    cat: "학술 논문 스타일",
+    catNum: "08",
+    title: "APA/MLA 인용 통합 카드",
+    titleEn: "APA/MLA Citation Integration Card",
+    tags: ["academic", "english"],
+    desc: "학술 글쓰기에 바로 활용할 수 있도록 주석에 APA/MLA 형식의 인용 정보를 포함. 분석 내용과 함께 올바른 인용 형식을 학습하는 이중 목적의 카드 디자인.",
+    prompt: `[Citation Card] 각 주석 카드 하단에 인용 정보 영역:\n  - APA: 작가명, (연도), 제목, 출판사\n  - MLA: 작가명, "제목", 출전, 연도, 쪽수\n  - 클릭 시 APA↔MLA 전환 토글\n[Card Layout] 상단: 분석 내용 (14pt), 하단: 인용 정보 (10pt 모노스페이스, #6B7280)\n[Copy] 인용 정보 옆에 📋 복사 버튼\n[Style] 카드 배경 white, border-left 4px #7C3AED, box-shadow subtle`,
+    specs: [
+      { color: "#7c3aed", label: "APA/MLA" },
+      { color: "#2563eb", label: "Copy 기능" },
+      { color: "#059669", label: "토글 전환" }
+    ]
+  },
+  {
+    id: "V39",
+    cat: "학술 논문 스타일",
+    catNum: "08",
+    title: "논증 구조 플로우차트",
+    titleEn: "Argumentation Structure Flowchart",
+    tags: ["academic", "data", "spatial"],
+    desc: "논설문이나 비평문의 논증 구조(전제→근거→결론)를 플로우차트로 시각화. 각 단계에 원문 인용과 주석을 결합하여 논리적 흐름을 명시적으로 추적합니다.",
+    prompt: `[Flowchart] 수직 플로우차트 구조:\n  Node Types:\n  - 전제(Premise): 직사각형, 배경 #DBEAFE, 테두리 #2563EB\n  - 근거(Evidence): 평행사변형, 배경 #D1FAE5, 테두리 #059669\n  - 결론(Conclusion): 둥근 직사각형, 배경 #FEE2E2, 테두리 #DC2626\n  - 반론(Counter): 다이아몬드, 배경 #FEF3C7, 테두리 #F59E0B\n[Content] 각 노드 내부: 원문 인용 (Italic) + 분석 주석\n[Arrow] 논리적 방향 화살표, 화살표 라벨: "따라서", "왜냐하면", "그러나"\n[Side] 우측에 전체 논증 요약 텍스트`,
+    specs: [
+      { color: "#2563eb", label: "전제 노드" },
+      { color: "#059669", label: "근거 노드" },
+      { color: "#dc2626", label: "결론 노드" }
+    ]
+  },
+  {
+    id: "V40",
+    cat: "학술 논문 스타일",
+    catNum: "08",
+    title: "시험 출제 포인트 마킹",
+    titleEn: "Exam Point Marking System",
+    tags: ["academic", "korean", "color"],
+    desc: "수능·내신 기출 분석 기반으로 '시험에 나오는 포인트'를 별도 마킹하여 시험 대비용 인포그래픽으로 활용. 학습과 시험 준비를 동시에 달성하는 실용적 설계.",
+    prompt: `[Exam Markers] 원문에 시험 출제 빈도별 마커:\n  - ⭐ 최빈출 (빨강 테두리, 배경 #FEF2F2)\n  - 📌 중빈출 (주황 테두리, 배경 #FFF7ED)\n  - 📎 저빈출 (회색 테두리, 배경 #F9FAFB)\n[Annotation] 마커 옆에 출제 유형 표시: "어휘 의미 → 2024 수능 35번"\n[Stats Bar] 상단에 출제 유형 분포 가로 막대 그래프:\n  어휘 40% | 내용 이해 30% | 구조 분석 20% | 감상 비평 10%\n[Tip Box] 하단에 "출제자의 의도" 팁 박스 (배경 #EFF6FF, 좌측 바 #2563EB 4px)`,
+    specs: [
+      { color: "#dc2626", label: "⭐ 최빈출" },
+      { color: "#f59e0b", label: "📌 중빈출" },
+      { color: "#2563eb", label: "출제 분석" }
+    ]
+  },
+
+  // ===== Category 9: 미니멀 & 프리미엄 (Minimal & Premium) =====
+  {
+    id: "V41",
+    cat: "미니멀 & 프리미엄",
+    catEn: "Minimal & Premium Design",
+    catNum: "09",
+    title: "스위스 타이포 그리드",
+    titleEn: "Swiss Typographic Grid",
+    tags: ["minimal", "layout", "typo"],
+    desc: "국제 타이포그래피 스타일(Swiss Style)의 엄격한 그리드 시스템 적용. 12-column 그리드 위에 원문과 주석을 정밀하게 배치하여 질서와 명료함의 극치를 표현합니다.",
+    prompt: `[Grid] 12-Column 그리드, gutter 20px, margin 40px\n  - 원문: column 1~7 (7칸)\n  - 주석: column 9~12 (4칸)\n  - column 8: 빈 칸 (breathing space)\n[Typography] Helvetica Neue 또는 Pretendard만 사용\n  - 원문: 16pt Regular, line-height 28px\n  - 주석: 11pt Light, line-height 18px\n[Color] 순흑(#000000)과 순백(#FFFFFF)만 사용, 유채색 완전 배제\n[Rule] 모든 요소는 그리드라인에 정확히 정렬, 1px도 벗어나지 않을 것`,
+    specs: [
+      { color: "#000000", label: "Swiss Grid" },
+      { color: "#44403c", label: "12-Column" },
+      { color: "#6b7280", label: "무채색 Only" }
+    ]
+  },
+  {
+    id: "V42",
+    cat: "미니멀 & 프리미엄",
+    catNum: "09",
+    title: "화이트 스페이스 명상",
+    titleEn: "White Space Meditation",
+    tags: ["minimal", "spatial"],
+    desc: "주석을 극도로 절제하고 여백을 최대화하는 명상적 설계. 한 화면에 원문 1~2행과 핵심 주석 1개만 배치하여 깊은 집중과 천천히 음미하는 독서 경험을 제공합니다.",
+    prompt: `[Extreme Whitespace] 화면의 70% 이상을 여백으로 유지\n[Content Per Page] 원문 최대 2행 + 주석 최대 1개\n[Layout] 원문: 화면 중앙 편향 좌측, 주석: 원문 아래 40px 간격으로 배치\n[Typography] 원문: 24pt Serif, 주석: 13pt Sans-serif Light, color #9CA3AF\n[Background] 순백 #FFFFFF, 일체의 장식 요소·선·배경색 없음\n[Navigation] 좌우 화살표 또는 스와이프로 다음 구간 이동\n[Mood] "한 문장을 오래 바라보게 하는" 경험 설계`,
+    specs: [
+      { color: "#9ca3af", label: "70% 여백" },
+      { color: "#000000", label: "2행 제한" },
+      { color: "#d1d5db", label: "무장식" }
+    ]
+  },
+  {
+    id: "V43",
+    cat: "미니멀 & 프리미엄",
+    catNum: "09",
+    title: "노이즈 텍스처 럭셔리",
+    titleEn: "Noise Texture Luxury",
+    tags: ["minimal", "color"],
+    desc: "미세한 노이즈 그레인 텍스처와 제한된 색상 팔레트로 고급스러운 출판물 느낌을 연출. 학술서적이나 미술관 도록의 품격을 디지털로 구현합니다.",
+    prompt: `[Background] #F5F0E8 (웜 베이지) 위에 노이즈 그레인 텍스처 (opacity 4%, grain size 1px)\n[Palette] 3색 제한: #1C1917 (차콜), #78716C (웜 그레이), #B91C1C (딥 레드 — 강조용)\n[Typography] 원문: Playfair Display 또는 나눔명조 20pt, 주석: IBM Plex Sans 11pt\n[Cards] 주석 카드: 배경 없음, 상단에 얇은 수평선(0.5pt #D6D3D1)만으로 구분\n[Layout] 좌측 정렬, 넉넉한 좌측 마진 80px (책 여백 느낌)\n[Detail] 제목에 letter-spacing 3px, 섹션 구분에 작은 fleuron(❧) 장식 부호`,
+    specs: [
+      { color: "#1c1917", label: "차콜" },
+      { color: "#78716c", label: "웜 그레이" },
+      { color: "#b91c1c", label: "딥 레드" }
+    ]
+  },
+  {
+    id: "V44",
+    cat: "미니멀 & 프리미엄",
+    catNum: "09",
+    title: "단일 강조색 시스템",
+    titleEn: "Single Accent Color System",
+    tags: ["minimal", "color"],
+    desc: "무채색 베이스에 단 하나의 강조색만 사용하는 극도의 절제. 그 하나의 색이 가리키는 곳이 곧 '가장 중요한 정보'가 되는, 색상의 희소성이 곧 주목도가 되는 전략.",
+    prompt: `[Base] 전체 무채색: 배경 #FFFFFF, 텍스트 #1F2937, 보조 #9CA3AF\n[Single Accent] 강조색 딱 1개만 선택 (예: #2563EB)\n[Usage Rule] 강조색 사용처:\n  - 원문의 '이것만은 꼭' 키워드 (최대 3개) 밑줄\n  - 가장 중요한 주석 1개의 좌측 바\n  - 페이지 번호 또는 네비게이션 활성 상태\n  - 그 외 일체 사용 금지\n[Impact] 강조색의 희소성이 주목도를 극대화\n[Typography] 원문 16pt Medium, 주석 12pt Regular, 모두 같은 서체 패밀리`,
+    specs: [
+      { color: "#2563eb", label: "단일 강조색" },
+      { color: "#1f2937", label: "무채색 기반" },
+      { color: "#9ca3af", label: "극도 절제" }
+    ]
+  },
+  {
+    id: "V45",
+    cat: "미니멀 & 프리미엄",
+    catNum: "09",
+    title: "에디토리얼 매거진 스프레드",
+    titleEn: "Editorial Magazine Spread",
+    tags: ["minimal", "layout", "typo"],
+    desc: "고급 문학 잡지의 2-page 스프레드 레이아웃을 차용. 좌측 페이지에 원문, 우측 페이지에 주석과 시각 자료를 배치하여 펼침면 전체가 하나의 완성된 구도를 이룹니다.",
+    prompt: `[Spread Layout] 가로 비율 16:9 캔버스, 중앙 세로 접힘선(fold line) 표현:\n  좌 페이지: 원문 (drop cap 첫 글자 48pt, 본문 15pt 세리프)\n  우 페이지: 상단 1/3 이미지 영역(삽화/사진/지도), 하단 2/3 주석 2단 배치\n[Details] Pull quote: 핵심 구절을 28pt Italic으로 우측 페이지 상단에 인용\n[Color] 흑백 기조, 이미지에만 유채색 허용\n[Gutter] 중앙 접힘선 20px, 텍스트가 접힘선을 넘지 않도록\n[Page Margin] 상하좌우 48px, 하단에 작은 페이지 번호`,
+    specs: [
+      { color: "#1f2937", label: "Magazine" },
+      { color: "#dc2626", label: "Pull Quote" },
+      { color: "#6b7280", label: "2-Page" }
+    ]
+  },
+
+  // ===== Category 10: 하이브리드 & 특수 목적 (Hybrid & Special Purpose) =====
+  {
+    id: "V46",
+    cat: "하이브리드 & 특수 목적",
+    catEn: "Hybrid & Special Purpose",
+    catNum: "10",
+    title: "이중 언어 병렬 분석",
+    titleEn: "Bilingual Parallel Analysis",
+    tags: ["english", "korean", "layout"],
+    desc: "영어 원문과 한국어 번역을 병렬 배치하고, 양쪽에 각각의 언어에 맞는 주석을 배치하는 이중 언어 학습 전용 레이아웃. 번역 과정의 의사결정을 주석으로 설명합니다.",
+    prompt: `[Parallel Layout] 2-Column 균등 분할:\n  좌측: 영어 원문 (Source Serif 15pt) + 영어 문법 주석 (#3B82F6)\n  우측: 한국어 번역 (나눔명조 15pt) + 한국어 어휘 주석 (#059669)\n[Sync] 양쪽 같은 문장이 수평으로 정렬되도록 행간 조절\n[Bridge] 번역 포인트(의역/직역 차이)를 중앙 접힘선에 화살표+라벨로 표시\n  라벨 예: "의역", "관용구 변환", "어순 재배치"\n[Color] 영어 주석 파랑 계열, 한국어 주석 초록 계열\n[Divider] 중앙 세로선 1px dashed #E5E7EB`,
+    specs: [
+      { color: "#3b82f6", label: "English Side" },
+      { color: "#059669", label: "Korean Side" },
+      { color: "#d97706", label: "Translation Bridge" }
+    ]
+  },
+  {
+    id: "V47",
+    cat: "하이브리드 & 특수 목적",
+    catNum: "10",
+    title: "시간축 연대기 인포그래픽",
+    titleEn: "Chronological Timeline Infographic",
+    tags: ["data", "spatial", "academic"],
+    desc: "작품이 쓰인 시대, 배경, 영향 관계를 수평 타임라인으로 시각화. 원문 분석과 역사적 맥락을 하나의 시간축 위에 통합하여 인문학적 이해의 깊이를 더합니다.",
+    prompt: `[Timeline] 수평 타임라인 (좌→우 = 과거→현재):\n  - 시간축: 1px solid #D1D5DB, 높이 중앙 배치\n  - 주요 사건 노드: 원형 12px, 배경 카테고리별 색\n  - 상단: 역사적 사건/시대적 배경 (위로 수직선 인출)\n  - 하단: 작품/문학사적 사건 (아래로 수직선 인출)\n[Node Colors] 정치=#DC2626, 문화=#2563EB, 문학=#059669, 개인사=#F59E0B\n[Focus] 해당 작품의 창작 시점을 대형 마커(24px)로 강조\n[Card] 노드 클릭/호버 시 상세 정보 카드 팝업\n[Scroll] 수평 스크롤 또는 줌 인/아웃 가능`,
+    specs: [
+      { color: "#dc2626", label: "정치 사건" },
+      { color: "#2563eb", label: "문화 사건" },
+      { color: "#059669", label: "문학 사건" }
+    ]
+  },
+  {
+    id: "V48",
+    cat: "하이브리드 & 특수 목적",
+    catNum: "10",
+    title: "교사용 수업 지도안 모드",
+    titleEn: "Teacher's Lesson Plan Mode",
+    tags: ["academic", "layout"],
+    desc: "교사가 수업에서 직접 사용할 수 있도록 설계된 프레젠테이션 겸용 인포그래픽. 발문(질문), 활동 지시, 판서 가이드가 별도 레이어로 포함됩니다.",
+    prompt: `[Teacher Layer] 학생용 인포그래픽 위에 교사 전용 오버레이 레이어 (토글 on/off):\n  - 🗣 발문(핵심 질문): 노란 말풍선 스타일, 위치는 해당 원문 옆\n  - ✍ 판서 가이드: 분필 느낌의 손글씨 폰트, 초록 배경\n  - ⏱ 시간 배분: 각 섹션 옆에 (5분) (10분) 타임 태그\n  - 🎯 학습 목표: 상단 배너, 배경 #1E40AF, 흰 글씨\n[Student View] 교사 레이어 off 시 깔끔한 학생용 인포그래픽으로 전환\n[Print] 인쇄 시 교사 레이어 포함/미포함 선택 가능`,
+    specs: [
+      { color: "#d97706", label: "🗣 발문" },
+      { color: "#059669", label: "✍ 판서" },
+      { color: "#2563eb", label: "🎯 학습목표" }
+    ]
+  },
+  {
+    id: "V49",
+    cat: "하이브리드 & 특수 목적",
+    catNum: "10",
+    title: "스토리보드 시퀀스",
+    titleEn: "Storyboard Sequence",
+    tags: ["spatial", "layout"],
+    desc: "영화 스토리보드 형식을 차용하여 작품의 장면 전개를 프레임 단위로 시각화. 각 프레임에 원문 발췌와 시각적 상상(일러스트 공간), 주석을 함께 배치합니다.",
+    prompt: `[Storyboard Grid] 2열 × N행 그리드, 각 셀이 하나의 '장면':\n  Cell Layout:\n  - 상단 60%: 이미지/일러스트 영역 (배경 #F3F4F6, 16:9 비율)\n    → 실제 이미지 또는 "장면 묘사" 텍스트 placeholder\n  - 하단 40%: 원문 발췌 (13pt 세리프 Italic) + 주석 (11pt 산세리프)\n[Numbering] 각 셀 좌상단에 Scene 01, Scene 02... 라벨\n[Arrow] 셀 사이 우측 하단에 → 방향 화살표\n[Camera Note] 영화적 용어로 분위기 표기: "CU (클로즈업)", "LS (롱샷)" 스타일의 메타데이터`,
+    specs: [
+      { color: "#2563eb", label: "Scene Grid" },
+      { color: "#d97706", label: "16:9 Frame" },
+      { color: "#059669", label: "Camera Note" }
+    ]
+  },
+  {
+    id: "V50",
+    cat: "하이브리드 & 특수 목적",
+    catNum: "10",
+    title: "AI 프롬프트 메타 설계도",
+    titleEn: "AI Prompt Meta Blueprint",
+    tags: ["data", "academic", "spatial"],
+    desc: "이 50가지 가이드라인 자체를 하나의 인포그래픽으로 설계하는 메타 설계도. 어떤 상황에 어떤 버전을 선택해야 하는지를 의사결정 트리(Decision Tree)로 안내합니다.",
+    prompt: `[Decision Tree] 상단에서 시작하는 의사결정 플로우차트:\n  Q1: "원문 언어?" → 한국어(고전) / 한국어(현대) / 영어\n  Q2: "주요 목적?" → 시험 대비 / 감상 심화 / 학술 분석 / 수업 활용\n  Q3: "매체?" → 인쇄물 / 웹(인터랙티브) / 프레젠테이션 / 모바일\n[Node Style] 질문=다이아몬드 #2563EB, 선택지=둥근사각형 #10B981, 최종추천=별 #F59E0B\n[Result] 각 경로의 최종 노드에 "추천: V##" 형태로 버전 번호 표시\n[Legend] 하단에 전체 50개 버전을 카테고리별로 그룹화한 미니 인덱스\n[Usage] "이 설계도를 GenUI 또는 NotebookLM 가이드라인에 첨부하여 사용"`,
+    specs: [
+      { color: "#2563eb", label: "Decision Tree" },
+      { color: "#10b981", label: "선택지 노드" },
+      { color: "#f59e0b", label: "추천 결과" }
+    ]
+  }
+];
+
+// Group by category
+const categories = {};
+const catOrder = [];
+guidelines.forEach(g => {
+  if (!categories[g.cat]) {
+    categories[g.cat] = { items: [], catEn: g.catEn || '', catNum: g.catNum };
+    catOrder.push(g.cat);
+  }
+  categories[g.cat].items.push(g);
+});
+
+function renderCards(filter = 'all') {
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+
+  catOrder.forEach(catName => {
+    const cat = categories[catName];
+    const filteredItems = filter === 'all'
+      ? cat.items
+      : cat.items.filter(g => g.tags.includes(filter));
+
+    if (filteredItems.length === 0) return;
+
+    const section = document.createElement('div');
+    section.className = 'category-section';
+    section.innerHTML = `
+      <div class="category-header">
+        <div class="category-number">${cat.catNum}</div>
+        <div>
+          <div class="category-title">${catName}</div>
+          <div style="font-size:13px;color:#737373;margin-top:2px;">${cat.catEn}</div>
+        </div>
+        <div class="category-count">${filteredItems.length} guidelines</div>
+      </div>
+      <div class="card-grid">
+        ${filteredItems.map(g => `
+          <div class="card" data-tags="${g.tags.join(',')}">
+            <div class="card-top">
+              <div class="card-id">${g.id}</div>
+              <div class="card-tags">
+                ${g.tags.map(t => `<span class="tag tag-${t}">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="card-title">
+              ${g.title}
+              <span class="card-title-en">${g.titleEn}</span>
+            </div>
+            <div class="card-desc">${g.desc}</div>
+            <div class="card-prompt">${g.prompt.replace(/\n/g, '<br>')}</div>
+            <div class="card-specs">
+              ${g.specs.map(s => `
+                <div class="card-spec">
+                  <div class="spec-dot" style="background:${s.color}"></div>
+                  <span>${s.label}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    main.appendChild(section);
+  });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCards(btn.dataset.filter);
+  });
+});
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 600);
+});
+
+// Initial render
+renderCards();
+</script>
+</body>
+</html>

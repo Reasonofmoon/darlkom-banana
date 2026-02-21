@@ -1,145 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darlkom v2.0 | Design DNA Workstation</title>
     <meta name="description" content="Professional Slide DNA Architect & Workstation">
-    
+
+    <!-- First-visit redirect to tutorial -->
+    <script>
+      if (!localStorage.getItem('darlkom_visited')) {
+        localStorage.setItem('darlkom_visited', '1');
+        window.location.href = 'tutorial.html?from=app';
+      }
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/variable/pretendardvariable.min.css" rel="stylesheet">
+
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- p5.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-zinc">
+<body>
 
     <div class="app-container">
-        <!-- 1. Left Sidebar: Library & Navigation -->
+
+        <!-- ① LEFT SIDEBAR -->
         <aside class="app-sidebar">
             <div class="sidebar-header">
-                <div class="logo-icon"><i data-lucide="dna"></i></div>
-                <span class="logo-text">DARLKOM <span class="version">v2.0</span></span>
-            </div>
-            
-            <div class="nav-group">
-                <div class="nav-label">LIBRARY</div>
-                <div class="nav-item active" data-view="grid"><i data-lucide="grid-3x3"></i> All Styles</div>
-                <div class="nav-item" data-view="favorites"><i data-lucide="star"></i> Favorites</div>
-                <div class="nav-item" data-view="recent"><i data-lucide="clock"></i> Recent</div>
+                <div class="logo-icon">
+                    <i data-lucide="dna"></i>
+                </div>
+                <span class="logo-text">DARLKOM</span>
+                <span class="version">v2.0</span>
             </div>
 
             <div class="nav-group">
-                <div class="nav-label">FILTERS</div>
-                <div class="filter-item active" data-filter="all"><i data-lucide="layers"></i> All</div>
-                <div class="filter-item" data-filter="user"><i data-lucide="user"></i> My Designs</div>
-                <div class="filter-item" data-filter="opening"><i data-lucide="zap"></i> Opening</div>
-                <div class="filter-item" data-filter="structure"><i data-lucide="layout"></i> Structure</div>
-                <div class="filter-item" data-filter="high impact"><i data-lucide="monitor-play"></i> High Impact</div>
+                <div class="nav-label">Library</div>
+                <div class="nav-item active" data-view="grid">
+                    <i data-lucide="grid-3x3"></i> All Styles
+                </div>
+                <div class="nav-item" data-view="favorites">
+                    <i data-lucide="star"></i> Favorites
+                </div>
+                <div class="nav-item" data-view="recent">
+                    <i data-lucide="clock"></i> Recent
+                </div>
+                <div class="nav-item" data-view="annotations">
+                    <i data-lucide="book-open"></i> Annotation Guide
+                    <span style="margin-left:auto;font-size:0.6rem;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;padding:1px 6px;border-radius:100px;font-family:'JetBrains Mono',monospace;">50</span>
+                </div>
             </div>
-            
+
+            <div class="nav-group">
+                <div class="nav-label">Filters</div>
+                <div class="filter-item active" data-filter="all">
+                    <i data-lucide="layers"></i> All DNA
+                </div>
+                <div class="filter-item" data-filter="user">
+                    <i data-lucide="user"></i> My Designs
+                </div>
+                <div class="filter-item" data-filter="opening">
+                    <i data-lucide="zap"></i> Opening
+                </div>
+                <div class="filter-item" data-filter="structure">
+                    <i data-lucide="layout"></i> Structure
+                </div>
+                <div class="filter-item" data-filter="high impact">
+                    <i data-lucide="monitor-play"></i> High Impact
+                </div>
+            </div>
+
+            <!-- Live Stats -->
+            <div class="sidebar-stats" id="sidebar-stats">
+                <div class="stat-pill">
+                    <div class="stat-pill-num" id="stat-total">—</div>
+                    <div class="stat-pill-label">Total</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-num" id="stat-shown">—</div>
+                    <div class="stat-pill-label">Shown</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-num" id="stat-user">0</div>
+                    <div class="stat-pill-label">Mine</div>
+                </div>
+            </div>
+
             <div class="bottom-actions">
-                <div class="nav-item"><i data-lucide="settings"></i> Settings</div>
+                <a href="tutorial.html" class="nav-item" style="text-decoration:none;color:inherit;margin-bottom:4px;">
+                    <i data-lucide="play-circle"></i> How to Use
+                </a>
+                <div class="nav-item">
+                    <i data-lucide="settings"></i> Settings
+                </div>
             </div>
         </aside>
 
-        <!-- 2. Center Main: Canvas & Mixer -->
+        <!-- ② MAIN -->
         <main class="app-main">
             <!-- Toolbar -->
             <header class="main-toolbar">
                 <div class="search-bar">
                     <i data-lucide="search"></i>
                     <input type="text" id="global-search" placeholder="Search DNA (e.g. 'neon', 'minimal')...">
+                    <span class="search-kbd">⌘K</span>
                 </div>
                 <div class="view-toggles">
-                    <button class="icon-btn active" title="Grid View"><i data-lucide="grid"></i></button>
-                    <button class="icon-btn" title="List View"><i data-lucide="list"></i></button>
+                    <button class="icon-btn active" id="btn-grid-view" title="Grid View">
+                        <i data-lucide="grid"></i>
+                    </button>
+                    <button class="icon-btn" id="btn-list-view" title="List View">
+                        <i data-lucide="list"></i>
+                    </button>
                 </div>
             </header>
 
             <!-- Content Area -->
             <div id="content-area" class="content-area">
-                
-                <!-- 3-Way Mixer Panel (Top) -->
-                <section class="mixer-panel">
-                    <div class="panel-header">
-                        <h3><i data-lucide="flask-conical"></i> DNA HYBRIDIZER</h3>
-                        <div class="mixer-controls">
-                            <button class="btn-secondary" onclick="saveHybrid()"><i data-lucide="save"></i> SAVE AS DNA</button>
-                            <button id="btn-mix" class="btn-primary"><i data-lucide="wand-2"></i> SYNTHESIZE</button>
-                            <button id="btn-export" class="btn-secondary"><i data-lucide="download"></i> EXPORT PNG</button>
-                        </div>
-                    </div>
-                    
-                    <div class="mixer-slots">
-                        <!-- Slot A: Structure -->
-                        <div class="slot" data-slot="A">
-                            <div class="slot-header"><i data-lucide="layout-template"></i> STRUCTURE</div>
-                            <div class="slot-dropzone" id="slot-a-zone">Drag DNA Here</div>
-                            <div class="slot-value" id="slot-a-value">Bauhaus Grid</div> <!-- Default/Placeholder -->
-                        </div>
-                        
-                        <div class="mixer-operator">+</div>
-                        
-                        <!-- Slot B: Palette -->
-                        <div class="slot" data-slot="B">
-                            <div class="slot-header"><i data-lucide="palette"></i> PALETTE</div>
-                            <div class="slot-dropzone" id="slot-b-zone">Drag DNA Here</div>
-                            <div class="slot-value" id="slot-b-value">Cyberpunk Neon</div>
+
+                <!-- DNA View (default) -->
+                <div id="dna-view">
+
+                    <!-- DNA Hybridizer Panel -->
+                    <section class="mixer-panel">
+                        <div class="panel-header">
+                            <h3><i data-lucide="flask-conical"></i> DNA HYBRIDIZER</h3>
+                            <div class="mixer-controls">
+                                <button class="btn-secondary" onclick="saveHybrid()">
+                                    <i data-lucide="save"></i> Save DNA
+                                </button>
+                                <button id="btn-mix" class="btn-primary">
+                                    <i data-lucide="wand-2"></i> Synthesize
+                                </button>
+                                <button id="btn-export" class="btn-secondary">
+                                    <i data-lucide="download"></i> Export
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="mixer-operator">+</div>
+                        <div class="mixer-slots">
+                            <!-- Slot A: Structure -->
+                            <div class="slot" data-slot="A">
+                                <div class="slot-header"><i data-lucide="layout-template"></i> STRUCTURE</div>
+                                <div class="slot-dropzone" id="slot-a-zone">Drag DNA Here</div>
+                                <div class="slot-value" id="slot-a-value">Bauhaus Grid</div>
+                            </div>
 
-                        <!-- Slot C: Material -->
-                        <div class="slot" data-slot="C">
-                            <div class="slot-header"><i data-lucide="component"></i> MATERIAL</div>
-                            <div class="slot-dropzone" id="slot-c-zone">Drag DNA Here</div>
-                            <div class="slot-value" id="slot-c-value">Paper Texture</div>
+                            <div class="mixer-operator">+</div>
+
+                            <!-- Slot B: Palette -->
+                            <div class="slot" data-slot="B">
+                                <div class="slot-header"><i data-lucide="palette"></i> PALETTE</div>
+                                <div class="slot-dropzone" id="slot-b-zone">Drag DNA Here</div>
+                                <div class="slot-value" id="slot-b-value">Cyberpunk Neon</div>
+                            </div>
+
+                            <div class="mixer-operator">+</div>
+
+                            <!-- Slot C: Material -->
+                            <div class="slot" data-slot="C">
+                                <div class="slot-header"><i data-lucide="component"></i> MATERIAL</div>
+                                <div class="slot-dropzone" id="slot-c-zone">Drag DNA Here</div>
+                                <div class="slot-value" id="slot-c-value">Paper Texture</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- P5 Canvas Container -->
-                    <div id="p5-canvas-container" class="preview-stage">
-                        <!-- p5.js canvas will be injected here -->
-                    </div>
-                </section>
 
-                <!-- DNA Library Grid (Bottom) -->
-                <section class="library-browser">
-                    <div class="section-title">REPOSITORY</div>
-                    <div id="dna-grid" class="dna-grid-pro">
-                        <!-- Items injected via JS -->
-                    </div>
-                </section>
-                
+                        <!-- Preview Canvas -->
+                        <div id="p5-canvas-container" class="preview-stage"></div>
+                    </section>
+
+                    <!-- DNA Library Grid -->
+                    <section class="library-browser">
+                        <div class="section-title">Repository</div>
+                        <div id="dna-grid" class="dna-grid-pro">
+                            <!-- Injected via JS -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Annotation Guide View (hidden by default) -->
+                <div id="annotation-view" class="annotation-view" style="display:none;">
+                    <!-- Injected via app.js -->
+                </div>
+
             </div>
-            
-            <!-- Timeline (Bottom Fixed) -->
+
+            <!-- Timeline -->
             <div class="app-timeline">
+                <div class="timeline-label">Deck Sequence</div>
                 <div class="timeline-track" id="deck-timeline">
-                    <div class="timeline-placeholder">Drag DNA here to build Deck Sequence...</div>
+                    <div class="timeline-placeholder">Drag DNA cards here to build your slide deck sequence…</div>
                 </div>
             </div>
         </main>
 
-        <!-- 3. Right Inspector: Properties -->
+        <!-- ③ RIGHT INSPECTOR -->
         <aside class="app-inspector" id="inspector-panel">
             <div class="inspector-header">
-                <h3>INSPECTOR</h3>
+                <h3>Inspector</h3>
                 <span class="badge-outline">READ ONLY</span>
             </div>
-            
             <div id="inspector-content" class="inspector-content">
                 <div class="empty-state">Select a DNA to inspect</div>
             </div>
         </aside>
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span id="toast-msg">Copied!</span>
     </div>
 
     <!-- Scripts -->

@@ -1,0 +1,1227 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darlkom v2.0 — How to Use</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080b14;
+  --panel:    #0d1117;
+  --glass:    rgba(17,24,39,0.6);
+  --border:   rgba(99,102,241,0.2);
+  --accent:   #6366f1;
+  --blue:     #60a5fa;
+  --violet:   #a78bfa;
+  --cyan:     #22d3ee;
+  --emerald:  #34d399;
+  --amber:    #fbbf24;
+  --rose:     #fb7185;
+  --txt:      #e2e8f0;
+  --muted:    #64748b;
+  --grad:     linear-gradient(135deg,#6366f1,#a78bfa);
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'IBM Plex Sans', sans-serif;
+  --serif:    'Noto Serif KR', serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  background:var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% -5%,rgba(99,102,241,.12) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%,rgba(167,139,250,.08) 0%,transparent 60%);
+  color:var(--txt);
+  font-family:var(--sans);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ─────────────────────────── */
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,11,20,.9);
+  backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:100;
+}
+.logo{
+  font-weight:700;font-size:1rem;letter-spacing:-.02em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:flex;align-items:center;gap:.5rem;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--grad);box-shadow:0 0 8px var(--accent);
+  display:inline-block;
+}
+.lang-toggle{
+  display:flex;gap:4px;
+  background:rgba(17,24,39,.8);border:1px solid var(--border);border-radius:8px;padding:3px;
+}
+.lang-btn{
+  padding:.35rem .85rem;border-radius:6px;border:none;cursor:pointer;
+  font-size:.78rem;font-weight:600;font-family:var(--sans);
+  background:transparent;color:var(--muted);transition:all .2s;
+}
+.lang-btn.active{background:var(--grad);color:#fff;}
+
+/* ── BACK LINK ─────────────────────── */
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--muted);font-size:.82rem;text-decoration:none;
+  border:1px solid var(--border);border-radius:8px;
+  padding:.35rem .85rem;transition:all .2s;
+}
+.back-link:hover{color:var(--blue);border-color:rgba(96,165,250,.4);}
+
+/* ── HERO ───────────────────────────── */
+.hero{
+  text-align:center;padding:4rem 2rem 2rem;
+  max-width:720px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.3);
+  color:#a5b4fc;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;font-family:var(--mono);margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
+  line-height:1.3;margin-bottom:.8rem;
+}
+.hero h1 em{
+  font-style:normal;background:linear-gradient(120deg,var(--blue),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{color:var(--muted);font-size:.9rem;line-height:1.8;max-width:520px;margin:0 auto 2rem;}
+
+/* ── STEPS NAV ──────────────────────── */
+.steps-nav{
+  display:flex;align-items:center;justify-content:center;
+  gap:.5rem;flex-wrap:wrap;padding:.5rem 2rem 2rem;
+}
+.step-btn{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.45rem 1rem;border:1px solid var(--border);border-radius:100px;
+  background:transparent;color:var(--muted);cursor:pointer;
+  font-size:.78rem;font-family:var(--sans);font-weight:500;
+  transition:all .25s;white-space:nowrap;
+}
+.step-btn:hover{border-color:var(--accent);color:var(--blue);}
+.step-btn.active{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.5);color:#c4b5fd;}
+.step-num{
+  width:20px;height:20px;border-radius:50%;font-size:.65rem;font-weight:700;
+  background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+
+/* ── STAGE ──────────────────────────── */
+.stage-wrap{
+  max-width:960px;margin:0 auto;padding:0 1.5rem 3rem;
+}
+.stage{display:none;}
+.stage.active{display:block;animation:fadeUp .4s ease forwards;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+/* ── DEMO CARD ──────────────────────── */
+.demo-card{
+  background:var(--glass);backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;position:relative;
+}
+.demo-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,.5),transparent);
+}
+.demo-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.4rem;border-bottom:1px solid var(--border);
+}
+.demo-title{
+  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--blue);font-family:var(--mono);
+}
+.step-info{
+  padding:1.5rem 1.4rem;
+}
+.step-info h2{
+  font-family:var(--serif);font-size:1.3rem;font-weight:700;margin-bottom:.6rem;
+}
+.step-info p{color:var(--muted);font-size:.88rem;line-height:1.8;max-width:640px;}
+.step-tips{
+  display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;
+}
+.tip-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(17,24,39,.8);border:1px solid var(--border);border-radius:8px;
+  padding:.35rem .8rem;font-size:.75rem;color:var(--muted);
+}
+.tip-chip .tip-icon{font-size:.9rem;}
+
+/* ── ANIMATION AREA ─────────────────── */
+.anim-area{
+  padding:1.2rem 1.4rem 1.4rem;
+  display:flex;gap:1rem;align-items:flex-start;flex-wrap:wrap;
+}
+
+/* ── MOCK UI COMPONENTS ─────────────── */
+.mock-window{
+  flex:1;min-width:280px;
+  background:rgba(8,11,20,.95);border:1px solid rgba(99,102,241,.2);
+  border-radius:14px;overflow:hidden;position:relative;
+}
+.mock-bar{
+  display:flex;align-items:center;gap:6px;
+  padding:.5rem .8rem;background:rgba(17,24,39,.9);border-bottom:1px solid var(--border);
+}
+.mock-dot{width:9px;height:9px;border-radius:50%;}
+.mock-dot-r{background:#fb7185;}
+.mock-dot-y{background:#fbbf24;}
+.mock-dot-g{background:#34d399;}
+.mock-label{font-size:.62rem;font-family:var(--mono);color:var(--muted);margin-left:auto;}
+
+/* Stage 1: Sidebar */
+.mock-sidebar-inner{padding:.6rem;}
+.mock-nav-item{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.32rem .5rem;border-radius:6px;font-size:.72rem;color:var(--muted);margin-bottom:2px;
+  transition:all .25s;
+}
+.mock-nav-icon{width:12px;height:12px;border-radius:2px;flex-shrink:0;}
+.mock-nav-item.highlight{background:rgba(99,102,241,.15);color:#c4b5fd;}
+.mock-nav-item.pulse{animation:navPulse 1.5s ease infinite;}
+@keyframes navPulse{
+  0%,100%{background:rgba(99,102,241,.1);box-shadow:none;}
+  50%     {background:rgba(99,102,241,.25);box-shadow:0 0 12px rgba(99,102,241,.3);}
+}
+
+/* Stage 2: DNA Grid */
+.mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.6rem;}
+.mock-dna-card{
+  border-radius:8px;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(99,102,241,.15);
+  transition:all .3s;
+}
+.mock-dna-thumb{height:44px;}
+.mock-dna-info{padding:.3rem .4rem;font-size:.55rem;font-weight:600;color:var(--muted);}
+.mock-dna-card.glow{
+  border-color:rgba(99,102,241,.6);
+  box-shadow:0 0 14px rgba(99,102,241,.35);
+  animation:cardGlow 2s ease infinite;
+}
+@keyframes cardGlow{
+  0%,100%{box-shadow:0 0 6px rgba(99,102,241,.2);border-color:rgba(99,102,241,.35);}
+  50%     {box-shadow:0 0 18px rgba(99,102,241,.5);border-color:rgba(99,102,241,.7);}
+}
+
+/* Stage 3: Hybridizer */
+.mock-mixer{padding:.6rem;display:flex;flex-direction:column;gap:.5rem;}
+.mock-slots{display:flex;gap:.4rem;align-items:center;}
+.mock-slot{
+  flex:1;border-radius:8px;border:1px dashed rgba(99,102,241,.3);
+  padding:.4rem;text-align:center;font-size:.6rem;color:var(--muted);
+}
+.mock-slot.filled{
+  border-style:solid;border-color:var(--accent);
+  animation:slotPop .4s ease;
+}
+@keyframes slotPop{from{transform:scale(.92);}to{transform:scale(1);}}
+.mock-slot-label{font-family:var(--mono);font-size:.55rem;color:var(--muted);margin-bottom:2px;text-transform:uppercase;}
+.mock-slot-val{color:var(--blue);font-weight:700;font-size:.6rem;}
+.mock-op{color:var(--violet);font-size:.9rem;opacity:.7;}
+.mock-canvas{
+  height:70px;background:#000;border-radius:8px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.mock-canvas-rendering{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:#a5b4fc;font-family:var(--mono);
+  opacity:0;transition:opacity .5s;
+}
+.mock-canvas-rendering.show{opacity:1;}
+
+/* Stage 4: Anno Guide */
+.mock-anno-hero{
+  background:linear-gradient(135deg,#0f172a,#1e1b4b);
+  padding:.7rem;margin:.6rem;border-radius:10px;
+}
+.mock-anno-title{font-size:.7rem;font-weight:700;color:#fff;}
+.mock-anno-sub{font-size:.58rem;color:var(--muted);margin-top:2px;}
+.mock-anno-cards{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;padding:.4rem .6rem .6rem;}
+.mock-anno-card{
+  background:rgba(17,24,39,.8);border:1px solid rgba(99,102,241,.2);
+  border-radius:8px;padding:.4rem .5rem;
+}
+.mock-anno-card-id{font-family:var(--mono);font-size:.52rem;color:var(--muted);}
+.mock-anno-card-title{font-size:.6rem;font-weight:700;color:var(--txt);margin-top:1px;}
+.mock-anno-card-tags{display:flex;gap:2px;margin-top:3px;}
+.mock-tag{font-size:.48rem;padding:1px 4px;border-radius:3px;font-weight:700;}
+.mock-anno-card:hover{border-color:rgba(99,102,241,.5);}
+.mock-anno-card.highlight{
+  border-color:var(--accent);
+  animation:annoGlow 1.8s ease infinite;
+}
+@keyframes annoGlow{
+  0%,100%{box-shadow:none;border-color:rgba(99,102,241,.3);}
+  50%     {box-shadow:0 0 12px rgba(99,102,241,.35);border-color:rgba(99,102,241,.7);}
+}
+
+/* Stage 5: Export/Copy */
+.mock-inspector{padding:.6rem;display:flex;flex-direction:column;gap:.4rem;}
+.mock-prop{display:flex;justify-content:space-between;font-size:.62rem;margin-bottom:2px;}
+.mock-prop-key{color:var(--muted);}
+.mock-prop-val{color:var(--txt);font-family:var(--mono);}
+.mock-copy-btn{
+  margin-top:.5rem;width:100%;padding:.4rem;border-radius:6px;border:none;cursor:pointer;
+  background:var(--grad);color:#fff;font-size:.65rem;font-weight:700;font-family:var(--sans);
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  animation:btnPulse 2s ease infinite;
+}
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 2px 8px rgba(99,102,241,.3);}
+  50%     {box-shadow:0 2px 20px rgba(99,102,241,.6);}
+}
+.mock-toast{
+  position:absolute;bottom:8px;right:8px;
+  background:rgba(17,24,39,.95);border:1px solid rgba(99,102,241,.4);
+  border-radius:8px;padding:.3rem .7rem;font-size:.62rem;color:var(--txt);
+  display:flex;align-items:center;gap:5px;
+  transform:translateY(30px);opacity:0;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+}
+.mock-toast.show{transform:translateY(0);opacity:1;}
+
+/* ── CURSOR ANIMATION ───────────────── */
+.mock-cursor{
+  position:absolute;width:16px;height:16px;pointer-events:none;z-index:10;
+  transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.22,1,.36,1),top .6s cubic-bezier(.22,1,.36,1);
+}
+.mock-cursor svg{filter:drop-shadow(0 0 4px rgba(99,102,241,.8));}
+
+/* ── NAV ARROWS ─────────────────────── */
+.stage-nav{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin-top:1.5rem;padding-bottom:.5rem;
+}
+.nav-arrow{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:10px;
+  background:transparent;color:var(--muted);cursor:pointer;font-size:.82rem;font-family:var(--sans);
+  transition:all .25s;
+}
+.nav-arrow:hover:not(:disabled){border-color:var(--accent);color:var(--blue);}
+.nav-arrow:disabled{opacity:.3;cursor:not-allowed;}
+.nav-arrow.primary{background:var(--grad);color:#fff;border:none;font-weight:600;}
+.nav-arrow.primary:disabled{background:var(--muted);}
+.progress-dots{display:flex;gap:6px;align-items:center;}
+.pdot{
+  width:7px;height:7px;border-radius:50%;background:var(--border);
+  transition:all .25s;cursor:pointer;
+}
+.pdot.active{background:var(--accent);box-shadow:0 0 6px var(--accent);width:20px;border-radius:4px;}
+
+/* ── RESPONSIVE ─────────────────────── */
+@media(max-width:600px){
+  .anim-area{flex-direction:column;}
+  .steps-nav{gap:.3rem;}
+  .step-btn{padding:.4rem .7rem;font-size:.72rem;}
+  .hero h1{font-size:1.4rem;}
+}
+
+/* ── CLICK INDICATOR ─────────────────── */
+.click-indicator{
+  position:absolute;
+  width:32px;height:32px;
+  border-radius:50%;
+  background:var(--grad);
+  color:#fff;
+  font-size:.75rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 0 rgba(99,102,241,.6);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s;
+  z-index:20;
+  font-family:var(--mono);
+}
+.click-indicator.show{
+  opacity:1;
+  animation:clickPulse 1.4s ease infinite;
+}
+.click-indicator.done{
+  animation:none;
+  box-shadow:0 0 0 3px rgba(52,211,153,.5);
+  background:linear-gradient(135deg,#059669,#34d399);
+}
+@keyframes clickPulse{
+  0%  {box-shadow:0 0 0 0 rgba(99,102,241,.7);}
+  60% {box-shadow:0 0 0 14px rgba(99,102,241,0);}
+  100%{box-shadow:0 0 0 0 rgba(99,102,241,0);}
+}
+.click-tooltip{
+  position:absolute;
+  background:rgba(17,24,39,.96);
+  border:1px solid rgba(99,102,241,.5);
+  border-radius:10px;
+  padding:.35rem .7rem;
+  font-size:.67rem;
+  color:var(--txt);
+  white-space:nowrap;
+  pointer-events:none;
+  z-index:21;
+  opacity:0;
+  transition:opacity .25s;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.click-tooltip.show{opacity:1;}
+.click-tooltip::before{
+  content:'';
+  position:absolute;
+  top:50%;left:-6px;
+  transform:translateY(-50%);
+  border:5px solid transparent;
+  border-right-color:rgba(99,102,241,.5);
+}
+
+/* ── INTRO LAYOUT MOCK ───────────────── */
+.intro-app-mock{
+  position:relative;
+  background:rgba(8,11,20,.98);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:visible;
+  display:flex;
+  height:260px;
+  margin:1rem 1.4rem 1.4rem;
+}
+.intro-mock-sidebar{
+  width:110px;
+  flex-shrink:0;
+  border-right:1px solid var(--border);
+  padding:.5rem;
+  background:rgba(17,24,39,.8);
+  border-radius:14px 0 0 14px;
+}
+.intro-mock-main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.intro-mock-toolbar{
+  height:34px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:0 .6rem;
+  gap:.4rem;
+  background:rgba(17,24,39,.5);
+}
+.intro-search-mock{
+  flex:1;height:20px;background:rgba(99,102,241,.08);border:1px solid var(--border);
+  border-radius:5px;display:flex;align-items:center;padding:0 .4rem;
+  font-size:.55rem;color:var(--muted);
+}
+.intro-mock-grid{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:.35rem;
+  padding:.5rem;
+  overflow:hidden;
+}
+.intro-dna-thumb{
+  border-radius:6px;
+  border:1px solid rgba(99,102,241,.15);
+  overflow:hidden;
+}
+.intro-dna-img{height:32px;}
+.intro-dna-lbl{font-size:.45rem;padding:2px 3px;color:var(--muted);font-weight:600;}
+.intro-mock-mixer{
+  border-top:1px solid var(--border);
+  height:64px;
+  display:flex;
+  align-items:center;
+  padding:0 .5rem;
+  gap:.4rem;
+  background:rgba(17,24,39,.4);
+}
+.intro-slot{
+  flex:1;height:42px;border:1px dashed rgba(99,102,241,.3);
+  border-radius:6px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-size:.48rem;color:var(--muted);
+}
+.intro-slot-lbl{font-family:var(--mono);text-transform:uppercase;font-size:.4rem;margin-bottom:1px;}
+.intro-op{color:var(--violet);font-size:.8rem;opacity:.6;flex-shrink:0;}
+.intro-synth-btn{
+  padding:.2rem .5rem;border-radius:5px;border:none;
+  background:var(--grad);color:#fff;font-size:.5rem;font-weight:700;
+  white-space:nowrap;
+}
+.intro-mock-inspector{
+  width:100px;
+  flex-shrink:0;
+  border-left:1px solid var(--border);
+  padding:.5rem;
+  background:rgba(17,24,39,.8);
+  border-radius:0 14px 14px 0;
+}
+.intro-insp-box{
+  font-size:.48rem;color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:.3rem;
+  margin-bottom:.3rem;
+}
+.intro-insp-label{
+  font-size:.45rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--blue);margin-bottom:2px;
+}
+.intro-swatch-row{display:flex;gap:2px;margin-top:2px;}
+.intro-swatch{width:10px;height:10px;border-radius:50%;}
+.intro-copy-btn{
+  width:100%;border:none;border-radius:4px;
+  background:var(--grad);color:#fff;
+  font-size:.45rem;font-weight:700;
+  padding:3px 0;margin-top:2px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="back-link">← <span data-ko="앱으로 돌아가기" data-en="Back to App"></span></a>
+  <div class="logo"><span class="logo-dot"></span> DARLKOM v2.0</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">✦ <span data-ko="사용 가이드" data-en="How to Use"></span></div>
+  <h1 data-ko="<em>Darlkom v2.0</em>을<br>마스터하는 법" data-en="Master<br><em>Darlkom v2.0</em>"></h1>
+  <p class="hero-sub" data-ko="DNA를 탐색하고 혼합하여 완벽한 슬라이드 설계를 만드는 5단계 워크플로우를 배워보세요." data-en="Learn the 5-step workflow to browse, mix, and create the perfect slide design using DNA modules."></p>
+</div>
+
+<!-- STEP NAV -->
+<div class="steps-nav" id="steps-nav">
+  <button class="step-btn active" data-step="0" onclick="goStep(0)">
+    <span class="step-num" style="background:linear-gradient(135deg,#22d3ee,#6366f1);">✦</span>
+    <span data-ko="전체 흐름" data-en="Overview"></span>
+  </button>
+  <button class="step-btn" data-step="1" onclick="goStep(1)">
+    <span class="step-num">1</span>
+    <span data-ko="탐색" data-en="Browse"></span>
+  </button>
+  <button class="step-btn" data-step="2" onclick="goStep(2)">
+    <span class="step-num">2</span>
+    <span data-ko="선택" data-en="Select"></span>
+  </button>
+  <button class="step-btn" data-step="3" onclick="goStep(3)">
+    <span class="step-num">3</span>
+    <span data-ko="혼합" data-en="Mix"></span>
+  </button>
+  <button class="step-btn" data-step="4" onclick="goStep(4)">
+    <span class="step-num">4</span>
+    <span data-ko="가이드" data-en="Guide"></span>
+  </button>
+  <button class="step-btn" data-step="5" onclick="goStep(5)">
+    <span class="step-num">5</span>
+    <span data-ko="내보내기" data-en="Export"></span>
+  </button>
+</div>
+
+<!-- STAGES -->
+<div class="stage-wrap">
+
+  <!-- ── Stage INTRO: Click Guide Overview ── -->
+  <div class="stage active" id="stage-0">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="INTRO — 앱 한눈에 파악하기" data-en="INTRO — App at a Glance"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="클릭할 위치를 번호로 안내합니다" data-en="Follow the Numbered Click Hotspots"></h2>
+        <p data-ko="앱을 처음 열면 아래 순서대로 클릭하세요. 번호가 순서대로 강조되며 각 클릭 위치와 역할을 알려줍니다." data-en="When you first open the app, click in this order. Each numbered hotspot lights up in sequence to show you where to click and why."></p>
+      </div>
+      <!-- INTRO APP MOCK -->
+      <div class="intro-app-mock" id="intro-app-mock">
+        <!-- Sidebar -->
+        <div class="intro-mock-sidebar">
+          <div style="font-size:.5rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;padding-left:.2rem;">LIBRARY</div>
+          <div id="inav-all" style="padding:.25rem .3rem;border-radius:5px;font-size:.55rem;color:#c4b5fd;background:rgba(99,102,241,.15);margin-bottom:2px;display:flex;align-items:center;gap:4px;"><span>▦</span> All DNA</div>
+          <div style="padding:.25rem .3rem;border-radius:5px;font-size:.55rem;color:var(--muted);margin-bottom:2px;display:flex;align-items:center;gap:4px;"><span>★</span> Favorites</div>
+          <div id="inav-anno" style="padding:.25rem .3rem;border-radius:5px;font-size:.55rem;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:4px;"><span>📋</span> Anno Guide</div>
+          <div style="font-size:.5rem;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;padding-left:.2rem;">FILTERS</div>
+          <div id="inav-filter" style="padding:.25rem .3rem;border-radius:5px;font-size:.55rem;color:var(--muted);margin-bottom:2px;display:flex;align-items:center;gap:4px;"><span>⚡</span> Opening</div>
+          <div style="padding:.25rem .3rem;border-radius:5px;font-size:.55rem;color:var(--muted);margin-bottom:2px;display:flex;align-items:center;gap:4px;"><span>▤</span> Structure</div>
+        </div>
+        <!-- Main -->
+        <div class="intro-mock-main">
+          <div class="intro-mock-toolbar">
+            <div class="intro-search-mock" id="isearch">🔍 Search DNA...</div>
+            <div style="width:18px;height:18px;border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--muted);">⊞</div>
+          </div>
+          <div class="intro-mock-grid">
+            <div class="intro-dna-thumb" id="icard-1"><div class="intro-dna-img" style="background:linear-gradient(135deg,#1e1b4b,#312e81);"></div><div class="intro-dna-lbl">Bauhaus</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#0c4a6e,#075985);"></div><div class="intro-dna-lbl">Neon</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#0f2027,#203a43);"></div><div class="intro-dna-lbl">Cyber</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#1a1a2e,#2d1b69);"></div><div class="intro-dna-lbl">Space</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#350e07,#431407);"></div><div class="intro-dna-lbl">Samurai</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#022c22,#064e3b);"></div><div class="intro-dna-lbl">Forest</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#1e293b,#0f172a);"></div><div class="intro-dna-lbl">Noir</div></div>
+            <div class="intro-dna-thumb"><div class="intro-dna-img" style="background:linear-gradient(135deg,#2d1b69,#4c1d95);"></div><div class="intro-dna-lbl">Violet</div></div>
+          </div>
+          <div class="intro-mock-mixer">
+            <div class="intro-slot" id="islot-a"><div class="intro-slot-lbl">Structure</div><span>—</span></div>
+            <div class="intro-op">+</div>
+            <div class="intro-slot" id="islot-b"><div class="intro-slot-lbl">Palette</div><span>—</span></div>
+            <div class="intro-op">+</div>
+            <div class="intro-slot" id="islot-c"><div class="intro-slot-lbl">Material</div><span>—</span></div>
+            <button class="intro-synth-btn" id="isynth">⚗️ Synthesize</button>
+          </div>
+        </div>
+        <!-- Inspector -->
+        <div class="intro-mock-inspector">
+          <div class="intro-insp-box">
+            <div class="intro-insp-label">Meta</div>
+            <div style="font-size:.45rem;color:var(--muted);">Bauhaus Grid</div>
+            <div style="font-size:.4rem;color:var(--muted);">Structure</div>
+          </div>
+          <div class="intro-insp-box">
+            <div class="intro-insp-label">Palette</div>
+            <div class="intro-swatch-row">
+              <div class="intro-swatch" style="background:#312e81;"></div>
+              <div class="intro-swatch" style="background:#6366f1;"></div>
+              <div class="intro-swatch" style="background:#a78bfa;"></div>
+            </div>
+          </div>
+          <button class="intro-copy-btn" id="icopy">📋 Copy Prompt</button>
+        </div>
+
+        <!-- CLICK INDICATORS (absolutely positioned) -->
+        <div class="click-indicator" id="ci-1" style="top:30px;left:55px;">①</div>
+        <div class="click-tooltip" id="ct-1" style="top:22px;left:96px;" data-ko="① 필터 클릭" data-en="① Click Filter"></div>
+
+        <div class="click-indicator" id="ci-2" style="top:52px;left:130px;">②</div>
+        <div class="click-tooltip" id="ct-2" style="top:44px;left:170px;" data-ko="② 검색창 키워드 입력" data-en="② Type in Search"></div>
+
+        <div class="click-indicator" id="ci-3" style="top:98px;left:160px;">③</div>
+        <div class="click-tooltip" id="ct-3" style="top:90px;left:200px;" data-ko="③ DNA 카드 클릭" data-en="③ Click DNA Card"></div>
+
+        <div class="click-indicator" id="ci-4" style="bottom:52px;left:380px;">④</div>
+        <div class="click-tooltip" id="ct-4" style="bottom:58px;left:420px;" data-ko="④ SYNTHESIZE 버튼" data-en="④ Click SYNTHESIZE"></div>
+
+        <div class="click-indicator" id="ci-5" style="bottom:16px;right:12px;">⑤</div>
+        <div class="click-tooltip" id="ct-5" style="bottom:22px;right:52px;text-align:right;" data-ko="⑤ 프롬프트 복사" data-en="⑤ Copy Prompt"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 1: Browse ── -->
+  <div class="stage" id="stage-1">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="STEP 1 — 탐색 & 필터" data-en="STEP 1 — Browse & Filter"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="원하는 DNA 스타일 찾기" data-en="Find Your DNA Style"></h2>
+        <p data-ko="왼쪽 사이드바의 필터를 클릭하거나 상단 검색창에 키워드(예: 'neon', 'minimal')를 입력해 원하는 스타일을 빠르게 찾으세요." data-en="Click the sidebar filters or type keywords like 'neon' or 'minimal' in the search bar to quickly find the style you want."></p>
+        <div class="step-tips">
+          <div class="tip-chip"><span class="tip-icon">🔍</span><span data-ko="검색: 'neon', 'minimal', 'bauhaus'" data-en="Search: 'neon', 'minimal', 'bauhaus'"></span></div>
+          <div class="tip-chip"><span class="tip-icon">🏷️</span><span data-ko="필터: Opening / Structure / High Impact" data-en="Filters: Opening / Structure / High Impact"></span></div>
+        </div>
+      </div>
+      <div class="anim-area">
+        <!-- Sidebar mock -->
+        <div class="mock-window" style="max-width:150px;flex:0 0 auto;">
+          <div class="mock-bar">
+            <div class="mock-dot mock-dot-r"></div>
+            <div class="mock-dot mock-dot-y"></div>
+            <div class="mock-dot mock-dot-g"></div>
+            <div class="mock-label">sidebar</div>
+          </div>
+          <div class="mock-sidebar-inner" id="s0-sidebar">
+            <div class="mock-nav-item highlight"><div class="mock-nav-icon" style="background:#6366f1;"></div><span style="font-size:.62rem;">All DNA</span></div>
+            <div class="mock-nav-item" id="s0-opening"><div class="mock-nav-icon" style="background:#22d3ee;"></div><span style="font-size:.62rem;">Opening</span></div>
+            <div class="mock-nav-item" id="s0-struct"><div class="mock-nav-icon" style="background:#60a5fa;"></div><span style="font-size:.62rem;">Structure</span></div>
+            <div class="mock-nav-item" id="s0-impact"><div class="mock-nav-icon" style="background:#fb7185;"></div><span style="font-size:.62rem;">High Impact</span></div>
+          </div>
+        </div>
+        <!-- Search + grid mock -->
+        <div class="mock-window" style="flex:1;">
+          <div class="mock-bar">
+            <div class="mock-dot mock-dot-r"></div>
+            <div class="mock-dot mock-dot-y"></div>
+            <div class="mock-dot mock-dot-g"></div>
+            <div class="mock-label">main</div>
+          </div>
+          <div style="padding:.5rem;display:flex;align-items:center;gap:.4rem;border-bottom:1px solid var(--border);">
+            <div style="flex:1;background:rgba(17,24,39,.8);border:1px solid var(--border);border-radius:6px;padding:.3rem .6rem;font-size:.62rem;color:var(--muted);display:flex;align-items:center;gap:.3rem;">
+              <span>🔍</span><span id="s0-search-text"></span><span id="s0-cursor" style="display:inline-block;width:1px;height:.7rem;background:var(--blue);margin-left:1px;animation:blink 1s step-end infinite;">|</span>
+            </div>
+          </div>
+          <div class="mock-grid" id="s0-grid">
+            <div class="mock-dna-card"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#1e1b4b,#312e81);"></div><div class="mock-dna-info">Bauhaus Grid</div></div>
+            <div class="mock-dna-card" style="opacity:.3;"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#0f172a,#1e293b);"></div><div class="mock-dna-info">Noir Film</div></div>
+            <div class="mock-dna-card"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#0c4a6e,#075985);"></div><div class="mock-dna-info">Neon Matrix</div></div>
+            <div class="mock-dna-card" style="opacity:.3;"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#350e07,#431407);"></div><div class="mock-dna-info">Samurai</div></div>
+            <div class="mock-dna-card"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43);"></div><div class="mock-dna-info">Cyber Punk</div></div>
+            <div class="mock-dna-card" style="opacity:.3;"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#1a1a2e,#2d1b69);"></div><div class="mock-dna-info">Space Opera</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 1: Select ── -->
+  <div class="stage" id="stage-1">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="STEP 2 — DNA 선택 & 검사" data-en="STEP 2 — Select & Inspect DNA"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="DNA 카드를 클릭하면 상세 정보가 표시됩니다" data-en="Click a DNA Card to Inspect Details"></h2>
+        <p data-ko="카드를 클릭하면 오른쪽 인스펙터 패널에서 색상 팔레트, 레이아웃 구성, 감정 프로필 등을 확인할 수 있습니다." data-en="Clicking a card reveals its color palette, layout composition, material, and emotional profile in the right Inspector panel."></p>
+        <div class="step-tips">
+          <div class="tip-chip"><span class="tip-icon">🎨</span><span data-ko="색상 스와치를 호버하면 색상 코드 확인 가능" data-en="Hover swatches to see color codes"></span></div>
+          <div class="tip-chip"><span class="tip-icon">📋</span><span data-ko="인스펙터 하단에서 Slot에 바로 할당" data-en="Assign to Slot directly from Inspector"></span></div>
+        </div>
+      </div>
+      <div class="anim-area">
+        <!-- Grid -->
+        <div class="mock-window" style="flex:1;min-width:200px;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">library</div></div>
+          <div class="mock-grid" id="s1-grid">
+            <div class="mock-dna-card glow" id="s1-selected"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#1e1b4b,#312e81);"></div><div class="mock-dna-info" style="color:var(--blue);">Bauhaus Grid</div></div>
+            <div class="mock-dna-card"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#0c4a6e,#075985);"></div><div class="mock-dna-info">Neon Matrix</div></div>
+            <div class="mock-dna-card"><div class="mock-dna-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43);"></div><div class="mock-dna-info">Cyber Punk</div></div>
+          </div>
+        </div>
+        <!-- Inspector -->
+        <div class="mock-window" style="max-width:170px;flex:0 0 auto;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">inspector</div></div>
+          <div class="mock-inspector">
+            <div style="font-size:.6rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">Meta Info</div>
+            <div class="mock-prop"><span class="mock-prop-key">ID</span><span class="mock-prop-val">DNA_001</span></div>
+            <div class="mock-prop"><span class="mock-prop-key">Name</span><span class="mock-prop-val" style="font-size:.55rem;">Bauhaus Grid</span></div>
+            <div class="mock-prop"><span class="mock-prop-key">Role</span><span class="mock-prop-val" style="font-size:.55rem;">Structure</span></div>
+            <div style="font-size:.6rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);padding-bottom:3px;margin:.6rem 0 4px;">Palette</div>
+            <div style="display:flex;gap:4px;margin-bottom:.5rem;">
+              <div style="width:20px;height:20px;border-radius:50%;background:#312e81;border:1px solid rgba(255,255,255,.2);animation:swatchGlow 2s ease infinite;" id="s1-swatch"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#6366f1;border:1px solid rgba(255,255,255,.2);"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#a78bfa;border:1px solid rgba(255,255,255,.2);"></div>
+            </div>
+            <div class="mock-copy-btn" id="s1-copy-btn">
+              📋 <span data-ko="Slot A 설정" data-en="Set as Slot A"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 2: Mix ── -->
+  <div class="stage" id="stage-2">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="STEP 3 — DNA 혼합 & 합성" data-en="STEP 3 — Mix & Synthesize DNA"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="3개의 DNA를 조합해 새로운 스타일 생성" data-en="Combine 3 DNAs to Create a New Style"></h2>
+        <p data-ko="Structure(A), Palette(B), Material(C) 3개의 슬롯에 각각 DNA를 할당한 후 SYNTHESIZE 버튼을 누르면 p5.js 기반의 역동적인 미리보기가 생성됩니다." data-en="Assign DNA to Structure (A), Palette (B), and Material (C) slots, then click SYNTHESIZE to generate a dynamic p5.js preview."></p>
+        <div class="step-tips">
+          <div class="tip-chip"><span class="tip-icon">⚗️</span><span data-ko="인스펙터 → 'Set as Slot A/B/C' 버튼으로 할당" data-en="Use Inspector → 'Set as Slot A/B/C' to assign"></span></div>
+          <div class="tip-chip"><span class="tip-icon">💾</span><span data-ko="SAVE AS DNA로 나만의 하이브리드 저장" data-en="Save your hybrid with SAVE AS DNA"></span></div>
+        </div>
+      </div>
+      <div class="anim-area">
+        <div class="mock-window" style="flex:1;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">hybridizer</div></div>
+          <div class="mock-mixer">
+            <div class="mock-slots">
+              <div class="mock-slot" id="s2-slotA">
+                <div class="mock-slot-label">Structure</div>
+                <div class="mock-slot-val" id="s2-slotA-val">—</div>
+              </div>
+              <div class="mock-op">+</div>
+              <div class="mock-slot" id="s2-slotB">
+                <div class="mock-slot-label">Palette</div>
+                <div class="mock-slot-val" id="s2-slotB-val">—</div>
+              </div>
+              <div class="mock-op">+</div>
+              <div class="mock-slot" id="s2-slotC">
+                <div class="mock-slot-label">Material</div>
+                <div class="mock-slot-val" id="s2-slotC-val">—</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:.4rem;justify-content:flex-end;margin-bottom:.4rem;">
+              <button style="background:var(--grad);border:none;border-radius:6px;padding:.3rem .7rem;color:#fff;font-size:.65rem;font-weight:700;cursor:pointer;font-family:var(--sans);" id="s2-synth-btn">⚗️ SYNTHESIZE</button>
+            </div>
+            <div class="mock-canvas">
+              <div class="mock-canvas-rendering" id="s2-canvas">
+                <span data-ko="렌더링 중..." data-en="Rendering..."></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 3: Annotation Guide ── -->
+  <div class="stage" id="stage-3">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="STEP 4 — 주석 디자인 가이드" data-en="STEP 4 — Annotation Design Guide"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="50가지 주석 인포그래픽 프롬프트 탐색" data-en="Browse 50 Annotation Infographic Prompts"></h2>
+        <p data-ko="사이드바의 'Annotation Guide' 탭에서 공간 설계, 타이포그래피, 색상 코딩 전략 등 10개 카테고리 50가지 프롬프트를 COPY 버튼으로 바로 복사할 수 있습니다." data-en="In the 'Annotation Guide' sidebar tab, browse 10 categories of 50 spatial design prompts. Click COPY to copy any prompt instantly."></p>
+        <div class="step-tips">
+          <div class="tip-chip"><span class="tip-icon">📚</span><span data-ko="카테고리 필터로 용도별 빠른 검색" data-en="Use category filters to find prompts by type"></span></div>
+          <div class="tip-chip"><span class="tip-icon">⚡</span><span data-ko="COPY 버튼으로 NotebookLM/Figma에 바로 붙여넣기" data-en="Paste directly into NotebookLM or Figma"></span></div>
+        </div>
+      </div>
+      <div class="anim-area">
+        <!-- Sidebar with Annotation tab -->
+        <div class="mock-window" style="max-width:135px;flex:0 0 auto;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div></div>
+          <div class="mock-sidebar-inner">
+            <div class="mock-nav-item" style="font-size:.58rem;">📊 All DNA</div>
+            <div class="mock-nav-item pulse" id="s3-anno-tab" style="font-size:.58rem;font-weight:600;">📋 <span data-ko="주석 가이드" data-en="Anno Guide"></span> <span style="background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.3);color:#a5b4fc;font-size:.48rem;padding:1px 4px;border-radius:100px;font-family:var(--mono);margin-left:auto;">50</span></div>
+          </div>
+        </div>
+        <!-- Annotation content -->
+        <div class="mock-window" style="flex:1;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">annotation guide</div></div>
+          <div class="mock-anno-hero">
+            <div class="mock-anno-title" data-ko="고급 주석 인포그래픽 50가지 디자인 지침" data-en="50 Annotation Infographic Design Guidelines"></div>
+            <div class="mock-anno-sub" data-ko="공간 설계 관점의 프롬프트 전략" data-en="Spatial Design Prompt Strategies"></div>
+          </div>
+          <div class="mock-anno-cards">
+            <div class="mock-anno-card highlight">
+              <div class="mock-anno-card-id">V01</div>
+              <div class="mock-anno-card-title" data-ko="클래식 마진 주석" data-en="Classic Margin Annotation"></div>
+              <div class="mock-anno-card-tags"><span class="mock-tag" style="background:rgba(59,130,246,.15);color:#93c5fd;">layout</span><span class="mock-tag" style="background:rgba(239,68,68,.15);color:#fca5a5;">korean</span></div>
+            </div>
+            <div class="mock-anno-card">
+              <div class="mock-anno-card-id">V06</div>
+              <div class="mock-anno-card-title" data-ko="이중 서체 대비" data-en="Dual Typeface Contrast"></div>
+              <div class="mock-anno-card-tags"><span class="mock-tag" style="background:rgba(236,72,153,.15);color:#f9a8d4;">typo</span></div>
+            </div>
+            <div class="mock-anno-card">
+              <div class="mock-anno-card-id">V11</div>
+              <div class="mock-anno-card-title" data-ko="3색 코딩 전략" data-en="3-Color Coding Strategy"></div>
+              <div class="mock-anno-card-tags"><span class="mock-tag" style="background:rgba(16,185,129,.15);color:#6ee7b7;">color</span></div>
+            </div>
+            <div class="mock-anno-card">
+              <div class="mock-anno-card-id">V50</div>
+              <div class="mock-anno-card-title" data-ko="AI 메타 설계도" data-en="AI Meta Blueprint"></div>
+              <div class="mock-anno-card-tags"><span class="mock-tag" style="background:rgba(99,102,241,.15);color:#a5b4fc;">data</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stage 4: Export ── -->
+  <div class="stage" id="stage-4">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title" data-ko="STEP 5 — 내보내기 & 복사" data-en="STEP 5 — Export & Copy"></div>
+      </div>
+      <div class="step-info">
+        <h2 data-ko="프롬프트와 DNA를 다양한 형식으로 내보내기" data-en="Export Prompts & DNA in Multiple Formats"></h2>
+        <p data-ko="COPY IMAGE PROMPT 버튼으로 AI 이미지 생성용 프롬프트를 복사하거나, COPY DNA JSON으로 설계 데이터를 그대로 내보낼 수 있습니다. 하이브리드 DNA는 SAVE AS DNA로 로컬에 저장됩니다." data-en="Use COPY IMAGE PROMPT to copy an AI image prompt, or COPY DNA JSON to export the design data. Save hybrid designs locally with SAVE AS DNA."></p>
+        <div class="step-tips">
+          <div class="tip-chip"><span class="tip-icon">🖼️</span><span data-ko="IMAGE PROMPT → Midjourney, Gemini 등에 바로 사용" data-en="IMAGE PROMPT → Use in Midjourney, Gemini, etc."></span></div>
+          <div class="tip-chip"><span class="tip-icon">💾</span><span data-ko="DNA JSON → 다른 프로젝트에 설계 재사용" data-en="DNA JSON → Reuse design across projects"></span></div>
+          <div class="tip-chip"><span class="tip-icon">📤</span><span data-ko="EXPORT PNG → 미리보기 캔버스 이미지 저장" data-en="EXPORT PNG → Save the preview canvas image"></span></div>
+        </div>
+      </div>
+      <div class="anim-area">
+        <div class="mock-window" style="flex:1;max-width:200px;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">inspector</div></div>
+          <div class="mock-inspector">
+            <div style="font-size:.6rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">Export / Copy</div>
+            <button class="mock-copy-btn" id="s4-prompt-btn" style="margin-bottom:.4rem;" onclick="triggerToast('s4-toast-prompt')">
+              📋 <span data-ko="IMAGE PROMPT 복사" data-en="COPY IMAGE PROMPT"></span>
+            </button>
+            <button class="mock-copy-btn" id="s4-json-btn" style="background:rgba(17,24,39,.8);border:1px solid var(--border);color:var(--muted);box-shadow:none;animation:none;" onclick="triggerToast('s4-toast-json')">
+              &lt;/&gt; <span data-ko="DNA JSON 복사" data-en="COPY DNA JSON"></span>
+            </button>
+          </div>
+        </div>
+        <!-- Canvas with toast -->
+        <div class="mock-window" style="flex:1;position:relative;">
+          <div class="mock-bar"><div class="mock-dot mock-dot-r"></div><div class="mock-dot mock-dot-y"></div><div class="mock-dot mock-dot-g"></div><div class="mock-label">preview</div></div>
+          <div style="padding:.6rem;height:120px;background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#a5b4fc;font-family:var(--mono);" data-ko="미리보기 캔버스" data-en="Preview Canvas"></div>
+          <div class="mock-toast" id="s4-toast-prompt">✓ <span data-ko="Image Prompt 복사됨!" data-en="Image Prompt copied!"></span></div>
+          <div class="mock-toast" id="s4-toast-json">✓ <span data-ko="DNA JSON 복사됨!" data-en="DNA JSON copied!"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="stage-nav">
+    <button class="nav-arrow" id="btn-prev" onclick="goStep(currentStep-1)" disabled>← <span data-ko="이전" data-en="Prev"></span></button>
+    <div class="progress-dots" id="progress-dots">
+      <div class="pdot active" onclick="goStep(0)"></div>
+      <div class="pdot" onclick="goStep(1)"></div>
+      <div class="pdot" onclick="goStep(2)"></div>
+      <div class="pdot" onclick="goStep(3)"></div>
+      <div class="pdot" onclick="goStep(4)"></div>
+      <div class="pdot" onclick="goStep(5)"></div>
+    </div>
+    <button class="nav-arrow primary" id="btn-next" onclick="goStep(currentStep+1)"><span data-ko="다음" data-en="Next"></span> →</button>
+  </div>
+
+</div><!-- /stage-wrap -->
+
+<script>
+// ── Language ─────────────────────────────
+let currentLang = 'ko';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.includes(lang === 'ko' ? '한' : 'En')));
+  document.querySelectorAll('[data-ko]').forEach(el => {
+    const txt = lang === 'ko' ? el.dataset.ko : el.dataset.en;
+    if (!txt) return;
+    if (el.tagName === 'INPUT') el.placeholder = txt;
+    else el.innerHTML = txt;
+  });
+}
+
+// ── Steps ────────────────────────────────
+let currentStep = 0;
+const TOTAL = 6;
+
+// ── URL param detection ──────────────────
+const fromApp = new URLSearchParams(window.location.search).get('from') === 'app';
+
+function goStep(n) {
+  if (n < 0 || n >= TOTAL) return;
+  document.querySelectorAll('.stage').forEach((s,i) => s.classList.toggle('active', i === n));
+  document.querySelectorAll('.step-btn').forEach((b,i) => b.classList.toggle('active', i === n));
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === n));
+  document.getElementById('btn-prev').disabled = n === 0;
+  const nextBtn = document.getElementById('btn-next');
+  if (n === TOTAL - 1) {
+    // Last step: show "Go to App" if came from app, else show Done
+    if (fromApp) {
+      nextBtn.disabled = false;
+      nextBtn.innerHTML = currentLang === 'ko' ? '🚀 앱 시작하기' : '🚀 Start App';
+      nextBtn.onclick = () => { window.location.href = 'index.html'; };
+      nextBtn.className = 'nav-arrow primary';
+    } else {
+      nextBtn.disabled = true;
+      nextBtn.innerHTML = currentLang === 'ko' ? '🎉 완료!' : '🎉 Done!';
+    }
+  } else {
+    nextBtn.disabled = false;
+    nextBtn.innerHTML = (currentLang === 'ko' ? '다음' : 'Next') + ' →';
+    nextBtn.onclick = () => goStep(currentStep + 1);
+  }
+  currentStep = n;
+  startStageAnim(n);
+}
+
+
+// ── Animations ───────────────────────────
+function startStageAnim(step) {
+  clearAllTimers();
+  hideAllIndicators();
+  if (step === 0) animIntro();
+  if (step === 1) animStage0();
+  if (step === 2) animStage1();
+  if (step === 3) animStage2();
+  if (step === 4) animStage3();
+  if (step === 5) animStage4();
+}
+
+// ── INTRO: Numbered Click Guide ──────────
+function hideAllIndicators() {
+  for(let i=1;i<=5;i++){
+    const ci=document.getElementById(`ci-${i}`);
+    const ct=document.getElementById(`ct-${i}`);
+    if(ci){ci.classList.remove('show','done');}
+    if(ct){ct.classList.remove('show');}
+  }
+}
+
+function showIndicator(n, done) {
+  const ci=document.getElementById(`ci-${n}`);
+  const ct=document.getElementById(`ct-${n}`);
+  if(ci){
+    ci.classList.remove('done');
+    ci.classList.add('show');
+    if(done) setTimeout(()=>{ ci.classList.remove('clickPulse'); ci.classList.add('done'); },600);
+  }
+  if(ct){ ct.classList.add('show'); }
+}
+
+function hideIndicator(n) {
+  const ci=document.getElementById(`ci-${n}`);
+  const ct=document.getElementById(`ct-${n}`);
+  if(ci){ ci.classList.remove('show'); }
+  if(ct){ ct.classList.remove('show'); }
+}
+
+function animIntro() {
+  const STEPS = [
+    { id:1, highlight: () => {
+        const el=document.getElementById('inav-filter');
+        if(el){ el.style.background='rgba(99,102,241,.25)'; el.style.color='#c4b5fd'; }
+      },
+      reset: () => {
+        const el=document.getElementById('inav-filter');
+        if(el){ el.style.background=''; el.style.color=''; }
+      }
+    },
+    { id:2, highlight: () => {
+        const el=document.getElementById('isearch');
+        if(el){ el.style.borderColor='var(--accent)'; el.style.boxShadow='0 0 8px rgba(99,102,241,.4)'; el.textContent='🔍 neon...'; }
+      },
+      reset: () => {
+        const el=document.getElementById('isearch');
+        if(el){ el.style.borderColor=''; el.style.boxShadow=''; el.textContent='🔍 Search DNA...'; }
+      }
+    },
+    { id:3, highlight: () => {
+        const el=document.getElementById('icard-1');
+        if(el){ el.style.borderColor='var(--accent)'; el.style.boxShadow='0 0 12px rgba(99,102,241,.5)'; }
+      },
+      reset: () => {
+        const el=document.getElementById('icard-1');
+        if(el){ el.style.borderColor=''; el.style.boxShadow=''; }
+      }
+    },
+    { id:4, highlight: () => {
+        const el=document.getElementById('isynth');
+        if(el){ el.style.transform='scale(1.08)'; el.style.boxShadow='0 0 16px rgba(99,102,241,.7)'; }
+        ['islot-a','islot-b','islot-c'].forEach((sid,i)=>{
+          const s=document.getElementById(sid);
+          if(s){ s.style.borderColor='var(--accent)'; s.querySelector('span').textContent=['Bauhaus','Neon','Paper'][i]; }
+        });
+      },
+      reset: () => {
+        const el=document.getElementById('isynth');
+        if(el){ el.style.transform=''; el.style.boxShadow=''; }
+        ['islot-a','islot-b','islot-c'].forEach(sid=>{
+          const s=document.getElementById(sid);
+          if(s){ s.style.borderColor=''; s.querySelector('span').textContent='—'; }
+        });
+      }
+    },
+    { id:5, highlight: () => {
+        const el=document.getElementById('icopy');
+        if(el){ el.style.boxShadow='0 0 14px rgba(99,102,241,.6)'; el.style.transform='scale(1.05)'; }
+      },
+      reset: () => {
+        const el=document.getElementById('icopy');
+        if(el){ el.style.boxShadow=''; el.style.transform=''; }
+      }
+    }
+  ];
+
+  let si = 0;
+
+  function runStep() {
+    if(si > 0) {
+      STEPS[si-1].reset();
+      // mark previous as done
+      const prevCi = document.getElementById(`ci-${si}`);
+      if(prevCi){ prevCi.classList.add('done'); prevCi.classList.remove('show'); }
+    }
+    if(si >= STEPS.length) {
+      // All done — restart after pause
+      T(()=>{ hideAllIndicators(); STEPS.forEach(s=>s.reset()); si=0; T(runStep,600); }, 1800);
+      return;
+    }
+    const step = STEPS[si];
+    showIndicator(step.id, false);
+    step.highlight();
+    si++;
+    T(runStep, 1800);
+  }
+
+  T(runStep, 400);
+}
+
+const timers = [];
+function T(fn, ms) { timers.push(setTimeout(fn, ms)); }
+function clearAllTimers() { timers.forEach(clearTimeout); timers.length = 0; }
+
+// Stage 0: typing search + filter highlight
+function animStage0() {
+  const items = ['neon','','neon']; // type, clear, type loop
+  let idx = 0;
+  const searchEl = document.getElementById('s0-search-text');
+  const filterItems = [
+    document.getElementById('s0-opening'),
+    document.getElementById('s0-struct'),
+    document.getElementById('s0-impact')
+  ];
+  const cards = document.querySelectorAll('#s0-grid .mock-dna-card');
+
+  function typeSearch(word, cb) {
+    let i = 0;
+    function type() {
+      if (i <= word.length) {
+        if (searchEl) searchEl.textContent = word.slice(0,i);
+        // fade out non-matching cards
+        cards.forEach((c,ci) => {
+          c.style.opacity = (i > 0 && ci % 2 === 1) ? '.2' : '1';
+        });
+        i++;
+        T(type, 100);
+      } else { T(cb, 800); }
+    }
+    type();
+  }
+  function clearSearch(cb) {
+    const txt = searchEl ? searchEl.textContent : '';
+    let l = txt.length;
+    function del() {
+      if (l >= 0) {
+        if (searchEl) searchEl.textContent = txt.slice(0,l);
+        cards.forEach(c => c.style.opacity = '1');
+        l--;
+        T(del, 60);
+      } else { T(cb, 400); }
+    }
+    del();
+  }
+  function filterHighlight(el, cb) {
+    filterItems.forEach(f => f && f.classList.remove('pulse','highlight'));
+    if (el) el.classList.add('pulse');
+    T(() => {
+      if (el) el.classList.remove('pulse');
+      T(cb, 300);
+    }, 1200);
+  }
+
+  // sequence
+  T(() => typeSearch('neon', () =>
+    clearSearch(() =>
+      filterHighlight(filterItems[0], () =>
+        filterHighlight(filterItems[1], () =>
+          filterHighlight(filterItems[2], () =>
+            T(() => animStage0(), 800)
+          )
+        )
+      )
+    )
+  ), 600);
+}
+
+// Stage 1: card glow + swatch bounce
+function animStage1() {
+  const swatch = document.getElementById('s1-swatch');
+  if (swatch) swatch.style.animation = 'swatchGlow 1.2s ease infinite';
+}
+
+// Stage 2: fill slots then render
+function animStage2() {
+  const slots = [
+    { id:'s2-slotA', val:'s2-slotA-val', name:['Bauhaus','Bauhaus'], delay:400 },
+    { id:'s2-slotB', val:'s2-slotB-val', name:['Neon Matrix','Neon Matrix'], delay:1200 },
+    { id:'s2-slotC', val:'s2-slotC-val', name:['Paper Tex','Paper Tex'], delay:2000 }
+  ];
+  const canvas = document.getElementById('s2-canvas');
+  const btn = document.getElementById('s2-synth-btn');
+
+  function reset() {
+    slots.forEach(s => {
+      const el = document.getElementById(s.id);
+      const ve = document.getElementById(s.val);
+      if (el) el.classList.remove('filled');
+      if (ve) ve.textContent = '—';
+    });
+    if (canvas) canvas.classList.remove('show');
+  }
+
+  reset();
+  slots.forEach(s => {
+    T(() => {
+      const el = document.getElementById(s.id);
+      const ve = document.getElementById(s.val);
+      if (el) el.classList.add('filled');
+      if (ve) ve.textContent = s.name[0];
+    }, s.delay);
+  });
+  T(() => {
+    if (btn) { btn.style.transform='scale(1.05)'; T(() => btn.style.transform='',150); }
+    T(() => { if (canvas) canvas.classList.add('show'); }, 300);
+    T(() => { reset(); T(() => animStage2(), 800); }, 2500);
+  }, 3200);
+}
+
+// Stage 3: pulse anno tab
+function animStage3() {
+  const cards = document.querySelectorAll('#stage-3 .mock-anno-card');
+  let ci = 0;
+  function cycleCard() {
+    cards.forEach(c => c.classList.remove('highlight'));
+    if (cards[ci]) cards[ci].classList.add('highlight');
+    ci = (ci + 1) % cards.length;
+    T(cycleCard, 1400);
+  }
+  T(cycleCard, 600);
+}
+
+// Stage 4: auto click buttons
+function animStage4() {
+  T(() => triggerToast('s4-toast-prompt'), 800);
+  T(() => { hideToast('s4-toast-prompt'); T(() => triggerToast('s4-toast-json'), 400); }, 2800);
+  T(() => { hideToast('s4-toast-json'); T(() => animStage4(), 600); }, 5000);
+}
+
+function triggerToast(id) {
+  const t = document.getElementById(id);
+  if (t) t.classList.add('show');
+}
+function hideToast(id) {
+  const t = document.getElementById(id);
+  if (t) t.classList.remove('show');
+}
+
+// ── Init ─────────────────────────────────
+setLang('ko');
+startStageAnim(0);
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goStep(currentStep + 1);
+  if (e.key === 'ArrowLeft')  goStep(currentStep - 1);
+});
+</script>
+
+<style>
+@keyframes swatchGlow{
+  0%,100%{box-shadow:0 0 4px rgba(99,102,241,.3);}
+  50%     {box-shadow:0 0 12px rgba(99,102,241,.7);}
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+</style>
+</body>
+</html>

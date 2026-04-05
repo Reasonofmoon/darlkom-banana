@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotebookLM 컨셉 인포그래픽 프롬프트 v2.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+
+  :root {
+    --bg: #080810;
+    --surface: #10101e;
+    --surface2: #18182e;
+    --border: #252540;
+    --text: #eeeef8;
+    --text2: #7777a0;
+
+    --a-color: #ff6b35;
+    --b-color: #00c9ff;
+    --c-color: #7cff6b;
+    --d-color: #ff6bce;
+    --e-color: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    padding: 28px 16px 60px;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    max-width: 980px;
+    margin: 0 auto 36px;
+    text-align: center;
+  }
+  .version-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg,#ff6b35,#ff6bce);
+    color:#fff; font-family:'Space Mono',monospace;
+    font-size:11px; letter-spacing:2px;
+    padding:5px 16px; border-radius:20px; margin-bottom:14px;
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 6vw, 64px);
+    letter-spacing: 3px;
+    background: linear-gradient(135deg,#ff6b35 0%,#ff6bce 40%,#00c9ff 80%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .sub { color: var(--text2); font-size:13px; line-height:1.8; }
+
+  /* ─── CONCEPT LEGEND ─── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin: 24px auto 32px;
+    max-width: 900px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 14px; font-size: 12px;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ─── SEARCH ─── */
+  .search-wrap {
+    max-width: 580px; margin: 0 auto 28px; position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; padding: 13px 20px 13px 50px;
+    color: var(--text); font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif; outline: none;
+    transition: border-color .2s;
+  }
+  .search-wrap input:focus { border-color: #ff6bce; }
+  .search-wrap .si { position: absolute; left: 18px; top:50%; transform:translateY(-50%); color:var(--text2); font-size:17px; }
+
+  /* ─── TABS ─── */
+  .tabs {
+    display: flex; gap: 8px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 24px; max-width: 980px;
+    margin-left: auto; margin-right: auto;
+  }
+  .tab-btn {
+    background: var(--surface); border: 2px solid var(--border);
+    border-radius: 10px; color: var(--text2); cursor: pointer;
+    font-family: 'Space Mono', monospace; font-size: 12px;
+    padding: 9px 20px; transition: all .2s; white-space: nowrap;
+    position: relative; overflow: hidden;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active-a { border-color: var(--a-color); color: var(--a-color); background: rgba(255,107,53,.08); }
+  .tab-btn.active-b { border-color: var(--b-color); color: var(--b-color); background: rgba(0,201,255,.08); }
+  .tab-btn.active-c { border-color: var(--c-color); color: var(--c-color); background: rgba(124,255,107,.08); }
+  .tab-btn.active-d { border-color: var(--d-color); color: var(--d-color); background: rgba(255,107,206,.08); }
+  .tab-btn.active-e { border-color: var(--e-color); color: var(--e-color); background: rgba(255,215,0,.08); }
+
+  /* ─── TOOLBAR ─── */
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 980px; margin: 0 auto 16px; padding: 0 4px;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .count-info { color: var(--text2); font-family: 'Space Mono', monospace; font-size: 12px; }
+  .count-info b { color: #fff; }
+  .copy-all-btn {
+    border: none; border-radius: 8px; color: #000;
+    cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px; font-weight: 700; padding: 9px 20px;
+    transition: opacity .2s, transform .1s;
+  }
+  .copy-all-btn:hover { opacity: .88; transform: scale(1.02); }
+  .copy-all-btn:active { transform: scale(.97); }
+
+  /* ─── GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px; max-width: 980px; margin: 0 auto;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; cursor: pointer;
+    transition: all .18s; display: flex; align-items: flex-start; gap: 12px;
+    position: relative;
+  }
+  .card:hover { background: var(--surface2); transform: translateY(-1px); }
+
+  .card-accent { width: 3px; flex-shrink: 0; border-radius: 4px; align-self: stretch; }
+
+  .num { font-family:'Space Mono',monospace; font-size:10px; color:var(--text2); min-width:26px; padding-top:2px; flex-shrink:0; }
+
+  .card-body { flex:1; }
+  .concept-tag {
+    display: inline-block; font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 1.5px; padding: 2px 7px;
+    border-radius: 4px; margin-bottom: 6px; opacity: .85;
+  }
+  .card-text { font-size: 13px; line-height: 1.65; color: var(--text); }
+  .copy-ic { font-size: 13px; color: var(--text2); flex-shrink: 0; opacity: 0; transition: opacity .2s; }
+  .card:hover .copy-ic { opacity: 1; }
+  .copy-ic.done { color: #7cff6b; opacity: 1; }
+
+  .no-results { text-align:center; color:var(--text2); padding:60px 0; font-size:14px; grid-column:1/-1; }
+
+  .toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(90px);
+    color: #000; padding: 10px 28px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; transition: transform .3s;
+    z-index: 9999; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="version-tag">🎬 CREATIVE SLIDE DECK GENERATOR v2.0 × NOTEBOOKLM</div>
+  <h1>CONCEPT INFOGRAPHIC PROMPTS</h1>
+  <p class="sub">5개 크리에이티브 컨셉 × 100개 상세 프롬프트 — 아티스트 레퍼런스 + 비주얼 디렉션 내장<br>클릭하면 클립보드에 복사됩니다</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--a-color)"></div><b style="color:var(--a-color)">A</b> Brand Film — 영감·열망</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--b-color)"></div><b style="color:var(--b-color)">B</b> Documentary — 충격·긴장</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--c-color)"></div><b style="color:var(--c-color)">C</b> RPG Quest — 몰입·성취</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--d-color)"></div><b style="color:var(--d-color)">D</b> Magazine — 욕망·트렌드</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--e-color)"></div><b style="color:var(--e-color)">E</b> Classified — 호기심·긴박</div>
+</div>
+
+<div class="search-wrap">
+  <span class="si">🔍</span>
+  <input type="text" id="searchInput" placeholder="키워드 검색 (아티스트, 개념, 스타일...)" oninput="filterPrompts()">
+</div>
+
+<div class="tabs" id="tabsContainer"></div>
+
+<div class="toolbar">
+  <div class="count-info" id="countInfo"></div>
+  <button class="copy-all-btn" id="copyAllBtn" onclick="copyAll()">📋 현재 탭 전체 복사</button>
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CONCEPTS = {
+  "A: Brand Film 🎬": {
+    color: "#ff6b35",
+    bg: "rgba(255,107,53,.12)",
+    tag: "BRAND FILM",
+    btnClass: "active-a",
+    data: [
+      "핵심 혁신 1개를 Luis Barragan의 강렬한 단색 벽면 구도로 표현 — '멈춤이 가장 빠른 길이었다' 역설 헤드라인, 딥 마젠타 배경, 단일 오브제 클로즈업, 정적 긴장감",
+      "브랜드 미션을 Carlo Scarpa의 물-돌 대비 미장센으로 시각화 — 거친 콘크리트와 유리의 충돌, 한 줄기 빛이 진실을 가리키는 연출, '달라야 한다' 카피",
+      "제품 차별성을 Herzog & de Meuron의 외피 텍스처처럼 레이어드 — '표면 아래에 답이 있다' 은유, 단면 노출 단면도 인포그래픽, 블랙+골드 투톤",
+      "핵심 가치 3개를 Lina Bo Bardi의 콘크리트 미니멀리즘으로 배치 — 서스펜디드 요소, 인더스트리얼 무드, '무게 없는 혁신' 헤드라인 방향",
+      "성장 스토리를 Glenn Murcutt의 자연-인공 이분법으로 시각화 — 로컬리즘과 유니버설리즘의 교차, 광활한 여백 속 단 하나의 숫자 강조",
+      "서비스 여정을 Jorn Utzon의 쉘 구조처럼 펼쳐지는 곡선 인포그래픽으로 표현 — 오페라하우스 기하학, '한 번도 보지 못한 방식으로' 서브카피",
+      "핵심 데이터 포인트를 John Lautner의 유기적 건축 구조처럼 흐르는 형태로 시각화 — 캔틸레버 캔버스, 중력에 맞서는 혁신 은유",
+      "비전 선언문을 Eduardo Souto Moura의 돌+현대성 대비로 표현 — '오래된 것의 새로운 언어', 역사와 미래 사이의 단 하나의 문",
+      "로드맵을 Rafael Moneo의 도시 맥락주의로 시각화 — 기존 질서 안의 새로운 질서, 격자 위의 벗어남, '규칙을 알아야 깰 수 있다'",
+      "팀 역량을 George Nakashima의 자연목 결 감성으로 표현 — 각자의 나이테, 불완전한 아름다움, '결이 다를수록 더 강하다' 카피",
+      "혁신 제품을 Raymond Loewy의 산업 디자인 미학으로 시각화 — 공기역학 실루엣, 하이라이트 한 줄, 꿀렸다가 터지는 여백",
+      "브랜드 아이덴티티를 Josef Müller-Brockmann의 그리드 시스템으로 구조화 — 수학적 조화, '정밀함이 감동이다' 헤드라인",
+      "고객 전환 순간을 Sebastião Salgado 사진 무드로 드라마화 — 흑백 대비, 얼굴 없는 군중, 하나의 빛을 향하는 시선",
+      "핵심 메시지를 Dieter Rams의 10 원칙 미니멀리즘으로 시각화 — '좋은 디자인은 가능한 한 적은 디자인이다', 화이트 스페이스 90%",
+      "결과 데이터를 Gio Ponti의 이탈리아 모더니즘 감성으로 표현 — 따뜻한 기하학, 인간적 스케일, 숫자가 시가 되는 레이아웃",
+      "브랜드 철학을 Andrea Palladio의 대칭+비례 미학으로 구조화 — 황금비 레이아웃, '완벽한 균형이 가장 인간적이다' 카피",
+      "서비스 핵심을 Axel Vervoordt의 와비-루스트 미학으로 표현 — 불완전한 아름다움, 시간의 흔적, '덜어낼수록 더해진다'",
+      "핵심 지표를 Poul Kjaerholm의 스틸+가죽 미니멀로 시각화 — 정제된 산업성, '정직한 소재처럼 정직한 데이터' 방향",
+      "기술 혁신을 Pierre Jeanneret의 인도 모더니즘 감성으로 표현 — 지역성과 보편성의 충돌, 인간 스케일의 혁신",
+      "비전 타임라인을 Fumihiko Maki의 그룹 폼 이론으로 시각화 — 개별이 모여 전체를 이루는 시퀀스, '점이 선이 되고 선이 세계가 된다'",
+      "경쟁 우위를 Rudolf Olgiati의 순수 형태론으로 표현 — 불필요한 것을 모두 제거한 본질, '이것만 남았다' 헤드라인",
+      "사용자 임팩트를 Ken Domon의 다큐멘터리 사진 감성으로 드라마화 — 있는 그대로의 진실, 조작 없는 순간의 힘",
+      "조직 문화를 Pierre Paulin의 유기적 가구 형태로 시각화 — 경계 없는 연결, 흐름의 인체공학, '사람처럼 구부러지는 조직'",
+      "ROI 데이터를 Shigeo Fukuda의 착시 그래픽으로 표현 — 보는 각도에 따라 달라지는 진실, '숫자도 관점이다'",
+      "제품 사용 경험을 Yusaku Kamekura의 올림픽 포스터 감성으로 표현 — 단순한 형태의 폭발적 에너지, 원색 대비",
+      "성장 곡선을 Finn Juhl의 조각적 가구 미학으로 표현 — 유기적 볼륨, '성장에도 형태가 있다' 시각화",
+      "혁신 생태계를 Herman Miller의 워크플레이스 시스템으로 시각화 — 연결된 개인, 시스템이 개인을 지원하는 방향성",
+      "브랜드 약속을 Piero Fornasetti의 초현실 오브제로 표현 — 친숙한 것을 낯설게, '약속은 예상치 못한 방식으로 지켜진다'",
+      "사용자 여정을 Jonathan Adler의 낙관적 모더니즘으로 표현 — 즐거운 형태, 유머 있는 기능성, '당연한 것을 즐거움으로'",
+      "핵심 통찰을 Ladislav Sutnar의 정보 디자인 혁명으로 시각화 — 복잡성의 단순화, '이해가 되는 순간의 아름다움'",
+      "마일스톤을 Alessandro Mendini의 포스트모던 유머로 표현 — 진지함과 유희의 공존, 알록달록한 진실",
+      "팀 역할을 Florence Knoll의 모더니스트 인테리어로 배치 — 기능이 형태를 결정한다, 각자의 자리가 전체를 완성",
+      "결과 임팩트를 Orla Kiely의 레트로 패턴으로 표현 — 반복에서 나오는 의미, 패턴이 된 성과",
+      "제품 로드맵을 Ronan & Erwan Bouroullec의 클라우드 시스템으로 시각화 — 유연한 모듈, 연결의 가능성, '계획은 살아있다'",
+      "서비스 가치를 Justina Blakeney의 정글 모더니즘으로 표현 — 풍성한 레이어, 자연의 리듬, '복잡함 속의 조화'",
+      "핵심 숫자를 Lucienne Day의 포스트워 낙관주의로 시각화 — 유기적 선과 점, 전쟁 이후의 희망처럼 빛나는 데이터",
+      "브랜드 스토리를 Paola Navone의 글로벌 믹스로 표현 — 다양한 문화의 충돌과 화음, '다름이 모여 하나가 된다'",
+      "제품 임팩트를 Roberto Burle Marx의 풍경 추상화로 표현 — 흘러가는 형태, 조감도 시점, 자연처럼 자연스러운 혁신",
+      "사용자 데이터를 Anni Albers의 위빙 텍스타일 패턴으로 시각화 — 씨실과 날실처럼 교차하는 데이터 포인트",
+      "전략 방향을 Naum Gabo의 구성주의로 표현 — 투명한 구조체, '보이는 것이 전부가 아니다', 내부 골격의 아름다움",
+      "파트너십을 Marcel Breuer의 Bauhaus 공동작업 감성으로 시각화 — '함께 만드는 것이 더 강하다', 용접된 연결",
+      "서비스 혁신을 Ettore Sottsass의 Memphis 스타일로 표현 — 컬러의 반란, 유쾌한 파격, '규칙 밖에서 답이 나온다'",
+      "성과 선언을 Konstantin Grcic의 산업적 아름다움으로 표현 — '기능이 감동이 될 때', 날카로운 라인의 성취감",
+      "고객 사랑을 Kelly Hoppen의 뉴트럴 럭셔리로 시각화 — 은은한 강렬함, 편안한 고급스러움, 수치보다 감각",
+      "혁신 비용을 Sam Maloof의 손의 온기로 표현 — 장인의 결, 기계가 흉내 낼 수 없는 인간의 정성",
+      "미래 비전을 Isamu Noguchi의 돌+종이+공간으로 표현 — 오리엔탈 미니멀리즘, 빈 공간이 말하는 미래",
+      "핵심 차별화를 Cini Boeri의 인간 중심 디자인으로 시각화 — '사람이 먼저다', 사용자 실루엣이 중심",
+      "브랜드 진화를 Piero Lissoni의 아키텍처럴 가구로 표현 — 구조가 디자인, '변화도 설계한다'",
+      "고객 감동을 Marimekko의 대담한 패턴으로 표현 — 원색의 자신감, 스칸디나비아 낙관주의, 즐거운 사용성",
+      "전략 실행을 James Dyson의 엔지니어링 미학으로 시각화 — 보이는 내부, 투명한 메커니즘, '작동하는 것이 아름답다'",
+      "팀 에너지를 Kaffe Fassett의 컬러 레이어링으로 표현 — 풍성한 색의 조화, 다양성이 만드는 따뜻함",
+      "제품 정밀도를 Patek Philippe의 무브먼트 감성으로 시각화 — 기어와 기어의 맞물림, '모든 디테일이 이유가 있다'",
+      "혁신 속도를 Henrik Fisker의 오토모티브 디자인으로 표현 — 공기역학, 미래적 실루엣, 가속하는 시간",
+      "기업 가치를 Eames의 유기적 모더니즘으로 시각화 — 인간적 스케일, 플라이우드처럼 자연에서 온 아이디어",
+      "성장 방향을 Norman Bel Geddes의 미래주의로 표현 — 1939년 세계박람회 미래, '내일은 이미 설계되어 있다'",
+      "사업 전환을 Sergio Pininfarina의 카 디자인 혁신으로 표현 — 라인 하나로 시대를 바꿈, 우아한 기능성",
+      "핵심 역량을 Hella Jongerius의 소재 실험으로 시각화 — 경계를 넘는 소재, '예상하지 못한 조합이 최선이다'",
+      "브랜드 리뉴얼을 India Mahdavi의 컬러 인테리어로 표현 — 선명한 색상, 감각적 공간, '새로운 색이 새로운 기회다'",
+      "고객 데이터를 Lisa Congdon의 패턴 일러스트로 시각화 — 따뜻한 선, 반복되는 패턴 속 의미, 친근한 진실",
+      "미션을 Yayoi Kusama의 무한 닷 패턴으로 표현 — 작은 점들이 모여 우주가 됨, '우리의 미션은 무한하다'",
+      "비전을 Olafur Eliasson의 빛+공간 설치로 표현 — 자연 현상의 재현, '보이는 것을 새롭게 보게 한다'",
+      "혁신 패러다임을 Anish Kapoor의 반사 조각으로 표현 — 현실의 왜곡, 자신을 보는 새로운 각도",
+      "제품 진화를 El Lissitzky의 프로운 구성으로 시각화 — 3D 공간감, 러시아 구성주의의 역동성",
+      "전략 피벗을 Theo van Doesburg의 De Stijl로 표현 — 수직+수평의 충돌, 원색의 결단, '방향을 바꾸는 것도 설계다'",
+      "팀 성과를 Josef Albers의 색면 중첩으로 시각화 — 겹침에서 나오는 새로운 색, 협업의 화학반응",
+      "고객 경험을 Wassily Kandinsky의 구성으로 표현 — 감각의 시각화, '경험은 음악처럼 느껴져야 한다'",
+      "비즈니스 모델을 Paul Klee의 마법 광장으로 시각화 — 수학적 유희, '숫자도 놀 수 있다'",
+      "핵심 인사이트를 Alexander Calder의 모빌처럼 표현 — 균형 잡힌 불균형, '통찰은 움직인다'",
+      "성장 스토리를 Joan Miró의 원시적 형태로 표현 — 아이 같은 직관, '가장 단순한 것이 가장 깊다'",
+      "제품 차별화를 Mark Rothko의 색면 감동으로 시각화 — 색이 감정이 될 때, 수치보다 먼저 느껴지는 것",
+      "브랜드 감성을 Cy Twombly의 낙서체 선으로 표현 — 통제된 혼돈, '브랜드도 손으로 쓴다'",
+      "전략 맵을 Agnes Martin의 미니멀 그리드로 구조화 — 조용한 강렬함, '가장 고요한 것이 가장 힘 있다'",
+      "혁신 임팩트를 Ellsworth Kelly의 하드엣지 형태로 표현 — 경계의 명확함, 색과 형태의 순수한 대화",
+      "미래 방향을 Donald Judd의 특수 사물로 시각화 — 경험으로서의 데이터, 공간을 점유하는 인사이트",
+      "고객 가치를 Dan Flavin의 형광등 설치로 표현 — 빛이 공간을 재정의, '우리도 공간을 재정의한다'",
+      "핵심 메트릭을 Sol LeWitt의 월드로잉 지시로 표현 — 지시+실행의 분리, 시스템이 결과를 만든다",
+      "브랜드 신뢰를 Richard Serra의 철판 조각으로 시각화 — 압도적 물질감, '신뢰는 무게가 있다'",
+      "성장 여정을 Bruce Nauman의 네온 언어로 표현 — 말이 빛이 될 때, '성장은 선언이다'",
+      "사업 전략을 Barbara Kruger의 텍스트 그래픽으로 표현 — 직접화법의 파워, '당신은 이것이 필요하다'",
+      "팀 문화를 Jean-Michel Basquiat의 원시 에너지로 표현 — 날 것의 창의성, 규칙 밖의 생명력",
+      "미션 선언을 Keith Haring의 선 인물로 시각화 — 보편적 언어, 누구나 이해하는 미션",
+      "혁신 에너지를 Franz Kline의 캘리그래피 제스처로 표현 — 먹빛 강렬함, 한 획에 담긴 결단",
+      "제품 비전을 Robert Motherwell의 스페인 공화국 시리즈로 표현 — 역사의 무게, '이것은 선언이다'",
+      "고객 감동을 Willem de Kooning의 제스처 추상으로 시각화 — 인간의 온기, 불완전한 완벽함",
+      "전략 전환을 Jackson Pollock의 액션 페인팅으로 표현 — 통제된 폭발, '혁신은 이렇게 일어난다'",
+      "브랜드 에너지를 Lee Krasner의 모자이크 추상으로 표현 — 파편의 조화, '깨진 것들이 만드는 전체'",
+      "팀 잠재력을 Arshile Gorky의 유기적 바이오모프로 시각화 — 생명력 있는 형태, '팀은 살아있다'",
+      "사업 돌파구를 Clyfford Still의 지층 색면으로 표현 — 깊이 있는 색의 균열, '돌파구는 내부에서 나온다'",
+      "혁신 속도를 Franz Marc의 동물 추상으로 시각화 — 동적 형태의 에너지, 속도와 방향의 시각화",
+      "성과 달성을 August Macke의 투명 색면으로 표현 — 빛을 통과하는 색, '성과는 투명하게 빛난다'",
+      "핵심 가치를 Max Beckmann의 삼면화로 구조화 — 세 패널의 서사, 시작-중간-끝의 극적 구성",
+      "브랜드 서사를 Ernst Ludwig Kirchner의 표현주의로 표현 — 감정의 왜곡, '사실보다 감정이 먼저다'",
+      "미션 완성을 Erich Heckel의 목판화 텍스처로 시각화 — 거친 선의 정직함, '목표도 이렇게 새긴다'"
+    ]
+  },
+  "B: Documentary 🎥": {
+    color: "#00c9ff",
+    bg: "rgba(0,201,255,.12)",
+    tag: "DOCUMENTARY",
+    btnClass: "active-b",
+    data: [
+      "그날, 모든 것이 바뀌었습니다 — 충격적 통계 1개를 단독 슬라이드로 배치, Sebastião Salgado의 흑백 다큐 무드, 인터뷰 자막 형식으로 전달",
+      "아무도 이야기하지 않았던 데이터 — Richard Avedon 포트레이트 스타일의 클로즈업, 어두운 배경에 단 하나의 얼굴, '증인이 있었다'",
+      "5년 전 우리는 이것을 몰랐습니다 — 타임랩스 비포/애프터 다큐 포맷, Steve McCurry의 인류학적 시선, 시간의 잔혹함을 데이터로",
+      "내레이션: '이 수치가 의미하는 것은...' — Paul Strand의 다큐멘터리 엄격함으로 핵심 지표 배치, 자막 스타일 서브카피",
+      "♪ [배경음: 긴장감 고조] 산업 전체가 흔들리던 그 순간 — 어두운 공장 실루엣, 윌리엄 에글스턴의 컬러 아메리카나 무드, 위기 데이터 전면 배치",
+      "증언 1: '우리는 그 변화를 예측하지 못했습니다' — 인터뷰 자막 형식, Diane Arbus의 불편한 진실, 자막 박스 안의 핵심 팩트",
+      "시장이 침묵하던 그 3개월 — 어두운 스팟라이트 한 줄기, Andre Kertesz의 기하학적 그림자, 숫자 하나가 전체를 지배",
+      "아무도 보도하지 않은 수치 — Lewis Hine의 사회 다큐 전통, 차가운 팩트의 온도, '데이터는 기억한다'",
+      "진실은 스프레드시트에 있었습니다 — Dorothea Lange의 대공황 다큐 감성, 손에 쥔 서류처럼 데이터 배치, 흑백+적색 강조",
+      "이것이 업계가 숨겨온 것입니다 — Robert Frank의 '아메리칸스' 감성, 솔직한 불편함, 검열 없는 수치 노출",
+      "♪ [BGM: 드럼 롤] 3초 후, 여러분의 생각이 바뀝니다 — 카운트다운 자막, Gordon Parks의 사회 고발 사진 무드, 단 하나의 반전 데이터",
+      "우리는 그것을 '당연하다'고 불렀습니다 — Gary Winogrand의 거리 사진 직접성, 일상 속에 숨은 이상함, 당연함의 붕괴",
+      "내레이터: '10년 뒤, 이 숫자는 두 배가 됩니다' — 미래 예측 데이터를 현재형 충격으로, Larry Burrows 전쟁 사진 긴박감",
+      "화면에서 눈을 뗄 수 없었습니다 — W. Eugene Smith의 포토에세이 구조, 연속된 증거, 피할 수 없는 결론",
+      "증언 2: '우리가 틀렸다는 걸 알면서도...' — 자백 자막 형식, James Nachtwey의 고통 직시, 사실의 폭력성",
+      "충격 자료 #1 — [REDACTED 처리된 수치], Henri Cartier-Bresson의 결정적 순간, 데이터가 포착된 그 찰나",
+      "업계 전문가들도 예측 실패한 변수 — Elliot Erwitt의 아이러니 사진 감성, 예측 모델의 실패를 유머 없이",
+      "♪ [BGM: 현악 긴장] 두 그래프가 교차하는 순간 — 적과 청의 교차선 클로즈업, Margaret Bourke-White의 산업 사진 스케일",
+      "우리가 무시한 신호들 — Lee Friedlander의 현대사회 증언, 경고 신호들의 나열, 점점 커지는 폰트",
+      "데이터가 거짓말하지 않는 이유 — Nan Goldin의 날 것의 진실, 조작 없는 수치의 힘, 렌즈 앞의 사실",
+      "그 어떤 PR도 이 수치를 가릴 수 없었습니다 — Mary Ellen Mark의 다큐 휴머니즘, 사실 앞의 마케팅 무력감",
+      "경고는 있었습니다 — Bruce Davidson의 사회 관찰 감성, 무시된 시그널들의 연대기, 소형 폰트→대형 폰트",
+      "♪ [BGM: 침묵] 그 이후의 데이터는 달랐습니다 — 피터 린드버그 미니멀 다큐 감성, 침묵의 데이터 시각화",
+      "이것은 음모가 아닙니다. 이것은 수학입니다 — Joel Meyerowitz의 차가운 관찰, 감정 없는 팩트의 설득",
+      "내레이션: '당신의 산업에서도 이미 시작되었습니다' — Anders Petersen의 친밀한 거리감, 'YOU'를 향한 카메라",
+      "무너진 예측 vs. 현실 — Sebastião Salgado의 대비 구도, 두 수치의 충돌, 예측의 오만함",
+      "이 회사는 5년 전 이것을 알았습니다 — Brassaï의 야간 파리 무드, 어둠 속 정보 노출, 탐문 사진 질감",
+      "증언 3: '돌아보면, 모든 답이 데이터 안에 있었습니다' — 회고 자막, Yousuf Karsh의 권위 있는 인물 조명",
+      "숫자가 말을 하기 시작합니다 — Ernst Haas의 컬러 시학, 데이터에 감정을 입히는 컬러 레이어",
+      "♪ [BGM: 클라이맥스] 바로 이 지점입니다 — 화면 전체를 채우는 단 하나의 수치, Irving Penn의 명료한 구도",
+      "아직 아무도 주목하지 않은 두 번째 위기 — Don McCullin의 전쟁 심리 촬영 감각, 예고된 재앙의 서술",
+      "같은 데이터, 다른 해석 — 좌우 분리 스크린, Chris Marker의 에세이 영화 감성, 관점의 다양성",
+      "5년 전 당신은 이 선택을 했습니다 — 아카이브 인터컷, Robert Capa의 현장 긴박감, 과거 결정의 현재 결과",
+      "이것이 업계의 불편한 진실입니다 — 반쯤 가려진 그래프, Weegee의 범죄 사진 긴박감, 폭로의 형식",
+      "당신이 보고 있는 것, 보지 못한 것 — 가시/불가시 데이터 이분법, Henri Cartier-Bresson의 비가시 순간 포착",
+      "내레이션: '전문가들은 이것을 블랙 스완이라 부릅니다' — 흑백 텍스처, 부분 공개 기밀 문서 오버레이",
+      "♪ [BGM: 긴 침묵 후 폭발] 결론은 하나입니다 — 모든 복잡한 데이터가 하나의 방향으로 수렴, 광각-클로즈업",
+      "우리는 같은 실수를 반복하고 있습니다 — 역사 사진 아카이브+현재 데이터 병치, 역사의 메아리",
+      "그 숫자 뒤에는 사람이 있었습니다 — 사회 다큐 인물 클로즈업, 데이터의 인간화, 통계가 스토리가 되는 순간",
+      "증언 4: '우리는 선택의 기로에 있었습니다' — 결정 분기점 자막, 실루엣+빛의 대비, 선택의 무게감",
+      "모두가 틀렸고, 데이터만 맞았습니다 — Martin Parr의 아이러니 사진, 전문가 실패의 유머 없는 기록",
+      "♪ [BGM: 점점 커지는 드럼] 이 숫자가 의미하는 것 — 텍스트 없이 수치만, 여백이 긴장을 만드는 레이아웃",
+      "그 결정이 5년 후 이 결과를 만들었습니다 — 원인-결과 타임라인 자막, Bernd & Hilla Becher 산업 기록 감성",
+      "반박할 수 없는 3가지 사실 — 법정 증거 자료 형식, 냉정한 사실 배열, Weegee 스타일 직접성",
+      "이것은 위기인가, 기회인가? — 같은 데이터를 두 방향으로 해석, 카메라 각도처럼 프레이밍이 전부다",
+      "당신의 경쟁자는 이미 알고 있습니다 — 추격 서사, 렌즈에 잡힌 선두주자 실루엣, 거리감의 시각화",
+      "♪ [BGM: 분위기 반전] 그런데, 희망이 있습니다 — 어두운 프레임에서 한 줄기 빛, 전환점 데이터의 등장",
+      "5년 후의 당신에게 보내는 데이터 — 미래 자막, 타임캡슐 형식, 현재 결정의 미래 무게감",
+      "내레이션: '이제 당신의 선택입니다' — 마지막 자막, 카메라가 천천히 당신을 향함, 행동 촉구",
+      "진실은 항상 데이터 안에 있었습니다 — 클로징 크레딧 형식, 모든 출처 명시, 팩트의 승리",
+      "이것이 우리가 보지 못한 이유입니다 — 인지 편향 다이어그램, 블라인드 스팟 시각화, Dorothea Lange 감성",
+      "업계의 숨겨진 공식을 공개합니다 — 수식 형태 타이포그래피, 물리학 공식처럼 배치된 비즈니스 데이터",
+      "이 데이터가 모든 것을 설명합니다 — 단 하나의 산점도, 모든 변수가 한 점으로 수렴, 절제의 힘",
+      "증언 5: '그때 우리가 달랐다면...' — 반사실적 자막, 기회비용의 시각화, 과거 결정의 현재 무게",
+      "♪ [BGM: 결말부 오케스트라] 변화는 이미 시작되었습니다 — 파노라마 타임라인, 모든 데이터가 하나의 방향으로",
+      "당신이 지금 보는 것이 미래입니다 — 예측 구간 시각화, 불확실성 영역, 현재와 미래의 경계",
+      "경고 신호는 5년 전부터 있었습니다 — 역순 타임라인, 초기 신호→현재 결과, 예방 가능했던 미래",
+      "이것이 우리가 행동해야 하는 이유 — 모든 증거의 종합, 결론의 단순함, 행동 촉구의 미학",
+      "♪ [침묵] [데이터] [침묵] — 여백이 전달하는 메시지, 설명 없는 사실의 힘, 관객에게 맡기는 해석",
+      "그들은 왜 이 사실을 숨겼을까 — 음모론 미학, 반만 공개된 차트, 숨겨진 데이터의 그림자",
+      "이 변화를 예측한 0.1%의 공통점 — 예외적 성공 다큐, 통계적 이상치 클로즈업, 희귀한 통찰",
+      "내레이션: '그리고 세상이 바뀌었습니다' — 클라이맥스 자막, 변곡점 데이터 전면 배치, BGM 크레셴도",
+      "당신의 산업은 지금 어디에 있습니까 — 지도 위 핀 하나, 현재 위치의 냉정한 직시, 자기 진단 데이터",
+      "모든 데이터는 이것을 가리킵니다 — 수렴 화살표, 모든 지표의 하나의 결론, 불가피성의 미학",
+      "이것이 5년의 증거입니다 — 아카이브 쌓기, 증거의 층위, 돌이킬 수 없는 사실의 무게",
+      "마지막으로 기억해야 할 숫자 — 단일 대형 타이포, 다른 모든 것이 배경으로 물러남",
+      "♪ [BGM: 엔딩] 그래서 우리는 여기 있습니다 — 클로징 자막, 다큐의 결말처럼 여운을 남기는 데이터",
+      "이것은 경고가 아닙니다. 이것은 현실입니다 — 팩트체크 스티커, 검증된 출처 나열, 현실의 냉정함",
+      "데이터는 기다려주지 않습니다 — 카운트다운 타이머 시각화, 시간의 압박, 지금 행동해야 하는 이유",
+      "이 추세가 계속된다면 — 외삽 그래프, 최악의 시나리오 선 추가, 가능성의 경계",
+      "당신의 경쟁자가 이미 알고 있는 것 — 정보 비대칭 시각화, 知/不知 영역 이분법",
+      "내레이션: '당신은 이미 선택했습니다' — 현재 행동이 미래를 결정, 무의식적 결정의 시각화",
+      "이것이 우리가 놓친 것들입니다 — 사후 확신 편향 다이어그램, '왜 몰랐나'의 구조적 해부",
+      "데이터가 보여주는 진짜 이야기 — 표면 수치 vs. 이면 데이터, 빙산 다이어그램 다큐 버전",
+      "♪ [BGM: 클라이맥스 전 침묵] 당신은 지금 결정해야 합니다 — 결정 포인트 다이어그램, 행동/비행동 결과 분기",
+      "그 질문에 이제 답할 수 있습니다 — 다큐 클로징, 모든 증거를 종합한 단 하나의 결론",
+      "이것이 오늘의 마지막 데이터입니다 — 엔딩 크레딧 형식 인포그래픽, 출처와 방법론 명시",
+      "다음 에피소드: 그래서 무엇을 해야 하는가 — 예고편 형식 CTA, 다음 행동 방향 미리보기",
+      "당신의 이야기는 아직 끝나지 않았습니다 — 오픈 엔딩 자막, 열린 미래의 데이터 가능성",
+      "그리고 5년 후, 우리는 이것을 기억할 것입니다 — 미래 시점 자막, 현재 결정의 역사적 의미",
+      "증언 6: '이것이 모든 것을 바꿨습니다' — 최후 증인 자막, 변화의 임팩트 단 하나의 수치로",
+      "♪ [BGM: 종지부] 진실은 항상 여기 있었습니다 — 마지막 슬라이드, 모든 데이터의 귀결, 여운의 여백"
+    ]
+  },
+  "C: RPG Quest 🎮": {
+    color: "#7cff6b",
+    bg: "rgba(124,255,107,.12)",
+    tag: "RPG QUEST",
+    btnClass: "active-c",
+    data: [
+      "⚔️ QUEST ACCEPTED: 잃어버린 시장 점유율을 되찾아라 — HP바 형식 현황 게이지, NPC 대사 '용사여, 시장이 흔들리고 있네', 퀘스트 수락 UI 오버레이",
+      "📊 STAT WINDOW OPEN — 현재 역량 6개 레이더 차트를 JRPG 스탯창 스타일로, STR/INT/AGI/DEF/LCK/WIS 속성으로 비즈니스 KPI 매핑",
+      "🗺️ 던전 맵 공개: 경쟁사 분석 지형도 — 4개 던전(시장), 각 던전 난이도 별 표시, 우리 파티 현재 위치 핀, Eyvind Earle 배경화 감성",
+      "⚠️ BOSS ENCOUNTER: 경쟁 심화 — 보스 HP 게이지 전면 배치, 보스 약점 분석 [WEAK: 차별화], 전투 BGM 큐 [♪ 보스 테마]",
+      "🏆 MISSION COMPLETE: Q3 목표 달성 — 레벨업 화면, 경험치 바 MAX, 보상 아이템 [+23% 성장], 축하 파티클 이펙트 방향",
+      "🔴 PARTY HP CRITICAL — 위기 지표 빨간 HP바, 파티 멤버(팀) 상태 이상, NPC: '포션이 필요해! 지금 당장!', 긴박한 UI",
+      "📜 새로운 퀘스트 해금됨: 새로운 시장 진입 — 스크롤 펼치는 애니메이션 방향, 숨겨진 맵 영역 공개, 탐험 보너스 +15%",
+      "⚔️ SKILL TREE UNLOCKED: 핵심 역량 발전 경로 — 분기형 스킬 트리, 각 노드 요건+효과, 현재 포인트 배분 현황",
+      "🛡️ DEFENSE MATRIX: 리스크 방어 시스템 — 방어막 HP 게이지, 위협 유형별 방어 수치, '이 방패만이 보스를 막을 수 있다'",
+      "✨ LEGENDARY ITEM ACQUIRED: 핵심 솔루션 — 아이템 획득 연출, 아이템 설명창 [효과: 시장 점유율 +20%], 금빛 아이템 아이콘",
+      "🗝️ SECRET DUNGEON 발견: 블루오션 시장 — 숨겨진 지역 해금, 지도 안개 걷힘, '아무도 아직 발견하지 못한 곳' NPC 대사",
+      "⚡ COMBO ATTACK: 파트너십 시너지 — 협공 이펙트 방향, 연계 보너스 수치, '두 힘이 합쳐질 때 1+1=3이 된다' 게임 공식",
+      "📈 EXPERIENCE GAINED: +4,200 XP — 레벨업 애니메이션 방향, 경험치 출처 분해 차트, 다음 레벨까지 거리",
+      "🔮 MAGIC SYSTEM: 데이터 분석 마법진 — 원형 마법진에 핵심 변수 배치, 주문 시전 단계, '데이터가 마법이 되는 순간'",
+      "🏰 GUILD HEADQUARTERS: 조직 구조 맵 — 길드 홀 도면, 각 부서=길드 파트, 역할과 레벨 명시, 길드 랭크 시스템",
+      "💎 RARE ITEM: 경쟁 우위 자산 — 레어도 등급 [Epic/Legendary], 아이템 속성 4개, 획득 조건 퀘스트 플로우",
+      "🌋 FINAL BOSS PHASE 2: 시장 위기 심화 — 2페이즈 전환 이펙트, 보스 새로운 패턴 경고, '예상치 못한 변수가 나타났다!'",
+      "⚗️ CRAFTING SYSTEM: 전략 조합 레시피 — 재료 아이템 3개+제작 과정+결과 아이템, '이 세 가지가 합쳐져야 한다'",
+      "🗺️ WORLD MAP UPDATE: 신규 시장 오픈 — 세계 지도 확장, 새 지역 안개 걷힘, 지역별 위험도/보상 표시",
+      "📊 BATTLE RESULTS: Q4 성과 분석 — 배틀 리포트 UI, 적 HP 소모량/아군 피해/획득 보상 통계, 랭킹 변동",
+      "🔄 SAVE POINT: 현재 전략 체크포인트 — 세이브 포인트 아이콘, 지금까지의 퀘스트 로그, 다음 세이브까지 할 일 목록",
+      "🧙 NPC 길드장: '이 정보가 당신의 여정을 바꿀 것입니다' — NPC 대사 박스, 중요 힌트 아이템 수령, 퀘스트 마커 갱신",
+      "⚔️ DAILY QUEST: 오늘의 핵심 실행 과제 — 데일리 퀘스트 목록 UI, 완료 시 보상 미리보기, 체크박스 진행상태",
+      "🏅 ACHIEVEMENT UNLOCKED: 첫 번째 마일스톤 — 도전과제 배지 팝업, 업적 설명, 보상: 다음 단계 잠금해제",
+      "💀 GAME OVER 방지를 위한 전략 가이드 — 죽음 방지 팁 NPC 대사, 실패 패턴 3개, 부활 아이템 획득 방법",
+      "🌟 STAR RANKING: 경쟁사 비교 티어 리스트 — S/A/B/C/D 티어, 각 경쟁사 위치, 우리의 목표 티어 강조",
+      "🗡️ WEAPON UPGRADE: 핵심 역량 강화 로드맵 — 무기 강화 +1~+10 단계, 각 단계 요구 재료, 강화 성공률",
+      "🔮 ORACLE PROPHECY: 시장 예측 — 예언 스크롤 형식, 미래 시나리오 3개, 각 시나리오 발생 확률",
+      "🏁 CHECKPOINT CLEARED: 분기별 목표 달성 — 체크포인트 깃발 이펙트, 클리어 시간 기록, 다음 체크포인트 거리",
+      "⚡ POWER SURGE: 핵심 드라이버 발동 — 캐릭터 에너지 폭발 이펙트 방향, 성장 드라이버 시각화, '이것이 우리의 필살기'",
+      "🎯 PRECISION STRIKE: 타겟 고객 식별 — 표적 UI 오버레이, 타겟 적 분석창, 약점 [EXPLOIT: 미충족 니즈]",
+      "📦 INVENTORY CHECK: 현재 자원 현황 — 인벤토리 UI 그리드, 각 자원 수량+최대치, 부족 자원 [LOW] 경고",
+      "🌐 SERVER ONLINE: 디지털 전환 완료 — 서버 연결 UI, 레이턴시 수치, 온라인 파티원 현황, '이제 글로벌 서버 진입'",
+      "🔓 UNLOCK: 새로운 가능성 해금 — 잠금장치 해제 이펙트, 해금 조건 체크리스트, 해금 후 접근 가능 콘텐츠 목록",
+      "🧪 EXPERIMENT MODE: 신사업 파일럿 — 실험실 UI, 변수 설정 패널, 예상 결과 범위, 실험 성공 조건",
+      "📜 LORE DISCOVERED: 업계 인사이트 발견 — 고대 석판 형식 데이터, 숨겨진 패턴, NPC: '이것이 전설의 공식이다'",
+      "⚔️ PVP ARENA: 경쟁사 직접 비교 — PVP 배틀 UI, 스탯 직접 비교, 승/패 항목 색깔 구분, 최종 승자 예측",
+      "🌙 NIGHT MARKET: 미개척 틈새시장 — 숨겨진 야간 시장 맵, 특수 아이템만 있는 상점, 접근 조건 퀘스트",
+      "💡 STRATEGY GUIDE: NPC 멘토 조언 — 파란 힌트 박스, 공략 포인트 3개, '이 순서대로 하면 반드시 클리어한다'",
+      "🏆 HALL OF FAME: 성공 사례 분석 — 명예의 전당 UI, Top 5 성공 패턴, 공통 스탯 분석",
+      "🔥 FIRE SALE EVENT: 한정 기회 시각화 — 타이머 카운트다운, 한정 보상, FOMO 긴박감, '이 기회는 다시 오지 않는다'",
+      "🗺️ QUEST LOG: 전체 프로젝트 로드맵 — 퀘스트 로그 스크롤 UI, 완료/진행/미완료 구분, 전체 달성률 게이지",
+      "⭐ RATING SYSTEM: 고객 만족도 별점 — 별점 UI 5개, 항목별 세부 평점, '5성을 위한 개선 포인트'",
+      "🧩 PUZZLE SOLVED: 복잡한 문제의 해결책 — 퍼즐 맞춤 완성 이펙트, 퍼즐 조각=핵심 요소, 완성 후 보상 공개",
+      "🌊 WAVE ATTACK: 시장 공세 전략 — 웨이브 타이밍 차트, 1차/2차/3차 공격 시퀀스, 최적 타이밍 가이드",
+      "💰 GOLD ACCUMULATED: 누적 ROI 시각화 — 골드 카운터 UI, 획득처 분해, 다음 업그레이드까지 필요 금액",
+      "🗡️ COMBO COUNTER: 연속 성과 스트릭 — 콤보 카운터 UI, 콤보 보너스 체계, '연속으로 할수록 강해진다'",
+      "🏔️ MOUNTAIN CLEARED: 분기 목표 정복 — 산 정상 도달 이펙트, 정복 스탯 요약, 다음 산(목표) 미리보기",
+      "🔮 SKILL MASTERY: 핵심 역량 숙련도 — 스킬 숙련도 바 시각화, Lv.1→Lv.MAX 경로, 숙련 보너스 효과",
+      "🛡️ FINAL STAND: 위기 대응 최후 방어선 — 방어진 형성 UI, 수호 아이템 장착 현황, '이 선을 넘으면 안 된다'",
+      "🌟 TRUE ENDING UNLOCKED: 최고 성과 달성 — 트루 엔딩 컷신 방향, 히든 보상 공개, '모든 조건을 충족했습니다'",
+      "⚡ OVERDRIVE MODE: 최고 성장 가속 — 게이지 MAX 이후 초월 상태, 보너스 성장률 시각화, 임시 버프 효과",
+      "🗺️ NEW GAME+: 다음 전략 사이클 시작 — NG+ 화면, 유지 어빌리티 목록, 증가된 난이도 경고, 새로운 시작",
+      "📊 STAT COMPARISON: 1년 전 vs. 현재 스탯 — 시계열 스탯 변화 차트, 성장한 수치 녹색, 약해진 수치 빨간색",
+      "🎮 GAME CLEAR: 연간 목표 달성 엔딩 — 엔딩 크레딧 형식, 모든 퀘스트 완료 로그, 최종 달성률과 보상 요약",
+      "🔄 RESPAWN POINT: 실패 후 재시작 전략 — 리스폰 지점 선택, 이전 실수 분석, 다음 시도 전략 개선점",
+      "🌍 OPEN WORLD UPDATE: 신규 시장 개방 — 월드 확장 맵 공개, 새 영역 탐험 가이드, '이 세계는 아직 끝나지 않았다'",
+      "💎 DIAMOND RANK: 최상위 시장 지위 목표 — 랭크 시스템 전체, 현재 랭크→목표 랭크 경로, 각 랭크 요건",
+      "🧠 BRAIN BOSS: 지식 산업 최종 보스 — 지식 보스 스탯 분석, 약점: 데이터 기반 인사이트, 공략 패턴",
+      "🗝️ MASTER KEY: 모든 것을 여는 핵심 전략 — 만능 열쇠 아이콘, 열 수 있는 문(기회) 목록, 열쇠 획득 방법",
+      "⚔️ GUILD WAR: 산업 경쟁 전투 시뮬레이션 — 길드전 맵, 세력도, 현재 전쟁 상황, 우리 길드 전략",
+      "🌟 PRESTIGE MODE: 도약을 위한 리셋 전략 — 프레스티지 보너스, 리셋 후 강해지는 스탯, 장기 전략의 역설",
+      "🎯 HEADSHOT: 핵심 문제 정중앙 타격 — 크리티컬 히트 이펙트, 대미지 수치=임팩트, '정확히 여기다!'",
+      "🏰 CASTLE SIEGE: 시장 리더십 쟁탈 — 공성 전략 맵, 성벽 방어선=진입 장벽, 공략 루트 3가지",
+      "🌙 DARK DUNGEON: 위험 시장의 기회 — 어두운 던전 지도, 위험 경고 표시, 숨겨진 보물 힌트 위치",
+      "💫 CONSTELLATION: 핵심 KPI 별자리 연결 — 별자리 형태 KPI 네트워크, 주요 지표가 별로, 연결선=인과관계",
+      "🔰 BEGINNER'S PATH: 신규 전략 온보딩 — 초보자 가이드 UI, 단계별 퀘스트 잠금해제, 첫 클리어 보상",
+      "⚡ LIGHTNING STRIKE: 번개 속도 실행 전략 — 스피드 실행 플랜, 타임라인 최소화, '빠를수록 강하다' 게임 공식",
+      "🗡️ SILENT ASSASSIN: 스텔스 전략 — 소음 없는 실행, 경쟁사 인식 전의 선점, '그들이 알아차렸을 때는 늦었다'",
+      "🌟 ALL CLEAR: 완벽한 전략 실행 체크리스트 — 올클리어 배지 모음, 각 퀘스트 퍼펙트 클리어 조건",
+      "🏆 FINAL TROPHY: 연간 성과 최종 요약 — 트로피 룸 UI, 획득 업적 모음, 최종 스코어, 다음 시즌 예고"
+    ]
+  },
+  "D: Magazine 📰": {
+    color: "#ff6bce",
+    bg: "rgba(255,107,206,.12)",
+    tag: "MAGAZINE",
+    btnClass: "active-d",
+    data: [
+      "The New Rules of 성장 — Vol.24 EXCLUSIVE, Irving Penn의 오브제 사진 감성, 거대한 타이포그래피+단 하나의 제품 컷, 럭셔리 화이트 스페이스",
+      "COVER STORY: 이것이 2025년의 Power Look입니다 — 파격적 비대칭 레이아웃, Richard Avedon 패션 사진 무드, 'MUST HAVE' 라벨",
+      "EDITOR'S NOTE: 우리가 놓친 것들 — 에디터 손글씨 서명 이미지, 내부자 관점 2문장, Annie Leibovitz의 친밀한 시선",
+      "The It Factor: 지금 가장 뜨거운 트렌드 — 컬러풀 인포그래픽, 트렌드 게이지 시각화, Patrick Demarchelier 무드",
+      "EXCLUSIVE: 업계 No.1이 처음 공개하는 것 — 기밀해제 테이프 오버레이, 베일 뒤의 데이터 공개 드라마, 시크릿 폴더 에스테틱",
+      "HOW TO: 지금 당장 시작할 수 있는 3가지 — 럭셔리 체크리스트, 티파니 블루+골드 컬러, Peter Lindbergh 미니멀 사진 무드",
+      "TREND REPORT 2025: 아무도 보지 못한 숫자들 — 거대한 퍼센트 타이포, 배경 텍스처 지면, 'BREAKING' 태그",
+      "The Power Issue: 지금 가장 영향력 있는 10가지 — Top 10 랭킹 에디토리얼, David LaChapelle 컬러 폭발 무드",
+      "BEAUTY MEETS DATA: 숫자도 아름다울 수 있다 — 파스텔+골드 데이터 시각화, Nick Knight의 실험적 사진 감성",
+      "WHY IT MATTERS: 이 트렌드를 놓치면 안 되는 이유 — FOMO 유발 헤드라인, Helmut Newton의 파워풀 구도, 긴박한 서브타이틀",
+      "FASHION FORWARD: 전략의 드레스 코드 — 패션 런웨이 스타일 데이터 배치, 시즌 트렌드처럼 분기 트렌드 표현",
+      "SUSTAINABILITY ISSUE: 새로운 럭셔리의 정의 — 그린+화이트 미니멀, Tim Walker의 몽환적 자연 무드, ESG 데이터 미학화",
+      "THE A LIST: 올해의 핵심 지표들 — A-리스트 셀러브리티처럼 KPI 배치, 레드카펫 순간 무드, 'WHO TO WATCH'",
+      "MARKET INSIDER: 전문가들이 말하지 않는 것 — 내부자 칼럼 형식, 작은 폰트의 큰 진실, Tim Gunn 스타일 코멘터리",
+      "COVER GIRL: 이 분기의 가장 빛나는 지표 — 단 하나의 수치를 모델처럼 표지에, Mario Testino 광채 조명",
+      "THE EDIT: 지금 당장 필요한 5가지 — 큐레이션 에디트 레이아웃, 쇼핑 에디토리얼 형식, 각 항목 가격표=비용/가치",
+      "STREET STYLE: 실제 현장의 데이터 — 거리 사진 무드의 리얼 데이터, Scott Schuman 감성, 꾸미지 않은 진실",
+      "POWER COUPLE: 두 지표의 상관관계 — 커플 사진 구도, 서로를 바라보는 두 데이터, 'They just work'",
+      "IN CONVERSATION: 데이터와의 인터뷰 — Q&A 포맷, 데이터가 말하는 것처럼 의인화, 잡지 인터뷰 레이아웃",
+      "THE CLOSET: 전략 아이템 에디토리얼 — 옷장 열기 콘셉트, 각 전략=의상 아이템, 시즌 코디=분기 전략",
+      "BEAUTY RITUAL: 일상 실행 루틴의 미학 — 뷰티 루틴 스텝 형식, 아침부터 저녁까지 실행 시퀀스, Kate Moss 미니멀",
+      "THE WRAP-UP: 이달의 핵심 테이크어웨이 — 매거진 마지막 장 형식, 에디터 최종 픽, 'What We Loved This Month'",
+      "FASHION WEEK REPORT: 분기 실적 런웨이 — 런웨이 워킹 순서로 KPI 등장, 각 '룩'=성과 지표, 리뷰 코멘트",
+      "THE NEXT BIG THING: 지금 주목해야 할 신호 — 'UP AND COMING' 레이블, 새벽 감성 어두운 레이아웃, 미래 트렌드 조명",
+      "LUXURY DECODED: 고급 전략의 공식 — 럭셔리 브랜드 에디토리얼 무드, 프리미엄 데이터 시각화, 'Timeless' 키워드",
+      "EXCLUSIVE ACCESS: 업계 No.1의 내부 데이터 — VIP 패스 오버레이, 제한 공개 그래프, VELVET ROPE 에스테틱",
+      "THE IT GIRL: 올해의 핵심 기술/트렌드 — 패션 아이콘처럼 트렌드 소개, 'She's wearing the future' 무드",
+      "MUST-HAVE LIST: 지금 반드시 알아야 할 지표들 — 쇼핑 리스트 형식, 체크박스, 'Add to Wishlist' CTA",
+      "TRAVEL ISSUE: 새로운 시장으로의 여행 — 여행 매거진 감성, 목적지=신시장, 가이드 북 레이아웃 인포그래픽",
+      "THE FORECAST: 다음 시즌 예측 — 패션 위크 예측 칼럼, 트렌드 선행 지표, 'What's IN/OUT 2026'",
+      "CELEBRITY SECRETS: 최고 성과자의 공통 전략 — 연예인 비밀 공개 형식, 성공 전략 Q&A, 스타일 팁=비즈니스 팁",
+      "RED CARPET MOMENT: 최고의 성과 순간 — 레드카펫 하이라이트 레이아웃, 최고 퍼포먼스 순간 포착, 'Best Dressed'",
+      "THE CONTROVERSY: 업계가 논쟁 중인 것 — 프로/콘 에디토리얼, 'For vs. Against', 독자 투표 형식",
+      "BACKSTAGE PASS: 전략 실행의 비하인드 — 무대 뒤 사진 무드, 완성 전의 과정, 'Real Look' 솔직함",
+      "THE PROFILE: 핵심 경쟁사 심층 분석 — 잡지 인물 프로필 형식, 경쟁사를 셀러브리티처럼, 강점/약점 인터뷰",
+      "HEALTH & WELLNESS: 조직 건강 진단 — 웰니스 매거진 감성, 건강 지표 시각화, 'Are You Thriving?'",
+      "THE COMEBACK: 반등 전략 스토리 — 복귀 스토리 에디토리얼, 'Back and Better' 헤드라인, 반등 데이터 드라마",
+      "GLOBAL EDITION: 세계 시장 트렌드 비교 — 인터내셔널 에디션 감성, 국가별 트렌드 에디토리얼, 글로벌 데이터 패션화",
+      "THE MAKEOVER: 전략 전환 비포/애프터 — 뷰티 메이크오버 형식, Before/After 레이아웃, 변화의 드라마",
+      "INSIDE ACCESS: 최고의 팀이 일하는 방식 — 오피스 투어 사진 무드, '내부에서 본 것' 형식, 팀 문화 에디토리얼",
+      "THE WISHLIST: 내년을 위한 전략 희망 목록 — 홀리데이 위시리스트 형식, 가격=투자 규모, 'Dear Strategy Santa'",
+      "BODY ISSUE: 조직 체질 개선 — 스포츠 일러스트레이티드 무드, 조직 근육 분석, '어떤 근육이 필요한가?'",
+      "THE POWER ISSUE: 올해 가장 영향력 있는 지표 — 파워 이슈 커버, 영향력 순위, 'Who Runs the Market'",
+      "HOLIDAY GIFT GUIDE: 팀에게 줄 전략 선물 — 선물 가이드 레이아웃, 각 전략=선물 아이템, 가격표=우선순위",
+      "THE REBOOT: 새로운 시작을 위한 에디토리얼 — 신년 특집 무드, 클린 슬레이트 이미지, 'New Year, New Strategy'",
+      "CULTURE ISSUE: 조직 문화 심층 특집 — 문화 매거진 에디토리얼, 가치관 시각화, 'What We Believe In'",
+      "THE COLLAB: 파트너십 특집 에디토리얼 — 콜라보 패션 무드, 두 브랜드의 만남, '1+1=∞' 에디토리얼",
+      "DIGITAL ISSUE: 디지털 전환 특집 — 디지털 네이티브 매거진 감성, 픽셀+프린트 하이브리드, '스크린 세대의 전략'",
+      "THE ARCHIVE: 과거 성공 전략 회고 특집 — 아카이브 이슈 감성, 빈티지 레이아웃, '우리가 잊고 있었던 것들'",
+      "BEAUTY ISSUE: 완벽한 전략의 미학 — 뷰티 특집 무드, '완벽함은 디테일에 있다', 세부 지표 클로즈업",
+      "THE INFLUENCER: 시장을 움직이는 핵심 변수 — 인플루언서 특집 형식, 영향력 지수 시각화, 'Follow This Variable'",
+      "ESCAPE ISSUE: 탈출구로서의 새로운 전략 — 여름 탈출 무드, 리프레시 전략, 'Get Me Out of Here'",
+      "THE VERDICT: 최종 전략 평가 에디토리얼 — 법정 드라마 판결 형식, 심사위원 총평, 최종 스코어 발표",
+      "STYLE FILE: 전략 스타일 가이드 — 스타일 바이블 형식, Do's & Don'ts 에디토리얼, 전략의 드레스 코드",
+      "THE LAUNCH: 신제품/신전략 런칭 이슈 — 론칭 파티 무드, 깜짝 공개 드라마, 'IT'S HERE' 헤드라인",
+      "BOLD PREDICTIONS: 전문가 예측 특집 — 예언 에디토리얼, 크리스털볼 감성, '2026년 이것이 온다'",
+      "THE DISSENT: 반대 의견도 듣는다 — 반론 에디토리얼, 다양한 관점, '다른 목소리가 더 강하다'",
+      "FAST FASHION: 빠른 실행 전략 특집 — 패스트 패션 무드, 속도의 미학, '내일 입을 것을 오늘 결정한다'",
+      "THE MINIMALIST: 덜어내는 전략 특집 — 미니멀리스트 에디토리얼, 화이트 스페이스 90%, '이것만 남겼습니다'",
+      "RESORT COLLECTION: 장기 전략 리조트 컬렉션 — 리조트 패션 시즌 무드, 장기 로드맵을 패션 컬렉션으로",
+      "THE MAXIMALIST: 모든 것을 넣는 전략 — 맥시멀리스트 에디토리얼, 풍성한 데이터 레이어, '많을수록 좋다'",
+      "BEHIND THE SEAMS: 전략 실행의 봉제선 — '봉제선 뒤의 진실', 완성품 뒤의 과정, 장인 정신 무드",
+      "THE CAPSULE: 핵심만 남긴 캡슐 컬렉션 전략 — 캡슐 컬렉션 에디토리얼, 10개→3개 정제, '정수만 담았다'",
+      "GLOBAL COLLAB: 글로벌 파트너십 특집 — 인터내셔널 콜라보 패션 무드, 국경을 넘는 전략 협력",
+      "THE INNOVATION ISSUE: 혁신 특집 — R&D 에디토리얼, 실험실 패션 무드, '이것이 다음 시즌이다'",
+      "RESORT TO LUXURY: 프리미엄 전략으로의 이동 — 럭셔리 리조트 감성, '이제 업그레이드할 시간', 가격 상승 정당화",
+      "THE FINAL ISSUE: 마지막 페이지의 인사이트 — 마지막 장 에디토리얼, '가장 중요한 것은 맨 마지막에 있다'"
+    ]
+  },
+  "E: Classified 🔒": {
+    color: "#ffd700",
+    bg: "rgba(255,215,0,.1)",
+    tag: "CLASSIFIED",
+    btnClass: "active-e",
+    data: [
+      "[TOP SECRET] OPERATION: 프로메테우스 — 핵심 목표 기밀 브리핑, 서류 질감 배경, 검은 검열 바 오버레이, 타자기 폰트 데이터 배치",
+      "[EYES ONLY] 정보 분석관 보고서 No.001 — 본 요원은 다음 3가지 위협을 식별함, 등급분류: SECRET, 배포 제한 스탬프",
+      "[REDACTED] 기밀 해제된 시장 정보 — 검열된 부분+공개된 부분 대비, '이것만 공개할 수 있습니다', 정보기관 양식",
+      "[CLASSIFIED] THREAT ASSESSMENT: 경쟁 위협 분석 — 위협 수준 게이지 [LOW/MED/HIGH/CRITICAL], 각 위협 소스 식별",
+      "[OPERATION BRIEF] 침투 경로 3선 — 시장 진입 루트 지도, 각 루트 위험도+성공 가능성, 추천 루트 강조",
+      "[FIELD REPORT] 현장 요원 보고서 — 1인칭 현장 관찰 기록, 날짜/시간/위치 헤더, 핵심 발견 사항 번호 목록",
+      "[TOP SECRET] 표적 식별 완료: 고가치 고객 세그먼트 — HVT(High Value Target) 분석, 위치/특성/접근 방법 기밀 형식",
+      "[INTEL SUMMARY] 경쟁사 동향 기밀 요약 — 출처: 복수의 독립 정보, 신뢰도 등급 표시, '이 정보는 72시간 후 소멸'",
+      "[MISSION DIRECTIVE] 실행 명령 — 작전 목표/타임라인/담당 요원/성공 기준 기밀 문서 형식, 승인 서명란",
+      "[SURVEILLANCE LOG] 시장 감시 일지 — 72시간 관찰 기록, 타임스탬프별 시장 변화, 이상 징후 마킹",
+      "[EYES ONLY] 내부 취약점 평가 — VULNERABILITIES IDENTIFIED: 3건, 각 취약점 심각도+익스플로잇 가능성",
+      "[CONFIDENTIAL] 자산 현황 목록 — ASSETS INVENTORY, 각 자산 분류/현황/가치/리스크, 기밀 스프레드시트 형식",
+      "[OPERATION: 실크로드] 공급망 침투 분석 — 공급망 지도 위 작전 경로, 각 노드 취약점, 대안 루트",
+      "[THREAT LEVEL: RED] 즉각 대응 필요 — 긴급 경보 헤더, 카운트다운 타이머, '이 창을 닫으면 자동 소멸'",
+      "[AGENT REPORT] 코드명 ORACLE의 예측 — 정보원 보고서 형식, 시장 예측 3시나리오, 각 확률 등급",
+      "[CLASSIFIED MAP] 경쟁 지형 기밀 지도 — 지도 위 각 세력 영역 표시, 분쟁 지역, 미확인 영역 [UNKNOWN]",
+      "[OPERATION DEBRIEF] 지난 분기 작전 평가 — 사후 분석 보고서, 성공/실패 판정, 개선 권고사항 분류",
+      "[PRIORITY: URGENT] 즉시 실행 권고안 — 우선순위 1-3번 긴급 행동 지시, 각 항목 데드라인+담당자",
+      "[SIGNAL INTELLIGENCE] 시장 신호 분석 — 각종 시그널 수집+분석+결론, 노이즈 vs. 진짜 신호 필터링",
+      "[BLACK SITE] 숨겨진 기회 식별 — 공식 지도에 없는 시장 기회, 비공개 정보 기반, '존재 자체가 기밀'",
+      "[COVER IDENTITY] 경쟁사 위장 분석 — 겉으로 드러난 전략 vs. 실제 의도 분석, 이중 구조 인포그래픽",
+      "[ENCRYPTED MESSAGE] 핵심 전략 암호화 — 암호문+해독 키 형식, '권한 없는 자는 읽을 수 없다', 의존성 구조",
+      "[DOSSIER] 핵심 의사결정자 프로필 — 인물 파일 형식, 사진란 [REDACTED], 주요 의사결정 패턴 분석",
+      "[OPERATION: 블랙베리] 미래 시장 선점 작전 — 선점 타이밍 차트, 작전 3단계, 철수 조건 설정",
+      "[LEAK PREVENTION] 내부 정보 보안 체계 — 정보 계층 다이어그램, 각 레벨 접근 권한, 누출 방지 프로토콜",
+      "[COUNTERINTELLIGENCE] 역정보 작전 가능성 — 경쟁사 허위 정보 탐지, 진짜 vs. 가짜 신호 분류",
+      "[BURN NOTICE] 즉시 폐기 후 행동 지시 — 자동 소멸 카운트다운, 핵심 행동 지시 3개, '읽은 후 잊어라'",
+      "[ASSET RECRUITMENT] 핵심 파트너 영입 전략 — 영입 대상 프로파일, 접근 방법, 설득 포인트 기밀 분석",
+      "[OPERATION CENTER] 전략 실행 지휘 본부 — 지휘 본부 레이아웃, 각 팀 실시간 상황, 전체 작전 진행률",
+      "[SATELLITE INTEL] 거시 환경 위성 분석 — 전체 시장 조감도, 거시 트렌드 식별, 줌인 포인트 3곳",
+      "[DOUBLE AGENT] 내부+외부 관점 교차 분석 — 이중 정보원 구조, 서로 다른 두 관점의 동일 데이터",
+      "[MISSION IMPOSSIBLE] 가장 어려운 전략 과제 — 불가능해 보이는 목표 설정, 가능성 3%, 그래도 하는 이유",
+      "[DEAD DROP] 핵심 정보 은밀한 전달 — 데드 드롭 스팟 지도, 정보 패키지 내용, 수령 확인 체계",
+      "[OPERATION CLEANUP] 구조조정 전략 문서 — 정리 대상 목록, 실행 시퀀스, 사후 상태 예측",
+      "[CLASSIFIED BRIEF] 임원 전용 전략 요약 — 1페이지 기밀 요약, 핵심만, '이 이상의 정보는 별도 브리핑'",
+      "[SLEEPER AGENT] 잠재 시장 기회 — 아직 활성화되지 않은 기회, 활성화 트리거 조건, 준비 전략",
+      "[EXTRACTION PLAN] 위기 탈출 시나리오 — 비상 탈출 루트 3가지, 각 루트 조건+리스크, 실행 결정 트리거",
+      "[OPERATION: 동방박사] 새로운 시장 탐색 — 미지의 시장 탐험 기록, 첫 접촉 보고서, 지속 조사 권고",
+      "[WIRE TAP] 경쟁사 커뮤니케이션 패턴 분석 — 공개 정보 기반 경쟁사 메시지 분석, 전략 의도 해독",
+      "[NEED TO KNOW] 알아야 할 최소 정보 — 역할별 공개 범위 차등 도표, '이것만 알면 된다' 최소 필수 정보",
+      "[OPERATION ATLAS] 글로벌 전략 지도 — 세계 지도 위 작전 분포, 각 지역 우선순위, 자원 배분 계획",
+      "[CIPHER KEY] 성공 공식 해독 키 — 암호화된 성공 패턴, 해독 과정, '이 키를 가진 자만 읽을 수 있다'",
+      "[SURVEILLANCE FOOTAGE] 시장 모니터링 기록 — CCTV 형식 시장 관찰 데이터, 타임스탬프, 이상 행동 탐지",
+      "[OPERATION: 피닉스] 재기 전략 문서 — 불사조 작전명, 폐허에서의 재건 계획, '태워버리고 다시 시작한다'",
+      "[DEEP COVER] 심층 시장 조사 — 6개월 위장 조사 결과, 표면 이면의 진실, 공개 불가 출처",
+      "[STRATEGIC WITHDRAWAL] 전략적 후퇴 계획 — 후퇴 조건/타이밍/재집결 포인트, '물러서는 것도 전략이다'",
+      "[OPERATION: 트로이] 내부에서 바꾸는 전략 — 침투→정착→변화 3단계, 외부에서 보이는 모습 vs. 실제",
+      "[BREACH ALERT] 위기 침투 경고 — 위기 진입 경로 식별, 각 경로 차단 방안, 현재 봉쇄 현황",
+      "[HANDLER REPORT] 전략 코치 최종 평가 — 핸들러가 요원(팀)을 평가, 강점/개선점/다음 임무 권고",
+      "[OPERATION ENDGAME] 최종 목표 달성 계획 — 엔드게임 전략, 모든 조각이 맞춰지는 순간, 최종 작전 개시일",
+      "[FLASH TRAFFIC] 긴급 정보 속보 — 최우선 전파 메시지, 즉각 행동 지시, '이 메시지를 받은 순간부터 시계가 작동한다'",
+      "[COMPARTMENTALIZATION] 전략 정보 격리 구조 — 팀별 알아야 할 정보 분리 도표, 정보 사일로 방지 구조",
+      "[OPERATION: 메두사] 복수 경쟁사 동시 대응 — 다전선 전략 지도, 각 전선 자원 배분, 우선순위 결정 매트릭스",
+      "[DEFECTOR INTELLIGENCE] 전향자 정보 활용 — 전직 경쟁사 출신 인사이트, 신뢰도 평가, 활용 방안",
+      "[OPERATION: 아르고] 새로운 항로 개척 — 미지의 바다 지도, 항로 선택 기준, 위험 요소 목록",
+      "[PATTERN ANALYSIS] 반복 패턴 식별 — 5년치 데이터에서 발견된 패턴, 주기성 분석, 다음 패턴 예측",
+      "[OPERATION: 넵튠] 수면 아래 전략 — 보이지 않는 영향력, 잠재적 동력, '수면 위와 수면 아래'",
+      "[BLACKOUT PROTOCOL] 정보 차단 시나리오 — 외부 정보 차단 시 생존 전략, 자체 인텔리전스 체계",
+      "[CLASSIFIED ANNEX] 기밀 첨부: 대안 전략 — 본문에 없는 대안 B/C 계획, '이것도 준비했습니다'",
+      "[OPERATION SUNRISE] 신규 시장 여명 — 새벽 4시 기밀 브리핑 형식, 아직 동이 트기 전의 선점 전략",
+      "[COUNTER-MEASURE] 경쟁 위협 무력화 — 각 위협에 대한 대응 조치, 위협-대응 매칭 테이블",
+      "[EYES ONLY: CEO] 경영진 전용 전략 인사이트 — 최상위 등급 정보, 숫자의 진짜 의미, 공개 불가 코멘트",
+      "[OPERATION: 이카루스 방지] 과도한 자신감 위험 경고 — 자체 위협 분석, 성공에 취한 조직의 패턴, 경계 경보",
+      "[FINAL BRIEFING] 모든 것을 종합한 전략 — 최종 종합 브리핑 문서, '이것으로 모든 질문에 답한다'",
+      "[THIS MESSAGE WILL SELF-DESTRUCT] 핵심 결론 — 카운트다운 10초, '지금 기억하라', 행동 지시 3개"
+    ]
+  }
+};
+
+const CATEGORIES = Object.keys(CONCEPTS);
+let activeTab = CATEGORIES[0];
+let searchTerm = '';
+
+const COLORS = {
+  "A: Brand Film 🎬": "#ff6b35",
+  "B: Documentary 🎥": "#00c9ff",
+  "C: RPG Quest 🎮": "#7cff6b",
+  "D: Magazine 📰": "#ff6bce",
+  "E: Classified 🔒": "#ffd700"
+};
+
+function renderTabs() {
+  const c = document.getElementById('tabsContainer');
+  c.innerHTML = CATEGORIES.map(cat => {
+    const conf = CONCEPTS[cat];
+    const isActive = cat === activeTab;
+    return `<button class="tab-btn ${isActive ? conf.btnClass : ''}" onclick="setTab('${cat.replace(/'/g,"\\'")}')">
+      ${cat}
+    </button>`;
+  }).join('');
+}
+
+function setTab(cat) {
+  activeTab = cat;
+  searchTerm = document.getElementById('searchInput').value.trim();
+  renderTabs();
+  renderGrid();
+  // update copy btn color
+  const conf = CONCEPTS[cat];
+  const btn = document.getElementById('copyAllBtn');
+  btn.style.background = conf.color;
+}
+
+function filterPrompts() {
+  searchTerm = document.getElementById('searchInput').value.trim();
+  renderGrid();
+}
+
+function renderGrid() {
+  const conf = CONCEPTS[activeTab];
+  const items = conf.data;
+  const filtered = searchTerm
+    ? items.filter(p => p.toLowerCase().includes(searchTerm.toLowerCase()))
+    : items;
+
+  document.getElementById('countInfo').innerHTML = `<b>${filtered.length}</b> / ${items.length}개 표시`;
+
+  const grid = document.getElementById('grid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-results">🔍 검색 결과가 없습니다. 다른 키워드를 시도해보세요.</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map((text, i) => `
+    <div class="card" onclick="copyItem(this, '${text.replace(/'/g,"\\'").replace(/"/g,'&quot;')}', ${i})" style="border-color:rgba(${hexToRgb(conf.color)},0.15)">
+      <div class="card-accent" style="background:${conf.color}; opacity:0.6"></div>
+      <span class="num">${String(i+1).padStart(2,'0')}</span>
+      <div class="card-body">
+        <div class="concept-tag" style="background:rgba(${hexToRgb(conf.color)},0.15);color:${conf.color}">${conf.tag}</div>
+        <div class="card-text">${text}</div>
+      </div>
+      <span class="copy-ic" id="ic-${i}">📋</span>
+    </div>
+  `).join('');
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+function copyItem(el, text, i) {
+  const clean = text.replace(/&quot;/g,'"');
+  navigator.clipboard.writeText(clean).then(() => {
+    el.style.borderColor = COLORS[activeTab];
+    const ic = document.getElementById(`ic-${i}`);
+    if (ic) { ic.textContent = '✅'; ic.classList.add('done'); }
+    setTimeout(() => {
+      el.style.borderColor = '';
+      if (ic) { ic.textContent = '📋'; ic.classList.remove('done'); }
+    }, 1500);
+    showToast('클립보드에 복사됨!');
+  });
+}
+
+function copyAll() {
+  const conf = CONCEPTS[activeTab];
+  const items = conf.data;
+  const filtered = searchTerm ? items.filter(p => p.toLowerCase().includes(searchTerm.toLowerCase())) : items;
+  navigator.clipboard.writeText(filtered.join('\n\n')).then(() => {
+    showToast(`${filtered.length}개 프롬프트 전체 복사 완료!`);
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  const conf = CONCEPTS[activeTab];
+  t.style.background = conf.color;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Init
+setTab(CATEGORIES[0]);
+renderTabs();
+</script>
+</body>
+</html>

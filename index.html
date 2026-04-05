@@ -6,12 +6,9 @@
     <title>Darlkom v2.0 | Design DNA Workstation</title>
     <meta name="description" content="Professional Slide DNA Architect & Workstation">
 
-    <!-- First-visit redirect to tutorial -->
+    <!-- Welcome banner (replaces forced redirect) -->
     <script>
-      if (!localStorage.getItem('darlkom_visited')) {
-        localStorage.setItem('darlkom_visited', '1');
-        window.location.href = 'tutorial.html?from=app';
-      }
+      window.__showWelcome = !localStorage.getItem('darlkom_welcomed');
     </script>
 
     <!-- Fonts -->
@@ -56,6 +53,10 @@
                 <div class="nav-item" data-view="annotations">
                     <i data-lucide="book-open"></i> Annotation Guide
                     <span style="margin-left:auto;font-size:0.6rem;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#a5b4fc;padding:1px 6px;border-radius:100px;font-family:'JetBrains Mono',monospace;">50</span>
+                </div>
+                <div class="nav-item" data-view="prompts">
+                    <i data-lucide="lightbulb"></i> Concept Prompts
+                    <span style="margin-left:auto;font-size:0.6rem;background:rgba(251,146,60,0.2);border:1px solid rgba(251,146,60,0.4);color:#fb923c;padding:1px 6px;border-radius:100px;font-family:'JetBrains Mono',monospace;">500</span>
                 </div>
             </div>
 
@@ -110,8 +111,8 @@
             <header class="main-toolbar">
                 <div class="search-bar">
                     <i data-lucide="search"></i>
-                    <input type="text" id="global-search" placeholder="Search DNA (e.g. 'neon', 'minimal')...">
-                    <span class="search-kbd">⌘K</span>
+                    <input type="text" id="global-search" placeholder="DNA 검색 (예: 'neon', '미니멀', 'glass')...">
+                    <span class="search-kbd">Ctrl+K</span>
                 </div>
                 <div class="view-toggles">
                     <button class="icon-btn active" id="btn-grid-view" title="Grid View">
@@ -125,6 +126,22 @@
 
             <!-- Content Area -->
             <div id="content-area" class="content-area">
+
+                <!-- Welcome Banner (first visit only) -->
+                <div id="welcome-banner" class="welcome-banner" style="display:none;">
+                    <div class="welcome-inner">
+                        <div class="welcome-title"><i data-lucide="sparkles"></i> DARLKOM에 오신 것을 환영합니다</div>
+                        <div class="welcome-steps">
+                            <div class="welcome-step"><span class="step-num">1</span> 아래 라이브러리에서 <b>DNA 카드</b>를 클릭하세요</div>
+                            <div class="welcome-step"><span class="step-num">2</span> 오른쪽 Inspector에서 <b>슬롯(A/B/C)</b>에 배정하세요</div>
+                            <div class="welcome-step"><span class="step-num">3</span> <b>Synthesize</b> 버튼으로 새로운 디자인을 합성하세요</div>
+                        </div>
+                        <div class="welcome-actions">
+                            <button class="btn-primary" onclick="dismissWelcome()"><i data-lucide="check"></i> 시작하기</button>
+                            <a href="tutorial.html" class="btn-secondary" style="text-decoration:none;"><i data-lucide="play-circle"></i> 상세 튜토리얼</a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- DNA View (default) -->
                 <div id="dna-view">
@@ -146,30 +163,31 @@
                             </div>
                         </div>
 
+                        <p class="mixer-hint">라이브러리에서 DNA를 선택한 후 Inspector에서 슬롯에 배정하거나, 카드를 슬롯으로 드래그하세요</p>
                         <div class="mixer-slots">
                             <!-- Slot A: Structure -->
                             <div class="slot" data-slot="A">
-                                <div class="slot-header"><i data-lucide="layout-template"></i> STRUCTURE</div>
-                                <div class="slot-dropzone" id="slot-a-zone">Drag DNA Here</div>
-                                <div class="slot-value" id="slot-a-value">Bauhaus Grid</div>
+                                <div class="slot-header" data-tooltip="레이아웃, 구도, 여백 비율을 결정합니다"><i data-lucide="layout-template"></i> STRUCTURE</div>
+                                <div class="slot-dropzone" id="slot-a-zone">DNA를 여기에 드래그하세요</div>
+                                <div class="slot-value" id="slot-a-value"></div>
                             </div>
 
                             <div class="mixer-operator">+</div>
 
                             <!-- Slot B: Palette -->
                             <div class="slot" data-slot="B">
-                                <div class="slot-header"><i data-lucide="palette"></i> PALETTE</div>
-                                <div class="slot-dropzone" id="slot-b-zone">Drag DNA Here</div>
-                                <div class="slot-value" id="slot-b-value">Cyberpunk Neon</div>
+                                <div class="slot-header" data-tooltip="색상 팔레트와 감성 프로필을 결정합니다"><i data-lucide="palette"></i> PALETTE</div>
+                                <div class="slot-dropzone" id="slot-b-zone">DNA를 여기에 드래그하세요</div>
+                                <div class="slot-value" id="slot-b-value"></div>
                             </div>
 
                             <div class="mixer-operator">+</div>
 
                             <!-- Slot C: Material -->
                             <div class="slot" data-slot="C">
-                                <div class="slot-header"><i data-lucide="component"></i> MATERIAL</div>
-                                <div class="slot-dropzone" id="slot-c-zone">Drag DNA Here</div>
-                                <div class="slot-value" id="slot-c-value">Paper Texture</div>
+                                <div class="slot-header" data-tooltip="텍스처, 질감, 소재감을 결정합니다"><i data-lucide="component"></i> MATERIAL</div>
+                                <div class="slot-dropzone" id="slot-c-zone">DNA를 여기에 드래그하세요</div>
+                                <div class="slot-value" id="slot-c-value"></div>
                             </div>
                         </div>
 
@@ -188,6 +206,13 @@
 
                 <!-- Annotation Guide View (hidden by default) -->
                 <div id="annotation-view" class="annotation-view" style="display:none;">
+                    <button class="btn-secondary anno-back-btn" onclick="backToDnaView()"><i data-lucide="arrow-left"></i> 라이브러리로 돌아가기</button>
+                    <!-- Injected via app.js -->
+                </div>
+
+                <!-- Concept Prompts View (hidden by default) -->
+                <div id="prompts-view" class="annotation-view" style="display:none;">
+                    <button class="btn-secondary anno-back-btn" onclick="backToDnaView()"><i data-lucide="arrow-left"></i> 라이브러리로 돌아가기</button>
                     <!-- Injected via app.js -->
                 </div>
 
@@ -197,7 +222,7 @@
             <div class="app-timeline">
                 <div class="timeline-label">Deck Sequence</div>
                 <div class="timeline-track" id="deck-timeline">
-                    <div class="timeline-placeholder">Drag DNA cards here to build your slide deck sequence…</div>
+                    <div class="timeline-placeholder">DNA 카드를 여기에 드래그하여 슬라이드 덱 순서를 구성하세요</div>
                 </div>
             </div>
         </main>
@@ -206,7 +231,7 @@
         <aside class="app-inspector" id="inspector-panel">
             <div class="inspector-header">
                 <h3>Inspector</h3>
-                <span class="badge-outline">READ ONLY</span>
+                <span class="badge-outline">DNA INSPECTOR</span>
             </div>
             <div id="inspector-content" class="inspector-content">
                 <div class="empty-state">Select a DNA to inspect</div>
@@ -215,8 +240,17 @@
 
     </div>
 
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-actions" id="modal-actions"></div>
+        </div>
+    </div>
+
     <!-- Toast -->
-    <div class="toast" id="toast">
+    <div class="toast" id="toast" aria-live="polite">
         <span class="toast-icon">✓</span>
         <span id="toast-msg">Copied!</span>
     </div>
